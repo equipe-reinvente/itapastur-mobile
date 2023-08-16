@@ -19,12 +19,16 @@ const WelcomeView = ({ navigation }) => {
         />
         <Text style={styles.description}>{description}</Text>
       </View>
-      <Button
-        title={"COMECE AGORA!"}
-        style={styles.button}
-        titleStyle={styles.buttonText}
-        onPress={handleStartButton}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title={"COMECE AGORA!"}
+          style={styles.button}
+          titleStyle={styles.buttonText}
+          color="#1daf6e"
+          contentContainerStyle={{height: 50}}
+          onPress={handleStartButton}
+        />
+      </View>
     </LinearGradient>
   )
 }
@@ -52,14 +56,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     textAlign: "center",
   },
-  button: {
-    width: 350,
-    backgroundColor: "#1daf6e",
-    borderRadius: 5,
-    padding: 8,
+  buttonContainer: {
     marginBottom: 90
   },
+  button: {
+    width: 350,
+    borderRadius: 5,
+  },
   buttonText: {
+    color: "#FFFFFF",
     fontSize: 16
   }
 });
