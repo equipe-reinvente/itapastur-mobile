@@ -5,61 +5,103 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
+
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>Bem-vindo novamente ao ItapasTur!</Text>
+  const makeLoginRequest = () => {
+    setPasswordErrorMessage("");
+    setEmailErrorMessage("");
+    if (password.length < 7) {
+        setPasswordErrorMessage("Senha inválida");
+        setPassword("");
+    } if (email.length < 7) {
+        setEmailErrorMessage("Email inválido");
+        setEmail("");
+    }
+  };
 
-      <TextInput
-        label="Endereço de Email"
-        variant="outlined"
-        color='gray'
-        style={styles.input}
-    />
-    
-      <TextInput
-        label="Senha"
-        variant="outlined"
-        color='gray'
-        style={styles.password}
-        secureTextEntry={showPassword}
-        trailing={props => (
-            <IconButton icon={() => (
-                <MaterialCommunityIcons
-                  name={showPassword ? 'eye-off' : 'eye'}
-                  size={24}
-                  color="gray"
+  const loginWithGoogle = () => {
+
+  };
+
+  const signupScreenLink = () => {
+
+  };
+
+  const forgotPasswordScreenLink = () => {
+
+  };
+
+  return (
+        <View style={styles.container}>
+        <Text style={styles.title}>Login</Text>
+        <Text style={styles.subtitle}>Bem-vindo novamente ao ItapasTur!</Text>
+
+        <Text style={{color: "red"}}>{emailErrorMessage}</Text>
+
+        <TextInput
+            label="Endereço de Email"
+            variant="outlined"
+            onChangeText={setEmail}
+            color='gray'
+            value={email}
+            placeholder="example@gmail.com"
+            style={styles.input}
+        />
+        
+        <Text style={{color: "red"}}>{passwordErrorMessage}</Text>
+
+        <TextInput
+            label="Senha"
+            variant="outlined"
+            value={password}
+            color='gray'
+            placeholder="password123example"
+            onChangeText={setPassword}
+            style={styles.password}
+            secureTextEntry={!showPassword}
+            trailing={props => (
+                <IconButton icon={() => (
+                    <MaterialCommunityIcons
+                    name={!showPassword ? 'eye-off' : 'eye'}
+                    size={24}
+                    color="gray"
+                    />
+                    )}
+                    onPress={togglePasswordVisibility}
                 />
                 )}
-                onPress={togglePasswordVisibility}
             />
-            )}
-        />
-        <Text style={styles.hyperlinkStyle}>Esqueceu sua senha?</Text>
-        <Button titleStyle={styles.buttonText} title="Login" style={styles.loginButton}/>
-        <View style={styles.dividerContainer}>
-            <Divider style={styles.divider} color='gray'></Divider>
-            <Text style={styles.dividerText}>ou logue-se com</Text>
-            <Divider style={styles.divider} color='gray'></Divider>
-        </View>  
-        <View>
-            <Button titleStyle={styles.googleButtonText} title="CONTINUE COM GOOGLE" style={styles.googleButton} variant="outlined" color='black' trailing={
-                props => (
-                    <MaterialCommunityIcons
-                        name="google"
-                        size={24}
-                        color="black"
-                    />
-                )} trailingContainerStyle={styles.googleButtonLogo}/>
-            <Button titleStyle={styles.singupButtonText} title="CADASTRE-SE" style={styles.singupButton} variant="outlined" color='#1DAF6E'/>
-        </View>    
-    </View>
-  );
+            <Text style={styles.hyperlinkStyle} onPress={forgotPasswordScreenLink}>Esqueceu sua senha?</Text>
+            <View style={{height: 48, width: 350, marginTop: 30, justifyContent: 'center'}}>
+                <Button titleStyle={styles.buttonText} title="Login" color='#1DAF6E' contentContainerStyle={{height: 48}} onPress={makeLoginRequest}/>
+            </View>
+            
+            <View style={styles.dividerContainer}>
+                <Divider style={styles.divider} color='gray'></Divider>
+                <Text style={styles.dividerText}>ou logue-se com</Text>
+                <Divider style={styles.divider} color='gray'></Divider>
+            </View>  
+            <View style={{width: 350}}>
+                <Button titleStyle={styles.googleButtonText} title="CONTINUE COM GOOGLE" contentContainerStyle={{height: 48}} style={styles.googleButton} variant="outlined" color='black' trailing={
+                    props => (
+                        <MaterialCommunityIcons
+                            name="google"
+                            size={24}
+                            color="black"
+                        />
+                    )} trailingContainerStyle={styles.googleButtonLogo} onPress={loginWithGoogle}/>
+                <Button titleStyle={styles.signupButtonText} title="CADASTRE-SE" contentContainerStyle={{height: 48}} style={styles.signupButton} variant="outlined" color='#1DAF6E' onPress={signupScreenLink}/>
+            </View>    
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -88,7 +130,7 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         color: 'gray',
         tintColor: 'gray',
-        marginBottom: 20
+        marginBottom: 5
     },
     password: {
         borderColor: 'gray',
@@ -103,12 +145,11 @@ const styles = StyleSheet.create({
     loginButton: {
         marginTop: 20,
         backgroundColor: "#1DAF6E",
-        borderRadius: 4,
-        width: 350,
         height: 48,
+        width: "100%",
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 4,
+        elevation: 10,
     },
     googleButtonText: {
         fontWeight: 'bold',
@@ -119,30 +160,20 @@ const styles = StyleSheet.create({
         left: "60%"
     },
     googleButton: {
-        borderRadius: 4,
-        width: 350,
-        height: 48,
-        justifyContent: 'center',
-        alignItems: 'center',
         borderColor: 'black',
-        marginBottom: 20,
-        borderWidth: 1
+        borderWidth: 1,
+        marginBottom: 20
     },
     googleButtonLogo: {
         position: "relative",
         right: "-60%",
         paddingHorizontal: 10
     }, 
-    singupButton: {
-        borderRadius: 4,
-        width: 350,
-        height: 48,
-        justifyContent: 'center',
-        alignItems: 'center',
+    signupButton: {
         borderColor: '#1DAF6E',
         borderWidth: 1
     }, 
-    singupButtonText: {
+    signupButtonText: {
         fontWeight: 'normal',
         color: '#1DAF6E',
         fontSize: 16,
