@@ -14,12 +14,12 @@ export default function App() {
         <Stack.Screen
           name="Welcome"
           component={Welcome}
-          options={{ title: "Welcome" }}
+          options={{ title: "Welcome", headerShown: false }}
         />
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{ title: "Login" }}
+          options={{ title: "Login", headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
