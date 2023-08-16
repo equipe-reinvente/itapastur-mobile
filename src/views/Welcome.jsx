@@ -2,8 +2,10 @@ import { View, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button, Text } from "@react-native-material/core";
 
-const WelcomeView = () => {
+const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
+
+  const handleStartButton = () => navigation.navigate('Login');
 
   return (
     <LinearGradient
@@ -20,6 +22,7 @@ const WelcomeView = () => {
       <Button
         title={"COMECE AGORA!"}
         style={styles.button}
+        onPress={handleStartButton}
       />
     </LinearGradient>
   )
