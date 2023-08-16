@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const LoginView = () => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: "#1DAF6E",
         borderRadius: 4,
-        width: 326,
+        width: 350,
         height: 48,
         justifyContent: 'center',
         alignItems: 'center',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
     googleButton: {
         borderRadius: 4,
-        width: 326,
+        width: 350,
         height: 48,
         justifyContent: 'center',
         alignItems: 'center',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     }, 
     singupButton: {
         borderRadius: 4,
-        width: 326,
+        width: 350,
         height: 48,
         justifyContent: 'center',
         alignItems: 'center',
@@ -167,4 +167,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default LoginView;
+export default Login;

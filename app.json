@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "itapasTur",
-    "slug": "itapasTur",
+    "name": "itapastur-mobile",
+    "slug": "itapastur-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
