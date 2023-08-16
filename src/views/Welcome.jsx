@@ -22,6 +22,7 @@ const WelcomeView = ({ navigation }) => {
       <Button
         title={"COMECE AGORA!"}
         style={styles.button}
+        titleStyle={styles.buttonText}
         onPress={handleStartButton}
       />
     </LinearGradient>
@@ -55,8 +56,12 @@ const styles = StyleSheet.create({
     width: 350,
     backgroundColor: "#1daf6e",
     borderRadius: 5,
-    marginBottom: 55
+    padding: 8,
+    marginBottom: 90
   },
+  buttonText: {
+    fontSize: 16
+  }
 });
 
 export default WelcomeView;
