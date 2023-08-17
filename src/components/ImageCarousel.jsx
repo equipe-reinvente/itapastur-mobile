@@ -40,8 +40,6 @@ const ImageCarousel = ({ images }) => {
 const styles = StyleSheet.create({
   carouselItem: {
     marginHorizontal: 20,
-    width: 350,
-    height: 250
   },
   image: {
     width: "100%",

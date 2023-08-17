@@ -31,7 +31,7 @@ const PlaceView = () => {
         <Text style={styles.description}>{description}</Text>
       </View>
 
-      <View>
+      <View style={styles.carouselContainer}>
         <ImageCarousel images={images}/>
       </View>
 
@@ -91,8 +91,13 @@ const styles = StyleSheet.create({
   description: {
     color: "#999999"
   },
-  buttonContainer: {
+  carouselContainer: {
+    width: 450,
+    height: 180,
     marginBottom: 90
+  },
+  buttonContainer: {
+    marginBottom: 50
   },
   button: {
     width: 350,
