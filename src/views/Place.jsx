@@ -1,11 +1,17 @@
 import { View, Image, StyleSheet } from "react-native";
 import { Button, Text } from "@react-native-material/core";
+import ImageCarousel from "../components/ImageCarousel";
 
 const PlaceView = () => {
   const description = `A pedra do frade é cercada por lendas. Conta-se por exemplo,
   que a pedra é a morada de uma princesa encantada, e que é impossível subir até seu topo.`;
 
-  const images = ['Imagem1', 'Imagem2', 'Imagem3', 'Imagem4', 'Imagem5'];
+  const images = [
+    { source: require("../assets/PedraDoFrade.jpg") },
+    { source: require("../assets/PedraDoFrade.jpg") },
+    { source: require("../assets/PedraDoFrade.jpg") },
+    { source: require("../assets/PedraDoFrade.jpg") }
+  ];
 
   return (
     <View style={styles.container}>
@@ -26,9 +32,7 @@ const PlaceView = () => {
       </View>
 
       <View>
-        {images.map((image) => (
-          <Text key={image}>{image}</Text>
-        ))}
+        <ImageCarousel images={images}/>
       </View>
 
       <View>

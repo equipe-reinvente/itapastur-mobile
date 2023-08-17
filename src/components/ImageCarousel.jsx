@@ -1,5 +1,5 @@
-import { View, Image, StyleSheet } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import { View, Image, StyleSheet } from "react-native";
+import Carousel from "react-native-snap-carousel";
 
 const ImageCarousel = ({ images }) => {
   return (
@@ -10,22 +10,22 @@ const ImageCarousel = ({ images }) => {
           <Image source={item.source} style={styles.image} />
         </View>
       )}
-      sliderWidth={300}
-      itemWidth={250}
+      sliderWidth={450}
+      itemWidth={400}
     />
   )
 }
 
 const styles = StyleSheet.create({
   carouselItem: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    marginHorizontal: 20,
+    width: 350,
+    height: 250
   },
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
+    borderRadius: 20
   },
 });
 
