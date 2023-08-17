@@ -4,10 +4,10 @@ import { TextInput, IconButton, Button, Divider } from "@react-native-material/c
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Login = ({ navigation }) => {
-    const [showPassword, setShowPassword] = useState(false);
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
 
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
@@ -25,7 +25,8 @@ const Login = ({ navigation }) => {
             setEmailErrorMessage("Email inválido");
             setEmail("");
         }
-    };
+      navigation.navigate('Tabs');
+  };
 
     const loginWithGoogle = () => {
 
@@ -43,7 +44,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.title}>Login</Text>
             <Text style={styles.subtitle}>Bem-vindo novamente ao ItapasTur!</Text>
 
-            <Text style={{ color: "red" }}>{emailErrorMessage}</Text>
+            <Text style={{color: "red", margin: 5}}>{emailErrorMessage}</Text>
 
             <TextInput
                 label="Endereço de Email"
@@ -54,8 +55,8 @@ const Login = ({ navigation }) => {
                 placeholder="example@gmail.com"
                 style={styles.input}
             />
-
-            <Text style={{ color: "red" }}>{passwordErrorMessage}</Text>
+            
+            <Text style={{color: "red", margin: 5}}>{passwordErrorMessage}</Text>
 
             <TextInput
                 label="Senha"
@@ -69,14 +70,14 @@ const Login = ({ navigation }) => {
                 trailing={props => (
                     <IconButton icon={() => (
                         <MaterialCommunityIcons
-                            name={!showPassword ? 'eye-off' : 'eye'}
-                            size={24}
-                            color="gray"
+                        name={!showPassword ? 'eye-off' : 'eye'}
+                        size={24}
+                        color="gray"
                         />
-                    )}
+                        )}
                         onPress={togglePasswordVisibility}
                     />
-                )}
+                    )}
             />
             <Text style={styles.hyperlinkStyle} onPress={forgotPasswordScreenLink}>Esqueceu sua senha?</Text>
             <View style={{ height: 48, width: 350, marginTop: 30, justifyContent: 'center' }}>
