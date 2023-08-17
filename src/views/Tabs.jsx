@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 const Tabs = ({ navigation }) => {
 
     return (
-        <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle:{height: 80}}}>
+        <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle:{height: 80, position: "absolute"}, tabBarHideOnKeyboard: 'true'}}>
             <Tab.Screen
                 name="Iníco"
                 component={Home}
