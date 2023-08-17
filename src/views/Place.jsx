@@ -35,16 +35,26 @@ const PlaceView = () => {
         <ImageCarousel images={images}/>
       </View>
 
-      <View>
-        <Text>Like</Text>
-        <Text>Share</Text>
+      <View style={styles.likeAndShareButtonsContainer}>
+        <Button
+          style={styles.likeAndShareButton}
+          color="#1daf6e"
+          contentContainerStyle={{height: 30}}
+          onPress={() => {}}
+        />
+        <Button
+          style={styles.likeAndShareButton}
+          color="#1daf6e"
+          contentContainerStyle={{height: 30}}
+          onPress={() => {}}
+        />
       </View>
 
-      <View style={styles.buttonContainer}>
+      <View style={styles.routeButtonContainer}>
         <Button 
           title={"TRAÇAR ROTA"}
-          style={styles.button}
-          titleStyle={styles.buttonText}
+          style={styles.routeButton}
+          titleStyle={styles.routeButtonText}
           color="#1daf6e"
           contentContainerStyle={{height: 50}}
           onPress={() => {}}
@@ -96,14 +106,24 @@ const styles = StyleSheet.create({
     height: 180,
     marginBottom: 90
   },
-  buttonContainer: {
-    marginBottom: 50
+  likeAndShareButtonsContainer: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    marginTop: -35,
+    marginBottom: 10,
+    marginLeft: 10,
   },
-  button: {
+  likeAndShareButton: {
+    width: 30,
+    marginHorizontal: 3,
+  },
+  routeButtonContainer: {
+    marginTop: 100
+  },
+  routeButton: {
     width: 350,
-    borderRadius: 5,
   },
-  buttonText: {
+  routeButtonText: {
     color: "#FFFFFF",
     fontSize: 16
   }
