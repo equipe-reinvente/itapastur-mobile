@@ -8,7 +8,7 @@ const PlaceView = () => {
   const images = ['Imagem1', 'Imagem2', 'Imagem3', 'Imagem4', 'Imagem5'];
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={styles.titleTextContainer}>
           <Text style={styles.title}>Pedra do Frade</Text>
@@ -51,11 +51,14 @@ const PlaceView = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    marginHorizontal: 20
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 30,
-    marginHorizontal: 20
   },
   titleTextContainer: {
     flex: 1,
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   descriptionContainer: {
-    margin: 20,
+    marginVertical: 20,
   },
   descriptionTitle: {
     fontSize: 25,
