@@ -21,11 +21,13 @@ const Login = ({ navigation }) => {
         if (password.length < 7) {
             setPasswordErrorMessage("Senha inválida");
             setPassword("");
-        } if (email.length < 7) {
+            return;
+        } if (email.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
             setEmailErrorMessage("Email inválido");
             setEmail("");
+            return;
         }
-      navigation.navigate('Tabs');
+        navigation.navigate('Tabs');
   };
 
     const loginWithGoogle = () => {
@@ -49,6 +51,8 @@ const Login = ({ navigation }) => {
             <TextInput
                 label="Endereço de Email"
                 variant="outlined"
+                autoCapitalize='none'
+                autoComplete='email'
                 onChangeText={setEmail}
                 color='gray'
                 value={email}
@@ -61,6 +65,7 @@ const Login = ({ navigation }) => {
             <TextInput
                 label="Senha"
                 variant="outlined"
+                autoCapitalize='none'
                 value={password}
                 color='gray'
                 placeholder="password123example"

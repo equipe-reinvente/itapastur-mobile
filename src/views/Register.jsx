@@ -20,7 +20,7 @@ const Register = ({ navigation }) => {
     if (password.length < 7) {
       setPasswordErrorMessage("Senha inválida");
       setPassword("");
-    } if (email.length < 7) {
+    } if (email.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setEmailErrorMessage("Email inválido");
       setEmail("");
     } if (password != passwordConfirmation) {
@@ -53,6 +53,8 @@ const Register = ({ navigation }) => {
       <TextInput
         label="Endereço de Email"
         variant="outlined"
+        autoCapitalize='none'
+        autoComplete='email'
         onChangeText={setEmail}
         color='gray'
         value={email}
@@ -66,6 +68,7 @@ const Register = ({ navigation }) => {
         variant="outlined"
         value={password}
         color='gray'
+        autoCapitalize='none'
         placeholder="password123example"
         onChangeText={setPassword}
         style={styles.password}
