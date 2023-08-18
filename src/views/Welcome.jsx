@@ -5,7 +5,7 @@ import { Button, Text } from "@react-native-material/core";
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
 
-  const handleStartButton = () => navigation.navigate('Login');
+  const handleStartButton = () => navigation.navigate('Place');
 
   return (
     <LinearGradient
