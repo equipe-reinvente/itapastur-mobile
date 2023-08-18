@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import axios from 'axios';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -17,16 +19,44 @@ const Register = ({ navigation }) => {
   const makeLoginRequest = ({ navigation }) => {
     setPasswordErrorMessage("");
     setEmailErrorMessage("");
+    let canRegister = true;
     if (password.length < 7) {
       setPasswordErrorMessage("Senha inválida");
       setPassword("");
+      canRegister = false;
     } if (email.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setEmailErrorMessage("Email inválido");
       setEmail("");
+      canRegister = false;
     } if (password != passwordConfirmation) {
       setPasswordConfirmationErrorMessage("As senhas não coincidem");
       setPassword("");
       setPasswordConfirmation("");
+      canRegister = false;
+    }
+    if (!canRegister) return;
+
+    let data = { 
+      "email": email,
+      "password": password
+    }
+
+    try {
+      axios.post("http://127.0.0.1:3000/users", data).then((response) => {
+          if (response.status === 200) {
+              navigation.navigate('Tabs');
+          } else {
+              let error = response.data["error"];
+              setEmailErrorMessage(error);
+          }
+    });
+    } catch (error) {
+        Toast.show({
+            type: 'error',
+            position: 'bottom',
+            text1: error,
+            visibilityTime: 2000,
+        });
     }
   };
 
@@ -90,6 +120,7 @@ const Register = ({ navigation }) => {
       <TextInput
         label="Confirme sua senha"
         variant="outlined"
+        autoCapitalize='none'
         value={passwordConfirmation}
         color='gray'
         placeholder="password123example"

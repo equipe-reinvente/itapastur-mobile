@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 
 const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,16 +19,40 @@ const Login = ({ navigation }) => {
     const makeLoginRequest = () => {
         setPasswordErrorMessage("");
         setEmailErrorMessage("");
+        let canLogin = true;
         if (password.length < 7) {
             setPasswordErrorMessage("Senha inválida");
             setPassword("");
-            return;
+            canLogin = false;
         } if (email.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
             setEmailErrorMessage("Email inválido");
             setEmail("");
-            return;
+            canLogin = false;
         }
-        navigation.navigate('Tabs');
+        if (!canLogin) return;
+
+        let data = { 
+            "email": email,
+            "password": password
+        }
+
+        try {
+            axios.post("http://127.0.0.1:3000/login", data).then((response) => {
+                if (response.status === 200) {
+                    navigation.navigate('Tabs');
+                } else {
+                    let error = response.data["error"];
+                    setEmailErrorMessage(error);
+                }
+            });
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                text1: error,
+                visibilityTime: 2000,
+            });
+        }
   };
 
     const loginWithGoogle = () => {
