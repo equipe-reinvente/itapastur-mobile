@@ -1,5 +1,5 @@
 import { View, Image, StyleSheet } from "react-native";
-import { Text } from "@react-native-material/core";
+import { Button, Text } from "@react-native-material/core";
 import ImageCarousel from "../components/ImageCarousel";
 import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -63,8 +63,9 @@ const PlaceView = () => {
       </View>
 
       <View style={styles.routeButtonContainer}>
-        <IconButton
-          icon={() => (
+        <Button
+          title={"TRAÇAR ROTA"}
+          trailing={() => (
             <MaterialCommunityIcons
               name={'car'}
               size={30}
@@ -72,6 +73,9 @@ const PlaceView = () => {
             />
           )}
           style={styles.routeButton}
+          titleStyle={styles.routeButtonText}
+          color="#1daf6e"
+          contentContainerStyle={{height: 50}}
           onPress={() => {}}
         />
       </View>
@@ -140,8 +144,6 @@ const styles = StyleSheet.create({
   },
   routeButton: {
     width: 350,
-    borderRadius: 6,
-    backgroundColor: "#1daf6e"
   },
   routeButtonText: {
     color: "#FFFFFF",
