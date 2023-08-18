@@ -1,8 +1,9 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button, Text } from "@react-native-material/core";
 import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PlaceTitle from "../components/PlaceTitle";
+import PlaceDescription from "../components/PlaceDescription";
 import ImageCarousel from "../components/ImageCarousel";
 
 const PlaceView = () => {
@@ -26,10 +27,7 @@ const PlaceView = () => {
         image={image}
       />
 
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionTitle}>Descrição</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
+      <PlaceDescription description={description} />
 
       <View style={styles.carouselContainer}>
         <ImageCarousel images={images}/>
@@ -85,16 +83,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     marginHorizontal: 20
-  },
-  descriptionContainer: {
-    marginVertical: 20,
-  },
-  descriptionTitle: {
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  description: {
-    color: "#999999"
   },
   carouselContainer: {
     width: 450,
