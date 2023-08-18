@@ -43,14 +43,22 @@ const Register = ({ navigation }) => {
     }
 
     try {
-      axios.post("http://127.0.0.1:3000/users", data).then((response) => {
+      axios.post("http://127.0.0.1:3000/users", data)
+      .then((response) => {
           if (response.status === 200) {
               navigation.navigate('Tabs');
           } else {
               let error = response.data["error"];
               setEmailErrorMessage(error);
           }
-    });
+      }).catch(error => {
+        Toast.show({
+            type: 'error',
+            position: 'bottom',
+            text1: error.message,
+            visibilityTime: 2000,
+        });
+      });
     } catch (error) {
         Toast.show({
             type: 'error',
