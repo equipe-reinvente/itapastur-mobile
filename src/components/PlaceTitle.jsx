@@ -10,7 +10,7 @@ const PlaceTitle = ({ title, category, image }) => {
       </View>
       <Image source={image.source} style={styles.image} />
     </View>
-  )
+  );
 }
 
 

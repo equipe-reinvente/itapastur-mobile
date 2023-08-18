@@ -34,7 +34,7 @@ const ImageCarousel = ({ images }) => {
         inactiveDotScale={0.6}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

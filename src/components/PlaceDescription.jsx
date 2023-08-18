@@ -7,7 +7,7 @@ const PlaceDescription = ({ description }) => {
       <Text style={styles.title}>Descrição</Text>
       <Text style={styles.description}>{description}</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
   description: {
     color: "#999999"
   },
-})
+});
 
 export default PlaceDescription;

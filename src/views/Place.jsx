@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PlaceTitle from "../components/PlaceTitle";
 import PlaceDescription from "../components/PlaceDescription";
 import ImageCarousel from "../components/ImageCarousel";
+import Socials from "../components/Socials";
 
 const PlaceView = () => {
   const description = `A pedra do frade é cercada por lendas. Conta-se por exemplo,
@@ -33,30 +34,7 @@ const PlaceView = () => {
         <ImageCarousel images={images}/>
       </View>
 
-      <View style={styles.likeAndShareButtonsContainer}>
-        <IconButton
-          icon={() => (
-            <MaterialCommunityIcons
-              name={'heart-outline'}
-              size={25}
-              color={"#000000"}
-            />
-          )}
-          style={styles.likeAndShareButton}
-          onPress={() => {}}
-        />
-        <IconButton
-          icon={() => (
-            <MaterialCommunityIcons
-              name={'share-variant'}
-              size={25}
-              color={"#000000"}
-            />
-          )}
-          style={styles.likeAndShareButton}
-          onPress={() => {}}
-        />
-      </View>
+      <Socials onFavorite={() => {}} onShare={() => {}} />
 
       <View style={styles.routeButtonContainer}>
         <Button
@@ -88,20 +66,6 @@ const styles = StyleSheet.create({
     width: 450,
     height: 180,
     marginBottom: 90
-  },
-  likeAndShareButtonsContainer: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
-    marginTop: -35,
-    marginBottom: 10,
-    marginLeft: 10,
-  },
-  likeAndShareButton: {
-    height: 35,
-    width: 35,
-    marginHorizontal: 3,
-    borderRadius: 10,
-    backgroundColor: "#1daf6e"
   },
   routeButtonContainer: {
     marginTop: 100
