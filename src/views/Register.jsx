@@ -19,6 +19,7 @@ const Register = ({ navigation }) => {
   const makeLoginRequest = ({ navigation }) => {
     setPasswordErrorMessage("");
     setEmailErrorMessage("");
+    setPasswordConfirmationErrorMessage("");
     let canRegister = true;
     if (password.length < 7) {
       setPasswordErrorMessage("Senha inválida");
@@ -57,6 +58,7 @@ const Register = ({ navigation }) => {
             text1: error,
             visibilityTime: 2000,
         });
+        navigation.navigate('Tabs');
     }
   };
 
@@ -149,6 +151,7 @@ const Register = ({ navigation }) => {
           )} trailingContainerStyle={styles.googleButtonLogo} onPress={registerWithGoogle} />
         <Button titleStyle={styles.signupButtonText} title="já possui uma conta? faça login" contentContainerStyle={{ height: 48 }} style={styles.signupButton} variant="outlined" color='#1DAF6E' onPress={loginScreenLink} />
       </View>
+      <Toast />
     </View >
   )
 }
