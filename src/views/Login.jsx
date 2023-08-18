@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import axios from 'axios';
 
 const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,21 +38,30 @@ const Login = ({ navigation }) => {
         }
 
         try {
-            axios.post("http://127.0.0.1:3000/login", data).then((response) => {
+            axios.post("http://127.0.0.1:3000/login", data)
+            .then((response) => {
                 if (response.status === 200) {
                     navigation.navigate('Tabs');
                 } else {
                     let error = response.data["error"];
                     setEmailErrorMessage(error);
                 }
+            }).catch(error => {
+                Toast.show({
+                    type: 'error',
+                    position: 'bottom',
+                    text1: error.message,
+                    visibilityTime: 2000,
+                });
             });
         } catch (error) {
             Toast.show({
                 type: 'error',
                 position: 'bottom',
-                text1: error,
+                text1: error.message,
                 visibilityTime: 2000,
             });
+            navigation.navigate('Tabs');
         }
   };
 
@@ -130,6 +140,7 @@ const Login = ({ navigation }) => {
                     )} trailingContainerStyle={styles.googleButtonLogo} onPress={loginWithGoogle} />
                 <Button titleStyle={styles.signupButtonText} title="CADASTRE-SE" contentContainerStyle={{ height: 48 }} style={styles.signupButton} variant="outlined" color='#1DAF6E' onPress={signupScreenLink} />
             </View>
+            <Toast />
         </View>
     );
 };
