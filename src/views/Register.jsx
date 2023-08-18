@@ -16,7 +16,7 @@ const Register = ({ navigation }) => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState("");
 
-  const makeLoginRequest = ({ navigation }) => {
+  const makeLoginRequest = () => {
     setPasswordErrorMessage("");
     setEmailErrorMessage("");
     setPasswordConfirmationErrorMessage("");
@@ -43,7 +43,7 @@ const Register = ({ navigation }) => {
     }
 
     try {
-      axios.post("http://127.0.0.1:3000/users", data)
+      axios.post("https://itapastur-api.fly.dev/users", data)
       .then((response) => {
           if (response.status === 200) {
               navigation.navigate('Tabs');
