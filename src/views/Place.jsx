@@ -1,6 +1,8 @@
 import { View, Image, StyleSheet } from "react-native";
-import { Button, Text } from "@react-native-material/core";
+import { Text } from "@react-native-material/core";
 import ImageCarousel from "../components/ImageCarousel";
+import { IconButton } from "@react-native-material/core";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const PlaceView = () => {
   const description = `A pedra do frade é cercada por lendas. Conta-se por exemplo,
@@ -36,27 +38,40 @@ const PlaceView = () => {
       </View>
 
       <View style={styles.likeAndShareButtonsContainer}>
-        <Button
+        <IconButton
+          icon={() => (
+            <MaterialCommunityIcons
+              name={'heart-outline'}
+              size={25}
+              color={"#000000"}
+            />
+          )}
           style={styles.likeAndShareButton}
-          color="#1daf6e"
-          contentContainerStyle={{height: 30}}
           onPress={() => {}}
         />
-        <Button
+        <IconButton
+          icon={() => (
+            <MaterialCommunityIcons
+              name={'share-variant'}
+              size={25}
+              color={"#000000"}
+            />
+          )}
           style={styles.likeAndShareButton}
-          color="#1daf6e"
-          contentContainerStyle={{height: 30}}
           onPress={() => {}}
         />
       </View>
 
       <View style={styles.routeButtonContainer}>
-        <Button 
-          title={"TRAÇAR ROTA"}
+        <IconButton
+          icon={() => (
+            <MaterialCommunityIcons
+              name={'car'}
+              size={30}
+              color={"#FFFFFF"}
+            />
+          )}
           style={styles.routeButton}
-          titleStyle={styles.routeButtonText}
-          color="#1daf6e"
-          contentContainerStyle={{height: 50}}
           onPress={() => {}}
         />
       </View>
@@ -114,14 +129,19 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   likeAndShareButton: {
-    width: 30,
+    height: 35,
+    width: 35,
     marginHorizontal: 3,
+    borderRadius: 10,
+    backgroundColor: "#1daf6e"
   },
   routeButtonContainer: {
     marginTop: 100
   },
   routeButton: {
     width: 350,
+    borderRadius: 6,
+    backgroundColor: "#1daf6e"
   },
   routeButtonText: {
     color: "#FFFFFF",
