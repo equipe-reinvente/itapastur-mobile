@@ -1,12 +1,15 @@
 import { View, Image, StyleSheet } from "react-native";
 import { Button, Text } from "@react-native-material/core";
-import ImageCarousel from "../components/ImageCarousel";
 import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import PlaceTitle from "../components/PlaceTitle";
+import ImageCarousel from "../components/ImageCarousel";
 
 const PlaceView = () => {
   const description = `A pedra do frade é cercada por lendas. Conta-se por exemplo,
   que a pedra é a morada de uma princesa encantada, e que é impossível subir até seu topo.`;
+
+  const image = { source: require("../assets/PedraDoFrade.jpg")}
 
   const images = [
     { source: require("../assets/PedraDoFrade.jpg") },
@@ -17,16 +20,11 @@ const PlaceView = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <View style={styles.titleTextContainer}>
-          <Text style={styles.title}>Pedra do Frade</Text>
-          <Text style={styles.category}>Ponto turístico</Text>
-        </View>
-        <Image
-          source={require("../assets/PedraDoFrade.jpg")}
-          style={styles.logo}
-        />
-      </View>
+      <PlaceTitle
+        title={"Pedra do Frade"}
+        category={"Ponto turístico"}
+        image={image}
+      />
 
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionTitle}>Descrição</Text>
@@ -87,28 +85,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     marginHorizontal: 20
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 30,
-  },
-  titleTextContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-  },
-  category: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#999999"
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 20,
   },
   descriptionContainer: {
     marginVertical: 20,
