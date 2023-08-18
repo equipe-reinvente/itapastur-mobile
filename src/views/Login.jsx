@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
             }).catch(error => {
                 Toast.show({
                     type: 'error',
-                    position: 'bottom',
+                    position: 'top',
                     text1: error.message,
                     visibilityTime: 2000,
                 });

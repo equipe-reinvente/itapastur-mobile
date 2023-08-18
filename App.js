@@ -27,7 +27,7 @@ export default function App() {
         <Stack.Screen
           name="Place"
           component={PlaceView}
-          options={{ title: "Place" }}
+          options={{ title: "Place", headerShown: false }}
         />
         <Stack.Screen
           name="Login"
