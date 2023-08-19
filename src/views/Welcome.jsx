@@ -1,11 +1,19 @@
 import { View, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button, Text } from "@react-native-material/core";
+import { GetContext } from '../components/AppContext';
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
+  const authToken = GetContext();
 
-  const handleStartButton = () => navigation.navigate('Login');
+  const handleStartButton = () => {
+    if (authToken !== "") {
+      navigation.navigate('Tabs');
+    } else {
+      navigation.navigate('Login');
+    }
+  }
 
   return (
     <LinearGradient

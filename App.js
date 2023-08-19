@@ -7,39 +7,42 @@ import Welcome from "./src/views/Welcome";
 import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from './src/views/Register';
+import { AuthProvider } from "./src/components/AppContext";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Welcome"
-          component={Welcome}
-          options={{ title: "Welcome", headerShown: false }}
-        />
-        <Stack.Screen
-          name="Tabs"
-          component={Tabs}
-          options={{ title: "Tabs", headerShown: false }}
-        />
-        <Stack.Screen
-          name="Place"
-          component={PlaceView}
-          options={{ title: "Place", headerShown: false }}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: "Login", headerShown: false }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{ title: "Register", headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{ title: "Welcome", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Tabs"
+            component={Tabs}
+            options={{ title: "Tabs", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Place"
+            component={PlaceView}
+            options={{ title: "Place", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: "Login", headerShown: false }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ title: "Register", headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
