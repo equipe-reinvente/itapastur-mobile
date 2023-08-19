@@ -3,12 +3,14 @@ import { Text, View, StyleSheet } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
+import { GetContext } from '../components/AppContext';
 import axios from 'axios';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const { login } = GetContext();
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +18,7 @@ const Register = ({ navigation }) => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState("");
 
-  const makeLoginRequest = () => {
+  const makeLoginRequest = async () => {
     setPasswordErrorMessage("");
     setEmailErrorMessage("");
     setPasswordConfirmationErrorMessage("");
@@ -41,32 +43,22 @@ const Register = ({ navigation }) => {
       "email": email,
       "password": password
     }
-
     try {
-      axios.post("https://itapastur-api.fly.dev/users", data)
-      .then((response) => {
-          if (response.status === 200) {
-              navigation.navigate('Tabs');
-          } else {
-              let error = response.data["error"];
-              setEmailErrorMessage(error);
-          }
-      }).catch(error => {
-        Toast.show({
-            type: 'error',
-            position: 'top',
-            text1: error.message,
-            visibilityTime: 2000,
-        });
-      });
-    } catch (error) {
-        Toast.show({
-            type: 'error',
-            position: 'bottom',
-            text1: error,
-            visibilityTime: 2000,
-        });
+      const response = await axios.post("https://itapastur-api.fly.dev/users", data);
+      if (response.status === 200) {
+        login(response.token);
         navigation.navigate('Tabs');
+      } else {
+        let error = response.data["error"];
+        setEmailErrorMessage(error);
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: error.message,
+        visibilityTime: 2000,
+      });
     }
   };
 

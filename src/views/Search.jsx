@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
 import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ImageCard from '../components/ImageCard';
 
 const Search = ({ navigation }) => {
 
@@ -42,33 +43,9 @@ const Search = ({ navigation }) => {
             </Text>
             
             <View style={styles.cardContainer}>
-                <View style={styles.categoryCard}>
-                    <ImageBackground source={require('../images/igrejaMatriz.png')} style={styles.cardImage}/>   
-                    <View style={styles.overlayContainer}>
-                        <Image source={require('../images/gradient.png')}/>
-                    </View>
-                    <View style={styles.overlayContainer}>
-                        <Button titleStyle={styles.cardText} title="Pontos turísticos" style={styles.cardButton} color='rgba(0, 0, 0, 0)' contentContainerStyle={{height: "100%"}} uppercase={false}/>
-                    </View>
-                </View>
-                <View style={styles.categoryCard}>
-                    <ImageBackground source={require('../images/itapajePlaca.png')} style={styles.cardImage}/>
-                    <View style={styles.overlayContainer}>
-                        <Image source={require('../images/gradient.png')}/>
-                    </View>
-                    <View style={styles.overlayContainer}>
-                        <Button titleStyle={styles.cardText} title="Lojas" style={styles.cardButton} color='rgba(0, 0, 0, 0)' contentContainerStyle={{height: "100%"}} uppercase={false}/>
-                    </View>
-                </View>
-                <View style={styles.categoryCard}>
-                    <ImageBackground source={require('../images/artesanato.png')} style={styles.cardImage}/>
-                    <View style={styles.overlayContainer}>
-                        <Image source={require('../images/gradient.png')}/>
-                    </View>
-                    <View style={styles.overlayContainer}>
-                        <Button titleStyle={styles.cardText} title="Artesões" style={styles.cardButton} color='rgba(0, 0, 0, 0)' contentContainerStyle={{height: "100%"}} uppercase={false}/>
-                    </View>
-                </View>
+                <ImageCard image={require('../images/igrejaMatriz.png')} text='Pontos turísticos'/>
+                <ImageCard image={require('../images/itapajePlaca.png')} text='Lojas'/>
+                <ImageCard image={require('../images/artesanato.png')} text='Artesões'/>
             </View>
         </View>
     );
