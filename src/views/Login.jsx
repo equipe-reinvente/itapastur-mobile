@@ -11,6 +11,7 @@ const Login = ({ navigation }) => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [emailErrorMessage, setEmailErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const { login } = GetContext();
 
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
@@ -39,15 +40,19 @@ const Login = ({ navigation }) => {
           "email": email,
           "password": password
         }
+
+        setLoading(true);
     
         try {
           const response = await axios.post("https://itapastur-api.fly.dev/login", data);
           if (response.status === 200) {
-            login(response.token);
+            login(response['data']['token']);
+            setLoading(false);
             navigation.navigate('Tabs');
           } else {
             let error = response.data["error"];
             setEmailErrorMessage(error);
+            setLoading(false);
           }
         } catch (error) {
           Toast.show({
@@ -56,6 +61,7 @@ const Login = ({ navigation }) => {
             text1: error.message,
             visibilityTime: 2000,
           });
+          setLoading(false);
         }
     };
 
@@ -111,11 +117,12 @@ const Login = ({ navigation }) => {
                         )}
                         onPress={togglePasswordVisibility}
                     />
-                    )}
+                )}
             />
             <Text style={styles.hyperlinkStyle} onPress={forgotPasswordScreenLink}>Esqueceu sua senha?</Text>
             <View style={{ height: 48, width: 350, marginTop: 30, justifyContent: 'center' }}>
-                <Button titleStyle={styles.buttonText} title="Login" color='#1DAF6E' contentContainerStyle={{ height: 48 }} onPress={makeLoginRequest} />
+                <Button titleStyle={styles.buttonText} title="Login" color='#1DAF6E' contentContainerStyle={{ height: 48 }} onPress={makeLoginRequest} loading={loading}
+                  />
             </View>
 
             <View style={styles.dividerContainer}>

@@ -5,10 +5,10 @@ import { GetContext } from '../components/AppContext';
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
-  const authToken = GetContext();
+  const {authToken} = GetContext();
 
   const handleStartButton = () => {
-    if (authToken !== "") {
+    if (authToken !== null && authToken !== "") {
       navigation.navigate('Tabs');
     } else {
       navigation.navigate('Login');
