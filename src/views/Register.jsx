@@ -10,6 +10,7 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login } = GetContext();
 
 
@@ -43,14 +44,19 @@ const Register = ({ navigation }) => {
       "email": email,
       "password": password
     }
+
+    setLoading(true);
+
     try {
       const response = await axios.post("https://itapastur-api.fly.dev/users", data);
       if (response.status === 200) {
-        login(response.token);
+        login(response['data']['token']);
+        setLoading(false);
         navigation.navigate('Tabs');
       } else {
         let error = response.data["error"];
         setEmailErrorMessage(error);
+        setLoading(false);
       }
     } catch (error) {
       Toast.show({
@@ -59,6 +65,7 @@ const Register = ({ navigation }) => {
         text1: error.message,
         visibilityTime: 2000,
       });
+      setLoading(false);
     }
   };
 
@@ -132,7 +139,7 @@ const Register = ({ navigation }) => {
 
 
       <View style={styles.buttonContainerRegister}>
-        <Button titleStyle={styles.buttonText} title="Cadastrar" color='#1DAF6E' contentContainerStyle={{ height: 48 }} onPress={makeLoginRequest} />
+        <Button titleStyle={styles.buttonText} title="Cadastrar" color='#1DAF6E' contentContainerStyle={{ height: 48 }} onPress={makeLoginRequest} loading={loading}/>
       </View>
 
       <View style={styles.dividerContainer}>
