@@ -32,7 +32,7 @@ const Profile = ({ navigation }) => {
             <View style={styles.secondaryButtonsContainer}>
                     <SecondaryButton title='Ajuda' icon='help-circle' color='gray'/>
                     <SecondaryButton title='Configurações' icon='cog' color='gray'/>
-                    <SecondaryButton title='Sugerir lugares' icon='store-plus' color='gray' hasDivider={false}/>
+                    <SecondaryButton title='Sugerir lugares' icon='store-plus' color='gray'/>
                     <SecondaryButton title='Sair' icon='logout' color='rgba(255, 0, 0, 0.4)' hasDivider={false}/>
             </View>
         </View>
