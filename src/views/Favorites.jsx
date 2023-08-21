@@ -50,7 +50,7 @@ const Favorites = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.title}>Notificações</Text>
+                <Text style={styles.title}>Favoritos</Text>
                 <IconButton style={styles.backButton} icon={
                 props => (
                     <MaterialCommunityIcons
