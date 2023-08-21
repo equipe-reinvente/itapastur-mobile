@@ -18,6 +18,10 @@ const MainProfile = ({ navigation }) => {
         navigation.navigate("Notifications");
     };
 
+    const openFavoritesMenu = () => {
+        navigation.navigate("Favorites");
+    };
+
     const handleLogout = () => {
         logout();
         navigation.navigate("Login");
@@ -45,12 +49,11 @@ const MainProfile = ({ navigation }) => {
                         size={30}
                         color="black"
                     />
-                )} style={styles.settingsButton}>
-                </IconButton>
+                )} style={styles.settingsButton}/>
             </View>
             <ConfigButton title='Empreendimentos' subtilte='Crie e gerencie seus negócios!' icon='briefcase' callback={openEnterprisesMenu}/>
             <ConfigButton title='Notificações' subtilte='Minha central de notificações' icon='bell-ring' callback={openNotificationsMenu}/>
-            <ConfigButton title='Favoritos' subtilte='Meus locais favoritos' icon='heart'/>
+            <ConfigButton title='Favoritos' subtilte='Meus locais favoritos' icon='heart' callback={openFavoritesMenu}/>
             <View style={styles.secondaryButtonsContainer}>
                     <SecondaryButton title='Ajuda' icon='help-circle' color='gray'/>
                     <SecondaryButton title='Configurações' icon='cog' color='gray'/>

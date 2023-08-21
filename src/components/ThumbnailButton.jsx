@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from "@react-native-material/core";
+import { Button, IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { GetContext } from '../components/AppContext';
@@ -9,7 +9,12 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         title = "",
                         subtitle = "",
                         image=require('../images/imagePlaceholder.png'),
-                        icon = null}, props) => {
+                        icon = null,
+                        iconColor = 'black',
+                        isIconClickable=false,
+                        iconCallback=() => {},
+                        id = -1}, 
+                        props) => {
 
     const styles = StyleSheet.create({
         container: style,
@@ -52,6 +57,11 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
         arrow: {
             position: 'relative',
             left: -50,
+        },
+        iconButton: {
+            position: 'relative',
+            top: -65,
+            left: 320,
         }
     });
 
@@ -63,27 +73,58 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                 <Text>{subtitle}</Text>
             </View>
             <View style={styles.overlayContainer}>
-                {icon !== null && <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
-                    contentContainerStyle={styles.buttonContainer} 
-                    pressableContainerStyle={styles.buttonPressableContainer}
-                    disableElevation
-                    onPress={callback}
-                    trailing={
-                        props => (
-                            <MaterialCommunityIcons
-                                name={icon}
-                                size={40}
-                                color="#1DAF6E"
-                            />
-                    )}
-                    trailingContainerStyle={styles.arrow}/>}
-                {icon === null && <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
-                    contentContainerStyle={styles.buttonContainer} 
-                    pressableContainerStyle={styles.buttonPressableContainer}
-                    disableElevation
-                    onPress={callback(props.key)}
-                    />}
-                
+                {!isIconClickable && 
+                    <View>
+                        {icon !== null && 
+                            <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                                contentContainerStyle={styles.buttonContainer} 
+                                pressableContainerStyle={styles.buttonPressableContainer}
+                                disableElevation
+                                onPress={() => callback(id)}
+                                trailing={
+                                    props => (
+                                        <MaterialCommunityIcons
+                                            name={icon}
+                                            size={40}
+                                            color={iconColor}
+                                        />
+                                )}
+                                trailingContainerStyle={styles.arrow}/>}
+                        {icon === null && 
+                            <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                                contentContainerStyle={styles.buttonContainer} 
+                                pressableContainerStyle={styles.buttonPressableContainer}
+                                disableElevation
+                                onPress={() => callback(id)}
+                            />}
+                    </View>}
+                {isIconClickable && 
+                    <View>
+                        {icon !== null &&
+                            <>
+                                <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                                    contentContainerStyle={styles.buttonContainer} 
+                                    pressableContainerStyle={styles.buttonPressableContainer}
+                                    disableElevation
+                                    onPress={() => callback(id)}
+                                    trailingContainerStyle={styles.arrow}/>
+                                <IconButton icon={() => (
+                                    <MaterialCommunityIcons
+                                        name={icon}
+                                        size={40}
+                                        color={iconColor}
+                                    />
+                                )} style={styles.iconButton}
+                                onPress={() => iconCallback(id)}/>
+                            </>}
+                        {icon === null && 
+                            <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                                contentContainerStyle={styles.buttonContainer} 
+                                pressableContainerStyle={styles.buttonPressableContainer}
+                                disableElevation
+                                onPress={() => callback(id)}
+                            />}
+                    </View>}
             </View>
         </View>
     );
