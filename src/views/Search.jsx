@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
-import { TextInput, IconButton, Button, Divider } from "@react-native-material/core";
+import { View, Text, StyleSheet } from 'react-native';
+import { TextInput, IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ImageCard from '../components/ImageCard';
@@ -10,8 +10,12 @@ const Search = ({ navigation }) => {
     const [searchCategory, setSearchCategory] = useState("Todas as Categorias")
 
     const searchByName = () => {
+        
+    };
 
-    }
+    const getSearchItems = () => {
+
+    };
 
     return (
         <View style={styles.container}>

@@ -2,13 +2,22 @@ import { View, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Button, Text } from "@react-native-material/core";
 import { GetContext } from '../components/AppContext';
+import * as SecureStore from 'expo-secure-store';
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
-  const {authToken} = GetContext();
+  const {login} = GetContext();
 
-  const handleStartButton = () => {
-    if (authToken !== null && authToken !== "") {
+  const handleStartButton = async () => {
+    let userData = null;
+    try {
+      userData = await SecureStore.getItemAsync('userData');
+
+      login(userData);
+      console.log(userData);
+    } catch {}
+
+    if (userData['token'] !== null && userData['token'] !== "") {
       navigation.navigate('Tabs');
     } else {
       navigation.navigate('Login');
