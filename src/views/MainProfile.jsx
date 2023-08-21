@@ -14,6 +14,10 @@ const MainProfile = ({ navigation }) => {
         navigation.navigate("Enterprises");
     };
 
+    const openNotificationsMenu = () => {
+        navigation.navigate("Notifications");
+    }
+
     const setUsernameText = () => {
         console.log(user);
         if (user['name'] !== "" && user['name'] !== null) setUsername(user['name']);
@@ -40,7 +44,7 @@ const MainProfile = ({ navigation }) => {
                 </IconButton>
             </View>
             <ConfigButton title='Empreendimentos' subtilte='Crie e gerencie seus negócios!' icon='briefcase' callback={openEnterprisesMenu}/>
-            <ConfigButton title='Notificações' subtilte='Minha central de notificações' icon='bell-ring'/>
+            <ConfigButton title='Notificações' subtilte='Minha central de notificações' icon='bell-ring' callback={openNotificationsMenu}/>
             <ConfigButton title='Favoritos' subtilte='Meus locais favoritos' icon='heart'/>
             <View style={styles.secondaryButtonsContainer}>
                     <SecondaryButton title='Ajuda' icon='help-circle' color='gray'/>

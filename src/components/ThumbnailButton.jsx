@@ -9,7 +9,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         title = "",
                         subtitle = "",
                         image=require('../images/imagePlaceholder.png'),
-                        icon = null}) => {
+                        icon = null}, props) => {
 
     const styles = StyleSheet.create({
         container: style,
@@ -81,7 +81,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                     contentContainerStyle={styles.buttonContainer} 
                     pressableContainerStyle={styles.buttonPressableContainer}
                     disableElevation
-                    onPress={callback}
+                    onPress={callback(props.key)}
                     />}
                 
             </View>
