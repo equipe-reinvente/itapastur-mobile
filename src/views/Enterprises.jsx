@@ -26,7 +26,7 @@ const Enterprises = ({ navigation }) => {
 
     const renderEnterprises = (item, key) => {
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key}/>
+            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} icon='chevron-right'/>
         );
     };
 
