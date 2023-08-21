@@ -8,7 +8,8 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         callback = () => {},
                         title = "",
                         subtitle = "",
-                        image=require('../images/imagePlaceholder.png')}) => {
+                        image=require('../images/imagePlaceholder.png'),
+                        icon = null}, props) => {
 
     const styles = StyleSheet.create({
         container: style,
@@ -62,7 +63,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                 <Text>{subtitle}</Text>
             </View>
             <View style={styles.overlayContainer}>
-                <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                {icon !== null && <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
                     contentContainerStyle={styles.buttonContainer} 
                     pressableContainerStyle={styles.buttonPressableContainer}
                     disableElevation
@@ -70,12 +71,19 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                     trailing={
                         props => (
                             <MaterialCommunityIcons
-                                name="chevron-right"
+                                name={icon}
                                 size={40}
                                 color="#1DAF6E"
                             />
                     )}
-                    trailingContainerStyle={styles.arrow}/>
+                    trailingContainerStyle={styles.arrow}/>}
+                {icon === null && <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
+                    contentContainerStyle={styles.buttonContainer} 
+                    pressableContainerStyle={styles.buttonPressableContainer}
+                    disableElevation
+                    onPress={callback(props.key)}
+                    />}
+                
             </View>
         </View>
     );

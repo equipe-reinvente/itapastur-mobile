@@ -7,39 +7,35 @@ import { GetContext } from '../components/AppContext';
 
 import ThumbnailButton from '../components/ThumbnailButton';
 
-const Enterprises = ({ navigation }) => {
+const Notifications = ({ navigation }) => {
 
-    const [enterpriseList, setEnterpriseList] = useState([]);
+    const [notificationList, setNotificationList] = useState([]);
 
-    const openSelectedEnterprise = (key) => {
+    const openSelectedNotification = (key) => {
 
     };
-
-    const createEnterprise = () => {
-        
-    }
 
     const previousPage = () => {
         navigation.navigate("MainProfile");
     }
 
-    const getEnterpriseList = async () => {
-        const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1'};
-        setEnterpriseList([...enterpriseList, newItem]);
+    const getNotificationList = async () => {
+        const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1'};
+        setNotificationList([...notificationList, newItem]);
     };
 
-    const renderEnterprises = (item, key) => {
+    const renderNotifications = (item, key) => {
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} icon='chevron-right' callback={openSelectedEnterprise}/>
+            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} callback={openSelectedNotification}/>
         );
     };
 
-    useEffect(getEnterpriseList, []);
+    useEffect(getNotificationList, []);
 
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.title}>Seus Empreendimentos</Text>
+                <Text style={styles.title}>Notificações</Text>
                 <IconButton style={styles.backButton} icon={
                 props => (
                     <MaterialCommunityIcons
@@ -52,16 +48,8 @@ const Enterprises = ({ navigation }) => {
             </View>
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never'>
-                    {enterpriseList.map(renderEnterprises)}
+                    {notificationList.map(renderNotifications)}
                 </ScrollView>
-                <View style={styles.createButtonContainer}>
-                    <Button titleStyle={styles.createButtonText} 
-                        style={{width: 326}} 
-                        title="cadastrar empreendimento" 
-                        color='#1DAF6E' 
-                        contentContainerStyle={styles.createButton} 
-                        onPress={createEnterprise}/>
-                </View>
             </View>
             
         </View>
@@ -122,4 +110,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Enterprises;
+export default Notifications;
