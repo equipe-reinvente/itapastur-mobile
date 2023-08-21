@@ -20,13 +20,13 @@ const Notifications = ({ navigation }) => {
     }
 
     const getNotificationList = async () => {
-        const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1'};
+        const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1', 'id': notificationList.length};
         setNotificationList([...notificationList, newItem]);
     };
 
     const renderNotifications = (item, key) => {
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} callback={openSelectedNotification}/>
+            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} callback={openSelectedNotification} id={item['id']}/>
         );
     };
 

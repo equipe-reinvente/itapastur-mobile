@@ -7,39 +7,50 @@ import { GetContext } from '../components/AppContext';
 
 import ThumbnailButton from '../components/ThumbnailButton';
 
-const Enterprises = ({ navigation }) => {
+const Favorites = ({ navigation }) => {
 
-    const [enterpriseList, setEnterpriseList] = useState([]);
+    const [favoritesList, setFavoritesList] = useState([]);
 
-    const openSelectedEnterprise = (key) => {
+    const openSelectedFavorites = (key) => {
 
     };
 
-    const createEnterprise = () => {
-        
-    }
+    const deleteSelectedFavorites = (key) => {
+        console.log(key);
+        if (key !== null && key > -1) {
+            const newList = favoritesList.filter(item => (item['id'] !== key));
+            setFavoritesList(newList);
+        }
+    };
 
     const previousPage = () => {
         navigation.navigate("MainProfile");
     }
 
-    const getEnterpriseList = async () => {
-        const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};
-        setEnterpriseList([...enterpriseList, newItem]);
+    const getfavoritesList = async () => {
+        const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': favoritesList.length};
+        setFavoritesList([...favoritesList, newItem]);
     };
 
-    const renderEnterprises = (item, key) => {
+    const renderFavorites = (item, key) => {
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} icon='chevron-right' callback={openSelectedEnterprise} iconColor='#1DAF6E' id={item['id']}/>
+            <ThumbnailButton title={item['title']} 
+            subtitle={item['subtitle']}
+            key={key} 
+            callback={openSelectedFavorites} 
+            icon='heart-off' 
+            isIconClickable={true} 
+            iconCallback={deleteSelectedFavorites}
+            id={item['id']}/>
         );
     };
 
-    useEffect(getEnterpriseList, []);
+    useEffect(getfavoritesList, []);
 
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.title}>Seus Empreendimentos</Text>
+                <Text style={styles.title}>Notificações</Text>
                 <IconButton style={styles.backButton} icon={
                 props => (
                     <MaterialCommunityIcons
@@ -52,16 +63,8 @@ const Enterprises = ({ navigation }) => {
             </View>
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never'>
-                    {enterpriseList.map(renderEnterprises)}
+                    {favoritesList.map(renderFavorites)}
                 </ScrollView>
-                <View style={styles.createButtonContainer}>
-                    <Button titleStyle={styles.createButtonText} 
-                        style={{width: 326}} 
-                        title="cadastrar empreendimento" 
-                        color='#1DAF6E' 
-                        contentContainerStyle={styles.createButton} 
-                        onPress={createEnterprise}/>
-                </View>
             </View>
             
         </View>
@@ -122,4 +125,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Enterprises;
+export default Favorites;
