@@ -12,12 +12,12 @@ const Profile = ({ navigation }) => {
             <Stack.Screen
                 name="MainProfile"
                 component={MainProfile}
-                options={{ title: "MainProfile", headerShown: false }}
+                options={{ title: "MainProfile", headerShown: false, animation: 'slide_from_right' }}
             />
             <Stack.Screen
                 name="Enterprises"
                 component={Enterprises}
-                options={{ title: "Enterprises", headerShown: false }}
+                options={{ title: "Enterprises", headerShown: false, animation: 'slide_from_right'}}
             />
         </Stack.Navigator>
     );

@@ -9,9 +9,11 @@ const WelcomeView = ({ navigation }) => {
   const {login} = GetContext();
 
   const handleStartButton = async () => {
-    let userData = null;
+    let userData = {'token': null};
     try {
       userData = await SecureStore.getItemAsync('userData');
+
+      userData = JSON.parse(userData);
 
       login(userData);
       console.log(userData);
