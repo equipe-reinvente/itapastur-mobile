@@ -7,7 +7,7 @@ import SecondaryButton from '../components/SecondaryButton';
 import { useEffect, useState } from 'react';
 
 const MainProfile = ({ navigation }) => {
-    const { profilePhoto, user } = GetContext();
+    const { profilePhoto, user, logout } = GetContext();
     const [username, setUsername] = useState("");
 
     const openEnterprisesMenu = () => {
@@ -16,7 +16,12 @@ const MainProfile = ({ navigation }) => {
 
     const openNotificationsMenu = () => {
         navigation.navigate("Notifications");
-    }
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigation.navigate("Login");
+    };
 
     const setUsernameText = () => {
         console.log(user);
@@ -50,7 +55,7 @@ const MainProfile = ({ navigation }) => {
                     <SecondaryButton title='Ajuda' icon='help-circle' color='gray'/>
                     <SecondaryButton title='Configurações' icon='cog' color='gray'/>
                     <SecondaryButton title='Sugerir lugares' icon='store-plus' color='gray' hasDivider={false}/>
-                    <SecondaryButton title='Sair' icon='logout' color='rgba(255, 0, 0, 0.4)' hasDivider={false}/>
+                    <SecondaryButton title='Sair' icon='logout' color='rgba(255, 0, 0, 0.4)' hasDivider={false} callback={handleLogout}/>
             </View>
         </View>
     );
