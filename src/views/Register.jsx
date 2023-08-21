@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { GetContext } from '../components/AppContext';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -50,7 +51,8 @@ const Register = ({ navigation }) => {
     try {
       const response = await axios.post("https://itapastur-api.fly.dev/users", data);
       if (response.status === 200) {
-        login(response['data']['token']);
+        await SecureStore.setItemAsync('userData', JSON.stringify(response['data']));
+        login(response['data']);
         setLoading(false);
         navigation.navigate('Tabs');
       } else {
