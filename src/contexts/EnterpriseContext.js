@@ -5,7 +5,7 @@ const EnterpriseContext = createContext();
 export const EnterpriseProvider = ({ children }) => {
   const [enterpriseData, setEnterpriseData] = useState({
     name: "",
-    category: "",
+    category: "Ponto Turístico",
     description: "",
     phoneNumber: "",
     streetAddress: "",
