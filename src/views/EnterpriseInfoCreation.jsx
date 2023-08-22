@@ -41,64 +41,66 @@ const EnterpriseInfoCreation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>Crie seu Empreendimento</Text>
-        <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
+      <View style={styles.inputsContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>Crie seu Empreendimento</Text>
+          <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
+        </View>
+
+        <TextInput
+          label="Nome"
+          variant="outlined"
+          autoCapitalize='none'
+          onChangeText={onChangeNameInput}
+          color='gray'
+          value={enterpriseData.name}
+          placeholder="Açaí da Pedra do Frade"
+          style={styles.input}
+        />
+
+        <SelectDropdown
+          data={categories}
+          defaultValue={categories[0]}
+          defaultButtonText={categories[0]}
+          onSelect={(selectedItem) => onSelectCategory(selectedItem)}
+          buttonStyle={styles.selectDropdown}
+          buttonTextStyle={styles.selectDropdownText}
+          renderDropdownIcon={isDropdownOpen => (
+            <MaterialCommunityIcons
+              name={ isDropdownOpen ? 'menu-up' : 'menu-down' }
+              size={25}
+              color={"#8c8c8c"}
+            />
+          )}
+          dropdownStyle={styles.dropdown}
+          rowTextStyle={styles.selectDropdownText}
+        />
+
+        <TextInput
+          label="Descrição"
+          variant="outlined"
+          autoCapitalize='none'
+          onChangeText={onChangeDescriptionInput}
+          color='gray'
+          value={enterpriseData.description}
+          multiline
+          numberOfLines={8}
+          textAlignVertical="top"
+          placeholder="Venda seu peixe aqui! :)"
+          style={styles.input}
+        />
+
+        <TextInput
+          label="Número de Telefone"
+          variant="outlined"
+          autoCapitalize='none'
+          onChangeText={onChangePhoneNumberInput}
+          color='gray'
+          value={enterpriseData.phoneNumber}
+          placeholder="+ 55 85 99999-9999"
+          style={styles.input}
+        />
       </View>
-
-      <TextInput
-        label="Nome"
-        variant="outlined"
-        autoCapitalize='none'
-        onChangeText={onChangeNameInput}
-        color='gray'
-        value={enterpriseData.name}
-        placeholder="Açaí da Pedra do Frade"
-        style={styles.input}
-      />
-
-      <SelectDropdown
-        data={categories}
-        defaultValue={categories[0]}
-        defaultButtonText={categories[0]}
-        onSelect={(selectedItem) => onSelectCategory(selectedItem)}
-        buttonStyle={styles.selectDropdown}
-        buttonTextStyle={styles.selectDropdownText}
-        renderDropdownIcon={isDropdownOpen => (
-          <MaterialCommunityIcons
-            name={ isDropdownOpen ? 'menu-up' : 'menu-down' }
-            size={25}
-            color={"#8c8c8c"}
-          />
-        )}
-        dropdownStyle={styles.dropdown}
-        rowTextStyle={styles.selectDropdownText}
-      />
-
-      <TextInput
-        label="Descrição"
-        variant="outlined"
-        autoCapitalize='none'
-        onChangeText={onChangeDescriptionInput}
-        color='gray'
-        value={enterpriseData.description}
-        multiline
-        numberOfLines={8}
-        textAlignVertical="top"
-        placeholder="Venda seu peixe aqui! :)"
-        style={styles.input}
-      />
-
-      <TextInput
-        label="Número de Telefone"
-        variant="outlined"
-        autoCapitalize='none'
-        onChangeText={onChangePhoneNumberInput}
-        color='gray'
-        value={enterpriseData.phoneNumber}
-        placeholder="+ 55 85 99999-9999"
-        style={styles.input}
-      />
 
       <View style={styles.buttonContainer}>
         <Button
@@ -118,8 +120,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 20
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    marginTop: 120,
+    marginBottom: 80
   },
   textContainer: {
     marginBottom: 15,
@@ -134,6 +138,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     color: "#999999"
+  },
+  inputsContainer: {
+    marginBottom: 30
   },
   input: {
     width: 350,
