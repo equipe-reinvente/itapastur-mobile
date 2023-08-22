@@ -4,7 +4,7 @@ import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const EnterpriseInfoCreation = () => {
+const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
 
   const categories = ["Ponto Turístico", "Artesão", "Loja"];
@@ -36,6 +36,8 @@ const EnterpriseInfoCreation = () => {
       phoneNumber,
     }));
   };
+
+  const handleNextStepButton = () => navigation.navigate('EnterpriseAddressCreation');
 
   return (
     <View style={styles.container}>
@@ -104,7 +106,7 @@ const EnterpriseInfoCreation = () => {
           titleStyle={styles.buttonText}
           color="#1daf6e"
           contentContainerStyle={{height: 50}}
-          onPress={() => {}}
+          onPress={handleNextStepButton}
           style={styles.button}
         />
       </View>

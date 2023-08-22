@@ -8,6 +8,7 @@ import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
 import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
+import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
 
@@ -48,6 +49,14 @@ export default function App() {
               name="EnterpriseInfoCreation"
               component={EnterpriseInfoCreation}
               options={{ title: "EnterpriseInfoCreation", headerShown: false }}
+            />
+            <Stack.Screen
+              name="EnterpriseAddressCreation"
+              component={EnterpriseAddressCreation}
+              options={{
+                title: "EnterpriseAddressCreation",
+                headerShown: false,
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>
