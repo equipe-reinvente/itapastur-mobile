@@ -9,9 +9,9 @@ const WelcomeView = ({ navigation }) => {
 
   const handleStartButton = () => {
     if (authToken !== null && authToken !== "") {
-      navigation.navigate('CreateEnterprise');
+      navigation.navigate('EnterpriseInfoCreation');
     } else {
-      navigation.navigate('CreateEnterprise');
+      navigation.navigate('EnterpriseInfoCreation');
     }
   }
 

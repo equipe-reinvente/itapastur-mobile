@@ -7,7 +7,7 @@ import Welcome from "./src/views/Welcome";
 import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
-import CreateEnterprise from "./src/views/CreateEnterprise";
+import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
 
@@ -45,9 +45,9 @@ export default function App() {
               options={{ title: "Register", headerShown: false }}
             />
             <Stack.Screen
-              name="CreateEnterprise"
-              component={CreateEnterprise}
-              options={{ title: "CreateEnterprise", headerShown: false }}
+              name="EnterpriseInfoCreation"
+              component={EnterpriseInfoCreation}
+              options={{ title: "EnterpriseInfoCreation", headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>

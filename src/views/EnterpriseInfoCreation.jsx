@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, TextInput, Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CreateEnterprise = () => {
+const EnterpriseInfoCreation = () => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
 
   const categories = ["Ponto Turístico", "Artesão", "Loja"];
@@ -168,4 +167,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreateEnterprise;
+export default EnterpriseInfoCreation;
