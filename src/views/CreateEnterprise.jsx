@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, TextInput, Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const CreateEnterprise = () => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -57,9 +59,19 @@ const CreateEnterprise = () => {
       <SelectDropdown
         data={categories}
         defaultValue={categories[0]}
+        defaultButtonText={categories[0]}
         onSelect={(selectedItem) => onSelectCategory(selectedItem)}
         buttonStyle={styles.selectDropdown}
+        buttonTextStyle={styles.selectDropdownText}
+        renderDropdownIcon={isDropdownOpen => (
+          <MaterialCommunityIcons
+            name={ isDropdownOpen ? 'menu-up' : 'menu-down' }
+            size={25}
+            color={"#8c8c8c"}
+          />
+        )}
         dropdownStyle={styles.dropdown}
+        rowTextStyle={styles.selectDropdownText}
       />
 
       <TextInput
@@ -97,8 +109,6 @@ const CreateEnterprise = () => {
           style={styles.button}
         />
       </View>
-
-      <Text>{enterpriseData.name}</Text>
     </View>
   );
 }
@@ -138,8 +148,12 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginBottom: 10
   },
+  selectDropdownText: {
+    textAlign: "left"
+  },
   dropdown: {
     borderRadius: 3,
+    marginTop: -53,
   },
   buttonContainer: {
     marginTop: 50
