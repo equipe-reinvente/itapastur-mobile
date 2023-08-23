@@ -1,4 +1,3 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Enterprises from './Enterprises';
@@ -9,12 +8,18 @@ import Favorites from './Favorites';
 const Stack = createNativeStackNavigator();
 
 const Profile = () => {
+
     return (
         <Stack.Navigator>
             <Stack.Screen
                 name="MainProfile"
                 component={MainProfile}
                 options={{ title: "MainProfile", headerShown: false, animation: 'slide_from_right' }}
+            />
+            <Stack.Screen
+                name="Favorites"
+                component={Favorites}
+                options={{ title: "Favorites", headerShown: false, animation: 'slide_from_right'}}
             />
             <Stack.Screen
                 name="Enterprises"
@@ -25,11 +30,6 @@ const Profile = () => {
                 name="Notifications"
                 component={Notifications}
                 options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
-            />
-            <Stack.Screen
-                name="Favorites"
-                component={Favorites}
-                options={{ title: "Favorites", headerShown: false, animation: 'slide_from_right'}}
             />
         </Stack.Navigator>
     );

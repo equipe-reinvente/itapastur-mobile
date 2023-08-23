@@ -20,7 +20,7 @@ const Enterprises = ({ navigation }) => {
     }
 
     const previousPage = () => {
-        navigation.navigate("MainProfile");
+        navigation.goBack();
     }
 
     const getEnterpriseList = async () => {
