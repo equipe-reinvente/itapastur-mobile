@@ -23,7 +23,7 @@ const Enterprises = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const getEnterpriseList = async () => {
+    const getEnterpriseList = () => {
         const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};
         setEnterpriseList([...enterpriseList, newItem]);
     };
