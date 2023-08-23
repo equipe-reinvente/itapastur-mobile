@@ -1,8 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button, IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState } from 'react';
-import { GetContext } from '../components/AppContext';
 
 const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100%", backgroundColor: '#D9D9D9', marginBottom: 5}, 
                         callback = () => {},

@@ -8,7 +8,7 @@ import Favorites from './Favorites';
 
 const Stack = createNativeStackNavigator();
 
-const Profile = ({ navigation }) => {
+const Profile = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
