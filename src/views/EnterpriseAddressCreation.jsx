@@ -57,6 +57,7 @@ const EnterpriseAddressCreation = ({ navigation }) => {
           color='gray'
           value={enterpriseData.addressNumber}
           placeholder="10"
+          keyboardType="numeric"
           style={styles.input}
         />
 
