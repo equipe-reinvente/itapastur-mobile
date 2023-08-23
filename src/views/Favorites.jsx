@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { IconButton, Button } from "@react-native-material/core";
+import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

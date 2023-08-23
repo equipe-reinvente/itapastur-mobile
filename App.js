@@ -7,6 +7,7 @@ import Welcome from "./src/views/Welcome";
 import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from './src/views/Register';
+import Notifications from "./src/views/Notifications";
 import { AuthProvider } from "./src/components/AppContext";
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +42,11 @@ export default function App() {
             component={Register}
             options={{ title: "Register", headerShown: false }}
           />
+          <Stack.Screen
+                name="Notifications"
+                component={Notifications}
+                options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
+            />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
