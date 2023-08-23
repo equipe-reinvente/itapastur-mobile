@@ -13,7 +13,7 @@ const SecondaryButton = ({title = "",
 
     const styles = StyleSheet.create({
         container: style,
-        tilte: {
+        title: {
             fontWeight: 'bold',
             fontSize: 16,
             color: color
@@ -71,7 +71,7 @@ const SecondaryButton = ({title = "",
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.tilte}>{title}</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             {hasDivider && <Divider style={styles.divider}/>}
             <View style={styles.overlayContainer}>

@@ -1,30 +1,30 @@
 import { Button } from "@react-native-material/core";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Image, StyleSheet, Text } from "react-native";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import { View, Image, StyleSheet, Text, ImageBackground } from "react-native";
 
 const PlaceCard = ({ image=require("../images/imagePlaceholder.png"), 
-                            style={position: "relative", borderRadius: 15, height: 150, width: 150},
+                            style={position: "relative", borderRadius: 15, height: 150, width: 150, overflow: 'hidden',},
                             likes = 0,
-                            title = "unknown" }) => {
+                            title = "Unknown",
+                            id = 0,
+                            callback = () => {} }) => {
   const [likeContainerSize, setLikeContainerSize] = useState(25);
   const [likesCountText, setLikesCountText] = useState(likes + "");
 
   const styles = StyleSheet.create({
     container: style,
     image: {
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        borderRadius: 20
+        width: style['width'],
+        height: style['height'],
+        borderRadius: style['borderRadius'],
     },
     overlayContainer: {
         position: 'absolute', 
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        width: '100%',
-        height: '100%',
+        width: style['width'],
+        height: style['height'],
         backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     gradient: {
@@ -41,33 +41,24 @@ const PlaceCard = ({ image=require("../images/imagePlaceholder.png"),
         width: likeContainerSize,
         top: -140,
         left: 10,
-        borderRadius: 20
+        borderRadius: 20,
     },  
     button: {
         position: 'relative',
-        height: '100%',
-        width: '100%',
-        top: -133,
-        borderRadius: 15
-    },
-    buttonContainer: {
-        position: 'relative',
-        height: '100%',
-        width: '100%',
-        top: -52,
-        borderRadius: 15
+        width: "100%",
+        height: "100%",
+        top: -150,
+        borderRadius: style['borderRadius'],
     },
     buttonContentContainer: {
         position: 'relative',
         height: '100%',
-        width: '100%',
-        borderRadius: 15
+        borderRadius: style['borderRadius'],
     },
     buttonPressable: {
         position: 'relative',
         height: '100%',
         width: '100%',
-        borderRadius: 15
     },
     likesText: {
         position: 'relative',
@@ -108,7 +99,7 @@ const PlaceCard = ({ image=require("../images/imagePlaceholder.png"),
     <View style={styles.container}>
         <Image source={image} style={styles.image}/>
         <View style={styles.overlayContainer}>
-            <Image source={require("../images/gradient2.png")} style={styles.gradient} />
+            <Image source={require("../images/gradient2.png")} style={styles.gradient}/>
             <View style={styles.likesBackground}>
                 <MaterialCommunityIcons
                     name={"heart"}
@@ -121,13 +112,13 @@ const PlaceCard = ({ image=require("../images/imagePlaceholder.png"),
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>{title}</Text>
             </View>
-            <View style={styles.buttonContainer}>
-                <Button style={styles.button} 
-                    contentContainerStyle={styles.buttonContentContainer} 
-                    pressableContainerStyle={styles.buttonPressable} 
-                    color='rgba(255, 255, 255, 0)'
-                    disableElevation />
-            </View>
+        </View>
+        <View style={style.overlayContainer}>
+            <Button style={styles.button} 
+                contentContainerStyle={styles.buttonContentContainer} 
+                color='rgba(0, 0, 0, 0)'
+                disableElevation 
+                onPress={() => callback(id)}/>
         </View>
     </View>
   );

@@ -19,7 +19,7 @@ const Notifications = ({ navigation }) => {
         navigation.navigate("MainProfile");
     }
 
-    const getNotificationList = async () => {
+    const getNotificationList = () => {
         const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1', 'id': notificationList.length};
         setNotificationList([...notificationList, newItem]);
     };

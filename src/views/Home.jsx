@@ -5,6 +5,7 @@ import EventImageCarousel from '../components/EventImageCarousel';
 import { IconButton } from '@react-native-material/core';
 import { useEffect, useState } from 'react';
 import PlaceCard from '../components/PlaceCard';
+import CircularImageCard from '../components/CircularImageCard';
 
 const images = [
     { source: require("../images/eventPlaceholder.png") },
@@ -27,12 +28,28 @@ const Home = ({ navigation }) => {
     const [notificationCount, setNotificationCount] = useState(0);
     const [notificationCountText, setNotificationCountText] = useState("");
     const [notificationCountBackgroundSize, setNotificationCountBackgroundSize] = useState(10);
+    const [trendingPlaces, setTrendingPlaces] = useState([{'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 0},
+                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 1},
+                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 2},
+                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 3}]);
+    const [newPlaces, setNewPlaces] = useState([{'title': "Shopping Pães", 'id': 4},
+                                                {'title': "Shopping Pães", 'id': 5},
+                                                {'title': "Shopping Pães", 'id': 6},
+                                                {'title': "Shopping Pães", 'id': 7},]);
+    const [artisansPlaces, setArtisansPlaces] = useState([{'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 8},
+                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 9},
+                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 10},
+                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 11}]);
+    const [stores, setStores] = useState([{'title': "Shopping Pães", 'id': 0},
+                                                {'title': "Shopping Pães", 'id': 0},
+                                                {'title': "Shopping Pães", 'id': 0},
+                                                {'title': "Shopping Pães", 'id': 0},]);
 
     const styles = StyleSheet.create({
         container: {
+            position: 'relative',
+            width: '100%',
             flex: 1,
-            padding: 20,
-            paddingRight: 0,
             alignItems: 'center'
         },
         logo: {
@@ -48,7 +65,8 @@ const Home = ({ navigation }) => {
         header: {
             position: 'relative',
             alignItems: 'center',
-            height: 90
+            height: 90,
+            marginTop: 10
         },
         bellIconButton: {
             position: 'relative',
@@ -83,7 +101,7 @@ const Home = ({ navigation }) => {
             left: 150,
             top: -60
         },
-        trendingContainer: {
+        imageCardContainer: {
             position: "relative",
             alignItems: 'flex-start',
             width: '100%',
@@ -101,33 +119,69 @@ const Home = ({ navigation }) => {
         },
         scrollViewContainer: {
             position: 'relative',
-            alignItems: 'flex-start',
-            width: '100%',
-        },
-        hyperlinkStyle: {
-            position: 'relative',
-            color: '#1DAF6E',
-            marginRight: 2,
-            left: "74%",
-            top: -23,
+            height: "100%",
+            width: "stretch",
+            paddingBottom: 160,
         },
         placeCardStyle: {
-            position: "relative", 
+            position: "relative",
             borderRadius: 15, 
             height: 150, 
             width: 150,
-            marginRight: 40,
-            marginBottom: 40
+            marginRight: 25,
+            marginBottom: 25,
+            overflow: 'hidden',
+        },
+        circularImageCardContainer: {
+            position: "relative",
+            alignItems: 'flex-start',
+            width: 'stretch',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            marginBottom: 20
+        },
+        newPlacesComponent: {
+            position: 'relative',
+        },
+        titleContainer: {
+            position: "relative",
+            alignItems: 'flex-start',
+            flexDirection: 'row',
+            width: '100%',
+            marginBottom: 20
+        },
+        scrollView: {
+            position: 'relative',
+        },
+        contentContainer: {
+            alignItems: 'center',
+            paddingLeft: 25
         }
     });
 
     const openNotifications = () => {
-        navigation.navigate('Notifications');
+        navigation.navigate('Profile');
     };
 
     const seeMoreRedirect = () => {
 
     };
+
+    const getTrendingPlaces = () => {
+
+    };
+
+    const renderTrendingPlaces = (item) => {
+        return (
+            <PlaceCard image={item['image']} title={item['title']} style={styles.placeCardStyle} likes={item['likes']} id={item['id']} key={item['id']}/>
+        );
+    }
+
+    const renderCircularImageCard = (item) => {
+        return (
+            <CircularImageCard title={item['title']} id={item['id']} key={item['id']} image={item['image']}/>
+        );
+    }
 
     const getNotificationCount = () => {
         let count = 0;
@@ -161,24 +215,63 @@ const Home = ({ navigation }) => {
                 </View>
             </View>
             <View style={styles.scrollViewContainer}>
-                <ScrollView>
+                <ScrollView style={styles.scrollView} overScrollMode='never'>
                     <View style={styles.eventsContainer}>
                         <EventImageCarousel images={images} 
                         style={{position: 'relative', height: 102, width: 280, left: -20, borderRadius: 15}} 
                         itemInfo={itemInfo}
                         title={"Festa de Itapajé"}/>
-                    </View> 
-
-                    <Text style={styles.title}>Mais Populares</Text>
-                    <Text style={styles.hyperlinkStyle} onPress={seeMoreRedirect}>Ver mais</Text>
-                    <View style={styles.trendingContainer}>
-                        <PlaceCard image={require("../assets/PedraDoFrade.jpg")} title='Pedra do Frade' style={styles.placeCardStyle}/>
-                        <PlaceCard image={require("../assets/PedraDoFrade.jpg")} title='Pedra do Frade' style={styles.placeCardStyle}/>
-                        <PlaceCard image={require("../assets/PedraDoFrade.jpg")} title='Pedra do Frade' style={styles.placeCardStyle}/>
-                        <PlaceCard image={require("../assets/PedraDoFrade.jpg")} title='Pedra do Frade' style={styles.placeCardStyle}/>
                     </View>
 
-                    <Text style={styles.title}>Últimos lugares que você curtiu</Text>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Mais Populares</Text>
+                            <Text style={{
+                                position: 'relative',
+                                color: '#1DAF6E',
+                                right: 0,
+                                top: 6,
+                                marginLeft: "37%"
+                            }} onPress={seeMoreRedirect}>Ver mais</Text>
+                        </View>
+                        <View style={styles.imageCardContainer}>
+                            {trendingPlaces.map(renderTrendingPlaces)}
+                        </View>
+                        
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Novos lugares para experimentar</Text>
+                        </View>
+                        
+                        <View style={styles.circularImageCardContainer}>
+                            {newPlaces.map(renderCircularImageCard)}
+                        </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Artesões Locais</Text>
+                            <Text style={{
+                                position: 'relative',
+                                color: '#1DAF6E',
+                                right: 0,
+                                top: 6,
+                                marginLeft: "35%"
+                            }} onPress={seeMoreRedirect}>Ver mais</Text>
+                        </View>
+                        <View style={styles.imageCardContainer}>
+                            {artisansPlaces.map(renderTrendingPlaces)}
+                        </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>Lojas</Text>
+                            <Text style={{
+                                position: 'relative',
+                                color: '#1DAF6E',
+                                right: 0,
+                                top: 6,
+                                marginLeft: "61%"
+                            }} onPress={seeMoreRedirect}>Ver mais</Text>
+                        </View>
+                        <View style={styles.circularImageCardContainer}>
+                            {stores.map(renderCircularImageCard)}
+                        </View>
+                    </View> 
                 </ScrollView>
             </View>            
         </View>

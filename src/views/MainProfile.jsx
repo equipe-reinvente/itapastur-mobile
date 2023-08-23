@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 const MainProfile = ({ navigation }) => {
     const { profilePhoto, user, logout } = GetContext();
     const [username, setUsername] = useState("");
+    const {goToNotifications} = navigation.params;
 
     const openEnterprisesMenu = () => {
         navigation.navigate("Enterprises");
