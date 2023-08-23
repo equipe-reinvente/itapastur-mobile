@@ -26,7 +26,7 @@ const EnterpriseAddressCreation = ({ navigation }) => {
     }));
   };
 
-  const handleNextStepButton = () => navigation.navigate('EnterpriseAddressCreation');
+  const handleNextStepButton = () => navigation.navigate('EnterpriseImageCreation');
 
   return (
     <View style={styles.container}>

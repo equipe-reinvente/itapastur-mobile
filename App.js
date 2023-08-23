@@ -9,6 +9,7 @@ import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
 import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
 import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
+import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
 
@@ -57,6 +58,11 @@ export default function App() {
                 title: "EnterpriseAddressCreation",
                 headerShown: false,
               }}
+            />
+            <Stack.Screen
+              name="EnterpriseImageCreation"
+              component={EnterpriseImageCreation}
+              options={{ title: "EnterpriseImageCreation", headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
