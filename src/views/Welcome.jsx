@@ -17,13 +17,12 @@ const WelcomeView = ({ navigation }) => {
 
       login(userData);
       console.log(userData);
+      if (userData['token'] !== null && userData['token'] !== "") {
+        navigation.navigate('Tabs');
+      } else {
+        navigation.navigate('Login');
+      }
     } catch {
-      navigation.navigate('Login');
-    }
-
-    if (userData['token'] !== null && userData['token'] !== "") {
-      navigation.navigate('Tabs');
-    } else {
       navigation.navigate('Login');
     }
   }
