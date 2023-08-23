@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { Text, TextInput, Button } from "@react-native-material/core";
+import { useState } from "react";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,15 +9,19 @@ import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhone
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
+  const [nameError, setNameError] = useState("");
 
   const categories = ["Ponto Turístico", "Artesão", "Loja"];
 
   const onChangeNameInput = (name) => {
+    setNameError("");
     setEnterpriseData((prevState) => ({
       ...prevState,
       name,
     }));
   };
+
+  const isValidName = (name) => name.trim() !== "";
 
   const onSelectCategory = (category) => {
     setEnterpriseData((prevState) => ({
@@ -46,7 +51,13 @@ const EnterpriseInfoCreation = ({ navigation }) => {
     }
   };
 
-  const handleNextStepButton = () => navigation.navigate('EnterpriseAddressCreation');
+  const handleNextStepButton = () => {
+    if (!isValidName(enterpriseData.name)) {
+      setNameError("Por favor, preencha o campo Nome!");
+      return;
+    }
+    navigation.navigate('EnterpriseAddressCreation');
+  }
 
   return (
     <KeyboardAvoidingWrapper>
@@ -67,6 +78,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
             placeholder="Açaí da Pedra do Frade"
             style={styles.input}
           />
+          {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
 
           <SelectDropdown
             data={categories}
@@ -185,6 +197,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginBottom: 10,
   }
 });
 
