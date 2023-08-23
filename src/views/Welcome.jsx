@@ -17,7 +17,9 @@ const WelcomeView = ({ navigation }) => {
 
       login(userData);
       console.log(userData);
-    } catch {}
+    } catch {
+      navigation.navigate('Login');
+    }
 
     if (userData['token'] !== null && userData['token'] !== "") {
       navigation.navigate('Tabs');

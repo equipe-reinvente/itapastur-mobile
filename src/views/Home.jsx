@@ -123,7 +123,7 @@ const Home = () => {
             position: 'relative',
             height: "100%",
             width: "stretch",
-            paddingBottom: 160,
+            paddingBottom: 170,
         },
         placeCardStyle: {
             position: "relative",
