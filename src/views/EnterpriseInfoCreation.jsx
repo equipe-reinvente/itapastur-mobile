@@ -3,6 +3,7 @@ import { Text, TextInput, Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -40,79 +41,81 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   const handleNextStepButton = () => navigation.navigate('EnterpriseAddressCreation');
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>Crie seu Empreendimento</Text>
-          <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
+    <KeyboardAvoidingWrapper>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Crie seu Empreendimento</Text>
+            <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
+          </View>
+
+          <TextInput
+            label="Nome"
+            variant="outlined"
+            autoCapitalize='none'
+            onChangeText={onChangeNameInput}
+            color='gray'
+            value={enterpriseData.name}
+            placeholder="Açaí da Pedra do Frade"
+            style={styles.input}
+          />
+
+          <SelectDropdown
+            data={categories}
+            defaultValue={categories[0]}
+            defaultButtonText={categories[0]}
+            onSelect={(selectedItem) => onSelectCategory(selectedItem)}
+            buttonStyle={styles.selectDropdown}
+            buttonTextStyle={styles.selectDropdownText}
+            renderDropdownIcon={isDropdownOpen => (
+              <MaterialCommunityIcons
+                name={ isDropdownOpen ? 'menu-up' : 'menu-down' }
+                size={25}
+                color={"#8c8c8c"}
+              />
+            )}
+            dropdownStyle={styles.dropdown}
+            rowTextStyle={styles.selectDropdownText}
+          />
+
+          <TextInput
+            label="Descrição"
+            variant="outlined"
+            autoCapitalize='none'
+            onChangeText={onChangeDescriptionInput}
+            color='gray'
+            value={enterpriseData.description}
+            multiline
+            numberOfLines={8}
+            textAlignVertical="top"
+            placeholder="Venda seu peixe aqui! :)"
+            style={styles.input}
+          />
+
+          <TextInput
+            label="Número de Telefone"
+            variant="outlined"
+            autoCapitalize='none'
+            onChangeText={onChangePhoneNumberInput}
+            color='gray'
+            value={enterpriseData.phoneNumber}
+            placeholder="+ 55 85 99999-9999"
+            style={styles.input}
+          />
         </View>
 
-        <TextInput
-          label="Nome"
-          variant="outlined"
-          autoCapitalize='none'
-          onChangeText={onChangeNameInput}
-          color='gray'
-          value={enterpriseData.name}
-          placeholder="Açaí da Pedra do Frade"
-          style={styles.input}
-        />
-
-        <SelectDropdown
-          data={categories}
-          defaultValue={categories[0]}
-          defaultButtonText={categories[0]}
-          onSelect={(selectedItem) => onSelectCategory(selectedItem)}
-          buttonStyle={styles.selectDropdown}
-          buttonTextStyle={styles.selectDropdownText}
-          renderDropdownIcon={isDropdownOpen => (
-            <MaterialCommunityIcons
-              name={ isDropdownOpen ? 'menu-up' : 'menu-down' }
-              size={25}
-              color={"#8c8c8c"}
-            />
-          )}
-          dropdownStyle={styles.dropdown}
-          rowTextStyle={styles.selectDropdownText}
-        />
-
-        <TextInput
-          label="Descrição"
-          variant="outlined"
-          autoCapitalize='none'
-          onChangeText={onChangeDescriptionInput}
-          color='gray'
-          value={enterpriseData.description}
-          multiline
-          numberOfLines={8}
-          textAlignVertical="top"
-          placeholder="Venda seu peixe aqui! :)"
-          style={styles.input}
-        />
-
-        <TextInput
-          label="Número de Telefone"
-          variant="outlined"
-          autoCapitalize='none'
-          onChangeText={onChangePhoneNumberInput}
-          color='gray'
-          value={enterpriseData.phoneNumber}
-          placeholder="+ 55 85 99999-9999"
-          style={styles.input}
-        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title={"PRÓXIMA ETAPA"}
+            titleStyle={styles.buttonText}
+            color="#1daf6e"
+            contentContainerStyle={{height: 50}}
+            onPress={handleNextStepButton}
+            style={styles.button}
+          />
+        </View>
       </View>
-
-      <View style={styles.buttonContainer}>
-        <Button
-          title={"PRÓXIMA ETAPA"}
-          titleStyle={styles.buttonText}
-          color="#1daf6e"
-          contentContainerStyle={{height: 50}}
-          onPress={handleNextStepButton}
-          style={styles.button}
-        />
-      </View>
-    </View>
+    </KeyboardAvoidingWrapper>
   );
 }
 
