@@ -6,6 +6,7 @@ import { IconButton } from '@react-native-material/core';
 import { useEffect, useState } from 'react';
 import PlaceCard from '../components/PlaceCard';
 import CircularImageCard from '../components/CircularImageCard';
+import { useNavigation } from '@react-navigation/native';
 
 const images = [
     { source: require("../images/eventPlaceholder.png") },
@@ -23,9 +24,10 @@ const itemInfo = [
     {date: "26/01", time: "20:00"}
 ]
 
-const Home = ({ navigation }) => {
+const Home = () => {
 
     const [notificationCount, setNotificationCount] = useState(0);
+    const navigationPerfil = useNavigation();
     const [notificationCountText, setNotificationCountText] = useState("");
     const [notificationCountBackgroundSize, setNotificationCountBackgroundSize] = useState(10);
     const [trendingPlaces, setTrendingPlaces] = useState([{'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 0},
@@ -40,10 +42,10 @@ const Home = ({ navigation }) => {
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 9},
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 10},
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 11}]);
-    const [stores, setStores] = useState([{'title': "Shopping Pães", 'id': 0},
-                                                {'title': "Shopping Pães", 'id': 0},
-                                                {'title': "Shopping Pães", 'id': 0},
-                                                {'title': "Shopping Pães", 'id': 0},]);
+    const [stores, setStores] = useState([{'title': "Shopping Pães", 'id': 12},
+                                                {'title': "Shopping Pães", 'id': 13},
+                                                {'title': "Shopping Pães", 'id': 14},
+                                                {'title': "Shopping Pães", 'id': 15},]);
 
     const styles = StyleSheet.create({
         container: {
@@ -121,7 +123,7 @@ const Home = ({ navigation }) => {
             position: 'relative',
             height: "100%",
             width: "stretch",
-            paddingBottom: 160,
+            paddingBottom: 170,
         },
         placeCardStyle: {
             position: "relative",
@@ -160,7 +162,9 @@ const Home = ({ navigation }) => {
     });
 
     const openNotifications = () => {
-        navigation.navigate('Profile');
+        try {
+            navigationPerfil.navigate('Notifications');
+        } catch (error) {console.log(error);}
     };
 
     const seeMoreRedirect = () => {
@@ -207,7 +211,7 @@ const Home = ({ navigation }) => {
                             color={'black'}
                         />
                     )} style={styles.bellIconButton}
-                    onPress={() => openNotifications}/>
+                    onPress={openNotifications}/>
                     {notificationCount > 0 && 
                     <View style={styles.notificationCounterBackground}>
                         <Text style={styles.notificationCounterText}>{notificationCountText}</Text>

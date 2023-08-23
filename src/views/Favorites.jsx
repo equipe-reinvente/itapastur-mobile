@@ -24,7 +24,7 @@ const Favorites = ({ navigation }) => {
     };
 
     const previousPage = () => {
-        navigation.navigate("MainProfile");
+        navigation.goBack();
     }
 
     const getfavoritesList = async () => {
