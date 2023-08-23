@@ -4,6 +4,7 @@ import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -32,10 +33,17 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   };
 
   const onChangePhoneNumberInput = (phoneNumber) => {
-    setEnterpriseData((prevState) => ({
-      ...prevState,
-      phoneNumber,
-    }));
+    if (phoneNumber.length === 11) {
+      setEnterpriseData((prevState) => ({
+        ...prevState,
+        phoneNumber: formatPhoneNumber(phoneNumber),
+      }));
+    } else {
+      setEnterpriseData((prevState) => ({
+        ...prevState,
+        phoneNumber: removeNonDigitCharacters(phoneNumber),
+      }));
+    }
   };
 
   const handleNextStepButton = () => navigation.navigate('EnterpriseAddressCreation');
@@ -99,7 +107,9 @@ const EnterpriseInfoCreation = ({ navigation }) => {
             onChangeText={onChangePhoneNumberInput}
             color='gray'
             value={enterpriseData.phoneNumber}
-            placeholder="+ 55 85 99999-9999"
+            placeholder="(85) 99999-9999"
+            keyboardType="numeric"
+            maxLength={15}
             style={styles.input}
           />
         </View>
@@ -121,7 +131,6 @@ const EnterpriseInfoCreation = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 20,
