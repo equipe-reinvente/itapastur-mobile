@@ -30,7 +30,7 @@ const EnterpriseAddressCreation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputsContainer}>
+      <View style={styles.content}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>Qual a localização?</Text>
           <Text style={styles.description}>
@@ -95,6 +95,9 @@ const styles = StyleSheet.create({
     marginTop: 120,
     marginBottom: 80
   },
+  content: {
+    marginBottom: 30
+  },
   textContainer: {
     marginBottom: 15,
   },
@@ -108,9 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     color: "#999999"
-  },
-  inputsContainer: {
-    marginBottom: 30
   },
   input: {
     width: 350,
