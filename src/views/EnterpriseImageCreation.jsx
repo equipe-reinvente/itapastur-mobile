@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Image } from "react-native";
 import { Text, Button } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEnterprise } from "../contexts/EnterpriseContext";
+import { GetContext } from "../components/AppContext";
 
 const EnterpriseImageCreation = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const { enterpriseData, setEnterpriseData } = useEnterprise();
+  const { authToken } = GetContext();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,6 +30,60 @@ const EnterpriseImageCreation = ({ navigation }) => {
       }));
     }
   }
+
+  const buildEnterpriseFormData = () => {
+    const data = new FormData();
+    data.append('name', enterpriseData.name);
+    data.append('description', enterpriseData.description);
+    data.append('cellphone', enterpriseData.phoneNumber);
+    /* data.append('user_id', ''); */
+    data.append('category', enterpriseData.category);
+    data.append('street', enterpriseData.streetAddress);
+    data.append('number', enterpriseData.addressNumber);
+    data.append('neighborhood', enterpriseData.neighborhoodAddress);
+    /* data.append('latitude', ''); */
+    /* data.append('longitude', ''); */
+    data.append('image_one', enterpriseData.images[0]);
+    data.append('image_two', enterpriseData.images[1]);
+    data.append('image_three', enterpriseData.images[2]);
+
+    return data;
+  };
+
+  const handleFinishButton = async () => {
+    const data = buildEnterpriseFormData();
+    const enterprisesURL = 'https://itapastur-api.fly.dev/enterprises/';
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        enterprisesURL,
+        data,
+        {
+          headers: {
+            'Authorization': authToken,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setLoading(false);
+        navigation.navigate('Welcome'); // Definir view
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: error.message,
+        visibilityTime: 2000,
+      });
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -85,7 +145,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
             titleStyle={styles.buttonText}
             color="#1daf6e"
             contentContainerStyle={{height: 50}}
-            onPress={() => {}}
+            onPress={handleFinishButton}
             style={styles.button}
           />
         </View>
