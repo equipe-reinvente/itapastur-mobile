@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Image } from "react-native";
 import { Text, Button } from "@react-native-material/core";
+import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -50,6 +51,8 @@ const EnterpriseImageCreation = ({ navigation }) => {
     return data;
   };
 
+  const handleTopLeftButton = () => navigation.navigate('EnterpriseAddressCreation');
+
   const handleFinishButton = async () => {
     const data = buildEnterpriseFormData();
     const enterprisesURL = 'https://itapastur-api.fly.dev/enterprises/';
@@ -87,6 +90,18 @@ const EnterpriseImageCreation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.topLeftButton}>
+        <IconButton
+          icon={() => (
+            <MaterialCommunityIcons
+              name={'chevron-left'}
+              size={40}
+              color={"#1DAF6E"}
+            />
+          )}
+          onPress={handleTopLeftButton}
+        />
+      </View>
       <View style={styles.content}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>Mostre seu empreendimento ao mundo!</Text>
@@ -161,6 +176,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 75,
     marginBottom: 135
+  },
+  topLeftButton: {
+    position: "absolute",
+    top: -25,
+    left: -20
   },
   content: {
     marginBottom: 30
