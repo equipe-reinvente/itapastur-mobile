@@ -4,6 +4,7 @@ import { GetContext } from '../components/AppContext';
 import EventImageCarousel from '../components/EventImageCarousel';
 import { IconButton } from '@react-native-material/core';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import PlaceCard from '../components/PlaceCard';
 import CircularImageCard from '../components/CircularImageCard';
 import { useNavigation } from '@react-navigation/native';
@@ -28,32 +29,13 @@ const Home = () => {
 
     const [notificationCount, setNotificationCount] = useState(0);
     const navigationPerfil = useNavigation();
+    const {authToken, setPlacesData, placesData} = GetContext();
     const [notificationCountText, setNotificationCountText] = useState("");
     const [notificationCountBackgroundSize, setNotificationCountBackgroundSize] = useState(10);
-    const [trendingPlaces, setTrendingPlaces] = useState([{'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 0},
-                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 1},
-                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 2},
-                                                        {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 3}]);
-    const [newPlaces, setNewPlaces] = useState([{'title': "Shopping Pães", 'id': 4},
-                                                {'title': "Shopping Pães", 'id': 5},
-                                                {'title': "Shopping Pães", 'id': 6},
-                                                {'title': "Shopping Pães", 'id': 7},]);
-    const [artisansPlaces, setArtisansPlaces] = useState([{'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 8},
-                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 9},
-                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 10},
-                                                {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 11}]);
-    const [stores, setStores] = useState([{'title': 'Shopping Pães', 
-                                        'image': null,
-                                        'likes': '1',
-                                        'category': 'Restaurante',
-                                        'address': "Rua pão de mel, 10",
-                                        'id': 12},
-                                        {'title': "Francy's Icecream Factory",
-                                        'image': null,
-                                        'likes': '4k',
-                                        'category': 'Gelateria',
-                                        'address': "Rua Raimundo Felício, 120",
-                                        'id': 13}]);
+    const [trendingPlaces, setTrendingPlaces] = useState([]);
+    const [newPlaces, setNewPlaces] = useState([]);
+    const [artisansPlaces, setArtisansPlaces] = useState([]);
+    const [stores, setStores] = useState([]);
 
     const styles = StyleSheet.create({
         container: {
@@ -176,7 +158,7 @@ const Home = () => {
         storeImageCard: {
             position: "relative",
             alignItems: 'flex-start',
-            width: 'stretch',
+            width: '100%',
             flexDirection: 'row',
             flexWrap: 'wrap',
             height: 70,
@@ -194,28 +176,77 @@ const Home = () => {
 
     };
 
-    const getTrendingPlaces = () => {
+    const getTrendingPlaces = (data) => {
+        let places = data['lojas'].sort((a, b) => b['favorites'] - a['favorites']);
+        places = places.concat(data['artesoes'].sort((a, b) => b['favorites'] - a['favorites']));
+        places = places.concat(data['pontos'].sort((a, b) => b['favorites'] - a['favorites']));
+        places = places.sort((a, b) => b['favorites'] - a['favorites']);
+        const newData = places.slice(0, 4);
+        setTrendingPlaces(newData);
+    };
 
+    const getStores = (data) => {
+        //console.log(data['lojas'][0]);
+        const newData = data['lojas'].sort((a, b) => b['favorites'] - a['favorites']).slice(0, 5);
+        setStores(newData);
+    };
+    
+    const getArtisans = (data) => {
+        const newData = data['artesoes'].slice(0, 4);
+        setNewPlaces(newData);
+    };
+
+    const getNewPlaces = (data) => {
+        let places = data['lojas'].sort((a, b) => b['id'] - a['id']);
+        places = places.concat(data['artesoes'].sort((a, b) => b['id'] - a['id']));
+        places = places.concat(data['pontos'].sort((a, b) => b['id'] - a['id']));
+        places = places.sort((a, b) => b['id'] - a['id']);
+        const newData = places.slice(0, 4);
+        setNewPlaces(newData);
+    };
+
+    const fetchCategories = async () => {
+        try {
+          const response = await axios.get(
+            'https://itapastur-api.fly.dev/categories/enterprises',
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+          let data = response.data["enterprises"];
+          if (data !== placesData) setPlacesData(data);
+          getArtisans(data);
+          getStores(data);
+          getTrendingPlaces(data);
+          getNewPlaces(data);
+          getNotificationCount();
+        } catch (error) {
+          console.error('Erro ao buscar categorias:', error);
+        }
     };
 
     const renderTrendingPlaces = (item) => {
         return (
-            <PlaceCard image={item['image']} title={item['title']} style={styles.placeCardStyle} likes={item['likes']} id={item['id']} key={item['id']}/>
+            <PlaceCard image={{uri: item['image_one']}} title={item['name']} style={styles.placeCardStyle} likes={item['favorites']} id={item['id']} key={item['id']}/>
         );
     };
 
     const renderCircularImageCard = (item) => {
         return (
-            <CircularImageCard title={item['title']} id={item['id']} key={item['id']} image={item['image']}/>
+            <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}}/>
         );
     };
 
     const renderStores = (item) => {
         return (
             <View style={styles.storeImageCard} key={item['id']}>
-                <CircularImageCard image={item['image']}/>
-                <View style={{position: "relative", left: -10}}>
-                    <Text style={{position: "relative", marginTop: 5}}>{item['title']}</Text>
+                <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
+                                                                                height: '100%',
+                                                                                width: 330}}/>
+                <View style={{position: "relative", left: -10, zIndex: -1}}>
+                    <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
                         <MaterialCommunityIcons
                             name={"heart"}
@@ -233,14 +264,14 @@ const Home = () => {
                             color="rgba(0, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{fontSize: 9, color: "rgba(0, 0, 0, 0.5)"}}> {item['address']}</Text>
+                        <Text style={{fontSize: 9, color: "rgba(0, 0, 0, 0.5)"}}> {item['address']['street']} {item['address']['number']}</Text>
                     </View>
                 </View>
             </View>
         )
     }
 
-    const getNotificationCount = () => {
+    const getNotificationCount = async () => {
         let count = 0;
         if (count < 10) setNotificationCountBackgroundSize(10);
         if (count >= 10) setNotificationCountBackgroundSize(15);
@@ -250,7 +281,7 @@ const Home = () => {
         setNotificationCount(count);
     };
 
-    useEffect(getNotificationCount, []);
+    useEffect(() => fetchCategories, []);
 
     return (
         <View style={styles.container}>

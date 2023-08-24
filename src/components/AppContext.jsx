@@ -6,6 +6,7 @@ export function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(require("../images/profilePhoto.png"));
   const [user, setUser] = useState({});
+  const [placesData, setPlacesData] = useState({});
 
   const login = (userObject) => {
     setAuthToken(userObject['token']);
@@ -18,7 +19,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser }}>
+    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser, placesData, setPlacesData }}>
       {children}
     </Context.Provider>
   );
