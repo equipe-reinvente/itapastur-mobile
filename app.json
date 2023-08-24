@@ -11,8 +11,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
+    "assetBundlePatterns": ["**/*"],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O aplicativo acessa sua galeria para utilizar as fotos do seu empreendimento.",
+          "cameraPermission": "O aplicativo acessa sua câmera para registrar as fotos do seu empreendimento."
+        }
+      ]
     ],
     "ios": {
       "supportsTablet": true

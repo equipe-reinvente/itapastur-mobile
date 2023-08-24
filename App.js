@@ -8,7 +8,12 @@ import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from './src/views/Register';
 import Notifications from "./src/views/Notifications";
+import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
+import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
+import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
+
 import { AuthProvider } from "./src/components/AppContext";
+import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,10 +48,28 @@ export default function App() {
             options={{ title: "Register", headerShown: false }}
           />
           <Stack.Screen
-                name="Notifications"
-                component={Notifications}
-                options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
-            />
+              name="Notifications"
+              component={Notifications}
+              options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
+          />
+          <Stack.Screen
+            name="EnterpriseInfoCreation"
+            component={EnterpriseInfoCreation}
+            options={{ title: "EnterpriseInfoCreation", headerShown: false }}
+          />
+          <Stack.Screen
+            name="EnterpriseAddressCreation"
+            component={EnterpriseAddressCreation}
+            options={{
+              title: "EnterpriseAddressCreation",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="EnterpriseImageCreation"
+            component={EnterpriseImageCreation}
+            options={{ title: "EnterpriseImageCreation", headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
