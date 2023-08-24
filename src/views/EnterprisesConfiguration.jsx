@@ -26,11 +26,6 @@ const EnterprisesConfiguration = ({ navigation, route }) => {
         
     };
 
-    const handleLogout = () => {
-        logout();
-        navigation.navigate("Login");
-    };
-
     const resizeName = () => {
         if (enterpriseName.length > 14) {
             setEnterpriseName(enterpriseName.substring(0, 15) + "...");

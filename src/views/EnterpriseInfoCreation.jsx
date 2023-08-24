@@ -52,7 +52,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
     }
   };
 
-  const handleTopLeftButton = () => navigation.navigate('Welcome'); // Definir view
+  const handleTopLeftButton = () => navigation.goBack(); // Definir view
 
   const handleNextStepButton = () => {
     if (!isValidName(enterpriseData.name)) {
