@@ -42,10 +42,16 @@ const Home = () => {
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 9},
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 10},
                                                 {'title': "Pedra do Frade", 'image': require("../assets/PedraDoFrade.jpg"), 'likes': '0', 'id': 11}]);
-    const [stores, setStores] = useState([{'title': "Shopping Pães", 'id': 12},
-                                                {'title': "Shopping Pães", 'id': 13},
-                                                {'title': "Shopping Pães", 'id': 14},
-                                                {'title': "Shopping Pães", 'id': 15},]);
+    const [stores, setStores] = useState([{'title': 'Shopping Pães', 
+                                        'image': null,
+                                        'likes': '1',
+                                        'category': 'Restaurante',
+                                        'address': "Rua pão de mel, 10"},
+                                        {'title': "Francy's Icecream Factory",
+                                        'image': null,
+                                        'likes': '4k',
+                                        'category': 'Gelateria',
+                                        'address': "Rua Raimundo Felício, 120"}]);
 
     const styles = StyleSheet.create({
         container: {
@@ -158,6 +164,21 @@ const Home = () => {
         contentContainer: {
             alignItems: 'center',
             paddingLeft: 25
+        },
+        storesContainer: {
+            position: "relative",
+            alignItems: 'flex-start',
+            width: 'stretch',
+            marginBottom: 20
+        },
+        storeImageCard: {
+            position: "relative",
+            alignItems: 'flex-start',
+            width: 'stretch',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            height: 70,
+            marginBottom: 10
         }
     });
 
@@ -179,12 +200,42 @@ const Home = () => {
         return (
             <PlaceCard image={item['image']} title={item['title']} style={styles.placeCardStyle} likes={item['likes']} id={item['id']} key={item['id']}/>
         );
-    }
+    };
 
     const renderCircularImageCard = (item) => {
         return (
             <CircularImageCard title={item['title']} id={item['id']} key={item['id']} image={item['image']}/>
         );
+    };
+
+    const renderStores = (item) => {
+        return (
+            <View style={styles.storeImageCard}>
+                <CircularImageCard image={item['image']}/>
+                <View style={{position: "relative", left: -10}}>
+                    <Text style={{position: "relative", marginTop: 5}}>{item['title']}</Text>
+                    <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
+                        <MaterialCommunityIcons
+                            name={"heart"}
+                            size={10}
+                            color="rgba(255, 0, 0, 0.5)"
+                            style={{position: 'relative', top: 1}}
+                        />
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['likes']}</Text>
+                        <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
+                    </View>
+                    <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
+                        <MaterialCommunityIcons
+                            name={"compass"}
+                            size={10}
+                            color="rgba(0, 0, 0, 0.5)"
+                            style={{position: 'relative', top: 1}}
+                        />
+                        <Text style={{fontSize: 9, color: "rgba(0, 0, 0, 0.5)"}}> {item['address']}</Text>
+                    </View>
+                </View>
+            </View>
+        )
     }
 
     const getNotificationCount = () => {
@@ -273,7 +324,7 @@ const Home = () => {
                             }} onPress={seeMoreRedirect}>Ver mais</Text>
                         </View>
                         <View style={styles.circularImageCardContainer}>
-                            {stores.map(renderCircularImageCard)}
+                            {stores.map(renderStores)}
                         </View>
                     </View> 
                 </ScrollView>

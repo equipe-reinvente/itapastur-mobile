@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from "@react-native-material/core";
+import { useState } from 'react';
 
 const CircularImageCard = ({title = "",  
                         callback = () => {}, 
                         color='black', 
                         image=require("../images/imagePlaceholder.png"),
                         style = {width: 60, height: 85, marginRight: 25}},
-                        id = 0) => {
+                        id = 0,) => {
 
     const imageBorderRadius = style['width'] / 2;
 
@@ -53,7 +54,8 @@ const CircularImageCard = ({title = "",
 
     return (
         <View style={styles.container}>
-            <Image source={image} style={styles.image}/>
+            {image!==null && <Image source={image} style={styles.image}/>}
+            {image===null && <Image source={require("../images/imagePlaceholder.png")} style={styles.image}/>}
             {title !== "" && <Text style={styles.title}>{title}</Text>}
             <View style={styles.overlayContainer}>
                 <Button style={styles.button} color='rgba(0, 0, 0, 0)' uppercase={false}

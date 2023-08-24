@@ -27,7 +27,7 @@ const Favorites = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const getfavoritesList = async () => {
+    const getfavoritesList = () => {
         const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': favoritesList.length};
         setFavoritesList([...favoritesList, newItem]);
     };

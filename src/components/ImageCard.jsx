@@ -1,7 +1,7 @@
 import { View, StyleSheet, Image, ImageBackground } from 'react-native';
 import { Button } from "@react-native-material/core";
 
-const ImageCard = ({ text = "", image = "", width = 340, height = 165, textColor = "white" }) => {
+const ImageCard = ({ text = "", image = "", width = 340, height = 165, textColor = "white", callback = () => {}, id=0}) => {
 
     const styles = StyleSheet.create({
         cardContainer: {
@@ -58,7 +58,12 @@ const ImageCard = ({ text = "", image = "", width = 340, height = 165, textColor
                 <Image source={require("../images/gradient.png")}/>
             </View>
             <View style={styles.overlayContainer}>
-                <Button titleStyle={styles.cardText} title= {text} style={styles.cardButton} color='rgba(0, 0, 0, 0)' contentContainerStyle={{height: "100%"}} uppercase={false}/>
+                <Button titleStyle={styles.cardText} 
+                title= {text} style={styles.cardButton} 
+                color='rgba(0, 0, 0, 0)' 
+                contentContainerStyle={{height: "100%"}} 
+                uppercase={false}
+                onPress={() => callback(id)}/>
             </View>
         </View>
     )
