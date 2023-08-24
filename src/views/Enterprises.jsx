@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
-
 import ThumbnailButton from '../components/ThumbnailButton';
+import { useNavigation } from '@react-navigation/native';
 
 const Enterprises = ({ navigation }) => {
 
@@ -23,13 +23,15 @@ const Enterprises = ({ navigation }) => {
         navigation.navigate("EnterprisesConfiguration", {enterpriseData});
     };
 
+    const navigationEnteprise = useNavigation();
+
     const createEnterprise = () => {
-        
-    }
+        navigationEnteprise.navigate('EnterpriseInfoCreation');
+    };
 
     const previousPage = () => {
         navigation.goBack();
-    }
+    };
 
     const getEnterpriseList = () => {
         //const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};

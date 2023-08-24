@@ -217,6 +217,7 @@ const Home = () => {
           );
           let data = response.data["enterprises"];
           if (data !== placesData) setPlacesData(data);
+          console.log("loaded data!");
           getArtisans(data);
           getStores(data);
           getTrendingPlaces(data);
@@ -281,7 +282,7 @@ const Home = () => {
         setNotificationCount(count);
     };
 
-    useEffect(() => fetchCategories, []);
+    useEffect(() => fetchCategories(), []);
 
     return (
         <View style={styles.container}>
