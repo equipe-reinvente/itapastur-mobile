@@ -46,12 +46,14 @@ const Home = () => {
                                         'image': null,
                                         'likes': '1',
                                         'category': 'Restaurante',
-                                        'address': "Rua pão de mel, 10"},
+                                        'address': "Rua pão de mel, 10",
+                                        'id': 12},
                                         {'title': "Francy's Icecream Factory",
                                         'image': null,
                                         'likes': '4k',
                                         'category': 'Gelateria',
-                                        'address': "Rua Raimundo Felício, 120"}]);
+                                        'address': "Rua Raimundo Felício, 120",
+                                        'id': 13}]);
 
     const styles = StyleSheet.create({
         container: {
@@ -210,7 +212,7 @@ const Home = () => {
 
     const renderStores = (item) => {
         return (
-            <View style={styles.storeImageCard}>
+            <View style={styles.storeImageCard} key={item['id']}>
                 <CircularImageCard image={item['image']}/>
                 <View style={{position: "relative", left: -10}}>
                     <Text style={{position: "relative", marginTop: 5}}>{item['title']}</Text>

@@ -31,6 +31,9 @@ const MainProfile = ({ navigation }) => {
         console.log(user);
         if (user['name'] !== "" && user['name'] !== null) setUsername(user['name']);
         else setUsername(user['email'].split("@")[0]);
+        if (username.length > 16) {
+            setUsername(username.substring(0, 17) + "...");
+        }
     }
 
     useEffect(setUsernameText, []);
@@ -38,7 +41,8 @@ const MainProfile = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.userInfoContainer}>
-                <Image style={styles.userPhoto} source={profilePhoto}/>
+                {profilePhoto !== null && <Image style={styles.userPhoto} source={profilePhoto}/>}
+                {profilePhoto === null && <Image style={styles.userPhoto} source={require("../images/profilePhoto.png")}/>}
                 <View style={styles.usernameEmailContainer}>
                    <Text style={styles.usernameText}>{username}</Text>
                     <Text style={styles.emailText}>{user['email']}</Text> 
@@ -77,6 +81,7 @@ const styles = StyleSheet.create({
         position: "relative",
         alignItems: 'flex-start',
         alignContent: 'flex-start',
+        flexDirection: 'row',
         textAlign: 'left',
         verticalAlign: 'middle',
         backgroundColor: "#D9D9D9",
@@ -103,13 +108,13 @@ const styles = StyleSheet.create({
     },
     usernameEmailContainer: {
         position: 'relative',
-        left: 70,
-        top: -45
+        marginLeft: 10,
+        top: 15
     },
     settingsButton: {
-        position: 'relative',
-        left: 290,
-        top: -95
+        position: 'absolute',
+        margin: 295,
+        top: -280
     }
 });
 

@@ -9,10 +9,18 @@ import ThumbnailButton from '../components/ThumbnailButton';
 
 const Enterprises = ({ navigation }) => {
 
-    const [enterpriseList, setEnterpriseList] = useState([]);
+    const [enterpriseList, setEnterpriseList] = useState([{'title': "Francy's Icecream Factory",
+                                                        'subtitle': 'Gelateria a moda italiana',
+                                                        'image': null,
+                                                        'likes': '4k',
+                                                        'category': 'Gelateria',
+                                                        'address': "Rua Raimundo Felício, 120",
+                                                        'members': ['Francisca Maria', 'Carlos Alberto'],
+                                                        'id': 0}]);
 
     const openSelectedEnterprise = (key) => {
-
+        let enterpriseData = enterpriseList[key];
+        navigation.navigate("EnterprisesConfiguration", {enterpriseData});
     };
 
     const createEnterprise = () => {
@@ -24,8 +32,8 @@ const Enterprises = ({ navigation }) => {
     }
 
     const getEnterpriseList = () => {
-        const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};
-        setEnterpriseList([...enterpriseList, newItem]);
+        //const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};
+        //setEnterpriseList([...enterpriseList, newItem]);
     };
 
     const renderEnterprises = (item, key) => {
