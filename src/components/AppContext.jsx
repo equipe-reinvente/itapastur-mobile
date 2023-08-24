@@ -5,19 +5,20 @@ const Context = createContext();
 export function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(require("../images/profilePhoto.png"));
-  const [username, setUsername] = useState("Unknown");
-  const [email, setEmail] = useState("unknown@gmail.com");
+  const [user, setUser] = useState({});
 
-  const login = (token) => {
-    setAuthToken(token);
+  const login = (userObject) => {
+    setAuthToken(userObject['token']);
+    setUser(userObject['user']);
   };
 
   const logout = () => {
     setAuthToken(null);
+    setUser({});
   };
 
   return (
-    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, username, setUsername, email, setEmail }}>
+    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser }}>
       {children}
     </Context.Provider>
   );

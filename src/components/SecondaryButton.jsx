@@ -1,13 +1,19 @@
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
-import { TextInput, Button, Divider } from "@react-native-material/core";
-import { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const SecondaryButton = ({title = "", height = 40, width = 352, callback = () => {}, icon = "", color='black', hasDivider = true, style = {width: width, height: height}}) => {
+const SecondaryButton = ({title = "", 
+                        height = 40, 
+                        width = 352, 
+                        callback = () => {}, 
+                        icon = "", 
+                        color='black', 
+                        hasDivider = true, 
+                        style = {width: width, height: height}}) => {
 
     const styles = StyleSheet.create({
         container: style,
-        tilte: {
+        title: {
             fontWeight: 'bold',
             fontSize: 16,
             color: color
@@ -65,7 +71,7 @@ const SecondaryButton = ({title = "", height = 40, width = 352, callback = () =>
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.tilte}>{title}</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
             {hasDivider && <Divider style={styles.divider}/>}
             <View style={styles.overlayContainer}>

@@ -1,9 +1,14 @@
 import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
-import { TextInput, Button, Divider } from "@react-native-material/core";
-import { useState } from 'react';
+import { Button, Divider } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const ConfigButton = ({title = "", subtilte = "", height = 80, width = 352, callback = () => {}, icon = "", style = {width: width, height: height}}) => {
+const ConfigButton = ({title = "", 
+                    subtilte = "", 
+                    height = 80, 
+                    width = 352, 
+                    callback = () => {}, 
+                    icon = "", 
+                    style = {width: width, height: height}}) => {
 
     const styles = StyleSheet.create({
         container: style,
