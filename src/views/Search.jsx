@@ -69,7 +69,7 @@ const Search = ({ navigation }) => {
 
     const renderResults = (item) => {
         return (
-            <View style={styles.circularImageCardContainer}>
+            <View style={styles.storeImageCard}>
                 <CircularImageCard image={item['image']}/>
                 <View style={{position: "relative", left: -10}}>
                     <Text style={{position: "relative", marginTop: 5}}>{item['title']}</Text>
@@ -233,16 +233,23 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center'
     },
-    circularImageCardContainer: {
+    storeImageCard: {
         position: "relative",
         alignItems: 'flex-start',
-        width: '100%',
+        width: 'stretch',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginBottom: 20
+        height: 70,
+        marginBottom: 10
     },
     circularImageCardTextContainer: {
-        position: 'relative',
+        position: "relative",
+        alignItems: 'flex-start',
+        width: 'stretch',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        height: 70,
+        marginBottom: 10
     },
     scrollViewContainer: {
         position: 'absolute',
