@@ -6,8 +6,12 @@ const CircularImageCard = ({title = "",
                         callback = () => {}, 
                         color='black', 
                         image=require("../images/imagePlaceholder.png"),
-                        style = {width: 60, height: 85, marginRight: 25}},
-                        id = 0,) => {
+                        style = {width: 60, height: 85, marginRight: 25},
+                        buttonStyle = {position: 'relative',
+                        alignItems: 'flex-start',
+                        height: style['height'],
+                        width: style['width'],},
+                        id = 0,}) => {
 
     const imageBorderRadius = style['width'] / 2;
 
@@ -23,17 +27,13 @@ const CircularImageCard = ({title = "",
         button: {
             position: 'relative',
             alignItems: 'flex-start',
-            height: style['height'],
-            width: style['width'],
+            height: buttonStyle['height'],
+            width: buttonStyle['width'],
         },
-        buttonContainer: {
-            position: 'relative',
-            height: style['height'],
-            width: 800
-        },
+        buttonContainer: buttonStyle,
         buttonPressableContainer: {
-            height: style['height'],
-            width: style['width']
+            height: buttonStyle['height'],
+            width: buttonStyle['width']
         },
         overlayContainer: {
             position: 'absolute', 
@@ -58,7 +58,7 @@ const CircularImageCard = ({title = "",
             {image===null && <Image source={require("../images/imagePlaceholder.png")} style={styles.image}/>}
             {title !== "" && <Text style={styles.title}>{title}</Text>}
             <View style={styles.overlayContainer}>
-                <Button style={styles.button} color='rgba(0, 0, 0, 0)' uppercase={false}
+                <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false}
                     contentContainerStyle={styles.buttonContainer} disableElevation
                     onPress={() => callback(id)} />
             </View>

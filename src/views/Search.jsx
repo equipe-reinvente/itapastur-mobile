@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { TextInput, IconButton } from "@react-native-material/core";
 import { useState } from 'react';
+import { GetContext } from '../components/AppContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ImageCard from '../components/ImageCard';
 import CircularImageCard from '../components/CircularImageCard';
@@ -10,54 +11,53 @@ const Search = ({ navigation }) => {
     const [searchText, setSearchText] = useState("");
     const [searchCategory, setSearchCategory] = useState("Todas as Categorias");
     const [showCategories, setShowCategories] = useState(true);
-    const [items, setItems] = useState({'attractions': [{'title': 'Pedra do Frade', 
-                                                        'image': require("../assets/PedraDoFrade.jpg"),
-                                                        'likes': '10',
-                                                        'category': 'Ponto turístico',
-                                                        'address': "Rua pedra furada, 2"}],
-                                        'stores': [{'title': 'Shopping Pães', 
-                                                    'image': null,
-                                                    'likes': '1',
-                                                    'category': 'Restaurante',
-                                                    'address': "Rua pão de mel, 10"},
-                                                    {'title': "Francy's Icecream Factory",
-                                                    'image': null,
-                                                    'likes': '4k',
-                                                    'category': 'Gelateria',
-                                                    'address': "Rua Raimundo Felício, 120"}],
-                                        'artisans': [{'title': "D'veras tecído", 
-                                                    'image': null,
-                                                    'likes': '50',
-                                                    'category': 'Tecelagem',
-                                                    'address': "Rua fulano de tal, 130"}]});
+    const { placesData, setPlacesData } = GetContext();
     const [results, setResults] = useState([]);
 
-    const searchByName = (text) => {
+    const searchByName = async (text) => {
+        if (placesData == {}) await fetchCategories();
         setSearchText(text);
         if (results.length > 0) setResults([]);
         if (text !== "" && text !== null) setShowCategories(false);
         else setShowCategories(true);
     };
 
+    const fetchCategories = async () => {
+        try {
+          const response = await axios.get(
+            'https://itapastur-api.fly.dev/categories/enterprises',
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+          let data = response.data["enterprises"];
+          if (data !== placesData) setPlacesData(data);
+        } catch (error) {
+          console.error('Erro ao buscar categorias:', error);
+        }
+    };
+
     const pressedSearchKey = () => {
         let category = null;
         if (searchCategory === "Pontos turísticos") {
-            category = 'attractions';
+            category = 'pontos';
         } else if (searchCategory === "Lojas") {
-            category = 'stores';
+            category = 'lojas';
         } else if (searchCategory === "Artesões") {
-            category = 'artisans';
+            category = 'artesoes';
         }
         setResults(searchItems(category));
     };
 
     const searchItems = (category) => {
-        if (category !== null) return items[category].filter(item => item['title'].toLowerCase().includes(searchText.toLowerCase()));
+        if (category !== null) return placesData[category].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase()));
         else {
             let searchResults = [];
-            searchResults = searchResults.concat(items['artisans'].filter(item => item['title'].toLowerCase().includes(searchText.toLowerCase())));
-            searchResults = searchResults.concat(items['attractions'].filter(item => item['title'].toLowerCase().includes(searchText.toLowerCase())));
-            searchResults = searchResults.concat(items['stores'].filter(item => item['title'].toLowerCase().includes(searchText.toLowerCase())));
+            searchResults = searchResults.concat(placesData['artesoes'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
+            searchResults = searchResults.concat(placesData['lojas'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
+            searchResults = searchResults.concat(placesData['pontos'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
             return searchResults;
         }
     };
@@ -69,10 +69,12 @@ const Search = ({ navigation }) => {
 
     const renderResults = (item) => {
         return (
-            <View style={styles.storeImageCard}>
-                <CircularImageCard image={item['image']}/>
-                <View style={{position: "relative", left: -10}}>
-                    <Text style={{position: "relative", marginTop: 5}}>{item['title']}</Text>
+            <View style={styles.storeImageCard} key={item['id']}>
+                <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
+                                                                                height: '100%',
+                                                                                width: 330}}/>
+                <View style={{position: "relative", left: -10, zIndex: -1}}>
+                    <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
                         <MaterialCommunityIcons
                             name={"heart"}
@@ -90,7 +92,7 @@ const Search = ({ navigation }) => {
                             color="rgba(0, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{fontSize: 9, color: "rgba(0, 0, 0, 0.5)"}}> {item['address']}</Text>
+                        <Text style={{fontSize: 9, color: "rgba(0, 0, 0, 0.5)"}}> {item['address']['street']} {item['address']['number']}</Text>
                     </View>
                 </View>
             </View>
@@ -141,7 +143,7 @@ const Search = ({ navigation }) => {
             </View>}
             {!showCategories && 
             <View style={styles.scrollViewContainer}>
-                <ScrollView overScrollMode='none'>
+                <ScrollView overScrollMode='none' style={{width: '100%'}}>
                     {results.map(renderResults)}
                 </ScrollView>
             </View>}
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
     storeImageCard: {
         position: "relative",
         alignItems: 'flex-start',
-        width: 'stretch',
+        width: '100%',
         flexDirection: 'row',
         flexWrap: 'wrap',
         height: 70,

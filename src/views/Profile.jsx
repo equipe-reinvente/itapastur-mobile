@@ -4,6 +4,7 @@ import Enterprises from './Enterprises';
 import MainProfile from './MainProfile';
 import Notifications from './Notifications';
 import Favorites from './Favorites';
+import EnterprisesConfiguration from "./EnterprisesConfiguration";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ const Profile = () => {
                 name="Notifications"
                 component={Notifications}
                 options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
+            />
+            <Stack.Screen
+                name="EnterprisesConfiguration"
+                component={EnterprisesConfiguration}
+                options={{ title: "EnterprisesConfiguration", headerShown: false, animation: 'slide_from_right'}}
             />
         </Stack.Navigator>
     );

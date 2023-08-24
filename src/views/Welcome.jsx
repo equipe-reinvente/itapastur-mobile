@@ -3,17 +3,29 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Button, Text } from "@react-native-material/core";
 import { GetContext } from '../components/AppContext';
 import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
   const {login} = GetContext();
 
   const handleStartButton = async () => {
-    let userData = {'token': null};
     try {
+      let userData = {'token': null};
       userData = await SecureStore.getItemAsync('userData');
 
       userData = JSON.parse(userData);
+
+      const response = await axios.get(
+        'https://itapastur-api.fly.dev/healthy_token',
+        {
+          headers: {
+            Authorization: `Bearer ${userData['token']}`,
+          },
+        }
+      );
+
+      console.log(response.data);
 
       login(userData);
       console.log(userData);
