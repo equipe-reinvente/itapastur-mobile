@@ -2,13 +2,18 @@ import { View, Image, StyleSheet } from "react-native";
 import { Text } from "@react-native-material/core";
 
 const PlaceTitle = ({ title, category, image }) => {
+  try {
+    if (image.source.uri == null) image.source = require("../images/imagePlaceholder.png");
+  } catch {}
+  
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.category}>{category}</Text>
       </View>
-      <Image source={image.source} style={styles.image} />
+      {image.source !== null && <Image source={image.source} style={styles.image} />}
+      {image.source === null && <Image source={require("../images/imagePlaceholder.png")} style={styles.image} />}
     </View>
   );
 }

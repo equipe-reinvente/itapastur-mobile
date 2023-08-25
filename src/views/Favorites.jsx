@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -10,6 +10,7 @@ import ThumbnailButton from '../components/ThumbnailButton';
 const Favorites = ({ navigation }) => {
 
     const [favoritesList, setFavoritesList] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const openSelectedFavorites = (key) => {
 
@@ -27,7 +28,7 @@ const Favorites = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const getfavoritesList = () => {
+    const getfavoritesList = async () => {
         const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': favoritesList.length};
         setFavoritesList([...favoritesList, newItem]);
     };
@@ -45,7 +46,13 @@ const Favorites = ({ navigation }) => {
         );
     };
 
-    useEffect(getfavoritesList, []);
+    const refreshControl = async () => {
+        setRefreshing(true);
+        await getfavoritesList();
+        setRefreshing(false);
+    }
+
+    useEffect(() => {getfavoritesList()}, []);
 
     return (
         <View style={styles.container}>
@@ -62,7 +69,9 @@ const Favorites = ({ navigation }) => {
                 onPress={previousPage}/>
             </View>
             <View style={styles.scrollViewContainer}>
-                <ScrollView style={styles.scrollView} overScrollMode='never'>
+                <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
+                }>
                     {favoritesList.map(renderFavorites)}
                 </ScrollView>
             </View>

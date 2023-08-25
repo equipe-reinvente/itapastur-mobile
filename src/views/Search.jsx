@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl  } from 'react-native';
 import { TextInput, IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { GetContext } from '../components/AppContext';
@@ -14,6 +14,7 @@ const Search = ({ navigation }) => {
     const [showCategories, setShowCategories] = useState(true);
     const { placesData, setPlacesData, authToken } = GetContext();
     const [results, setResults] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const searchByName = (text) => {
         setSearchText(text);
@@ -39,6 +40,12 @@ const Search = ({ navigation }) => {
           console.error('Erro ao buscar categorias:', error);
         }
     };
+
+    const refreshControl = async () => {
+        setRefreshing(true);
+        await pressedSearchKey();
+        setRefreshing(false);
+    }
 
     const pressedSearchKey = async () => {
         await fetchCategories();
@@ -145,7 +152,9 @@ const Search = ({ navigation }) => {
             </View>}
             {!showCategories && 
             <View style={styles.scrollViewContainer}>
-                <ScrollView overScrollMode='never' style={{width: '100%'}}>
+                <ScrollView overScrollMode='never' style={{width: '100%', position: 'relative'}} refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
+                }>
                     {results.map(renderResults)}
                 </ScrollView>
             </View>}
@@ -256,7 +265,9 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     scrollViewContainer: {
-        position: 'relative',
+        position: 'absolute',
+        flex: 1,
+        height: '100%',
         width: '100%',
         alignItems: 'flex-start',
         paddingBottom: 150,

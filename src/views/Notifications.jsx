@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -10,10 +10,17 @@ import ThumbnailButton from '../components/ThumbnailButton';
 const Notifications = ({ navigation }) => {
 
     const [notificationList, setNotificationList] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const openSelectedNotification = (key) => {
 
     };
+
+    const refreshControl = async () => {
+        setRefreshing(true);
+        await getNotificationList();
+        setRefreshing(false);
+    }
 
     const previousPage = () => {
         try {
@@ -21,7 +28,7 @@ const Notifications = ({ navigation }) => {
         } catch (error) {console.log(error);}
     }
 
-    const getNotificationList = () => {
+    const getNotificationList = async () => {
         const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1', 'id': notificationList.length};
         setNotificationList([...notificationList, newItem]);
     };
@@ -32,7 +39,7 @@ const Notifications = ({ navigation }) => {
         );
     };
 
-    useEffect(getNotificationList, []);
+    useEffect(() => {getNotificationList()}, []);
 
     return (
         <View style={styles.container}>
@@ -49,7 +56,9 @@ const Notifications = ({ navigation }) => {
                 onPress={previousPage}/>
             </View>
             <View style={styles.scrollViewContainer}>
-                <ScrollView style={styles.scrollView} overScrollMode='never'>
+                <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
+                }>
                     {notificationList.map(renderNotifications)}
                 </ScrollView>
             </View>

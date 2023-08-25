@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { IconButton, Button } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -12,6 +12,7 @@ const Enterprises = ({ navigation }) => {
 
     const [enterpriseList, setEnterpriseList] = useState([]);
     const { user, authToken } = GetContext(); 
+    const [refreshing, setRefreshing] = useState(false);
 
     const openSelectedEnterprise = (key) => {
         let enterpriseData = enterpriseList.filter(item => item['id'] === key)[0];
@@ -40,28 +41,34 @@ const Enterprises = ({ navigation }) => {
         );
     };
 
-    useEffect( () =>
-            {async function getEnterpriseList() {
-                try {
-                    const response = await axios.get(
-                        'https://itapastur-api.fly.dev/enterprises/' + user['id'], 
-                        {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
-                        },
-                        }
-                    );
-                    const data = response.data['user_enterprises'];
-                    if (data !== enterpriseList)setEnterpriseList(data);
-                } catch (error) {
-                    if (axios.isAxiosError(error)) {
-                        console.error('Erro do Axios:', error.message);
-                      } else {
-                        console.error('Erro:', error.message);
-                      }
+    const refreshControl = async () => {
+        setRefreshing(true);
+        await getEnterpriseList();
+        setRefreshing(false);
+    }
+
+    const getEnterpriseList = async () => {
+        try {
+            const response = await axios.get(
+                'https://itapastur-api.fly.dev/enterprises/' + user['id'], 
+                {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
                 }
-            }getEnterpriseList();} 
-            , []); 
+            );
+            const data = response.data['user_enterprises'];
+            if (data !== enterpriseList)setEnterpriseList(data);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error('Erro do Axios:', error.message);
+              } else {
+                console.error('Erro:', error.message);
+              }
+        }
+    }
+
+    useEffect( () => {getEnterpriseList()}, []); 
 
     return (
         <View style={styles.container}>
@@ -78,7 +85,9 @@ const Enterprises = ({ navigation }) => {
                 onPress={previousPage}/>
             </View>
             <View style={styles.scrollViewContainer}>
-                <ScrollView style={styles.scrollView} overScrollMode='never'>
+                <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
+                }>
                     {enterpriseList.map(renderEnterprises)}
                 </ScrollView>
                 <View style={styles.createButtonContainer}>

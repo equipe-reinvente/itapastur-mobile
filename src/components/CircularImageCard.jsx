@@ -11,9 +11,13 @@ const CircularImageCard = ({title = "",
                         alignItems: 'flex-start',
                         height: style['height'],
                         width: style['width'],},
-                        id = 0,}) => {
+                        id = 0,
+                        category = ""}) => {
 
     const imageBorderRadius = style['width'] / 2;
+    try {
+        if (image.uri === null) image = require("../images/imagePlaceholder.png");
+    } catch {}
 
     const styles = StyleSheet.create({
         container: style,
@@ -60,7 +64,7 @@ const CircularImageCard = ({title = "",
             <View style={styles.overlayContainer}>
                 <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false}
                     contentContainerStyle={styles.buttonContainer} disableElevation
-                    onPress={() => callback(id)} />
+                    onPress={() => callback(id, category)} />
             </View>
         </View>
     );

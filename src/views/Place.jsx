@@ -5,28 +5,27 @@ import ImageCarousel from "../components/ImageCarousel";
 import Socials from "../components/Socials";
 import RouteTraceButton from "../components/RouteTraceButton";
 
-const PlaceView = () => {
-  const description = `A pedra do frade é cercada por lendas. Conta-se por exemplo,
-  que a pedra é a morada de uma princesa encantada, e que é impossível subir até seu topo.`;
+const PlaceView = ({ navigation, route }) => {
+  
+  const { placeData } = route.params; 
 
-  const image = { source: require("../assets/PedraDoFrade.jpg")}
+  const image = { source: {uri: placeData['image_one']}}
 
   const images = [
-    { source: require("../assets/PedraDoFrade.jpg") },
-    { source: require("../assets/PedraDoFrade.jpg") },
-    { source: require("../assets/PedraDoFrade.jpg") },
-    { source: require("../assets/PedraDoFrade.jpg") }
+    { source: {uri: placeData['image_one']} },
+    { source: {uri: placeData['image_two']} },
+    { source: {uri: placeData['image_three']} }
   ];
 
   return (
     <View style={styles.container}>
       <PlaceTitle
-        title={"Pedra do Frade"}
-        category={"Ponto turístico"}
+        title={placeData['name']}
+        category={placeData['category']}
         image={image}
       />
 
-      <PlaceDescription description={description} />
+      <PlaceDescription description={placeData['description']} />
 
       <View style={styles.carouselContainer}>
         <ImageCarousel images={images}/>
