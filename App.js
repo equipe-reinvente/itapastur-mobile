@@ -6,11 +6,12 @@ import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
 import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
-import Register from './src/views/Register';
+import Register from "./src/views/Register";
 import Notifications from "./src/views/Notifications";
 import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
 import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
 import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
+import EventInfoCreation from "./src/views/EventInfoCreation";
 
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
@@ -49,9 +50,13 @@ export default function App() {
               options={{ title: "Register", headerShown: false }}
             />
             <Stack.Screen
-                name="Notifications"
-                component={Notifications}
-                options={{ title: "Notifications", headerShown: false, animation: 'slide_from_right'}}
+              name="Notifications"
+              component={Notifications}
+              options={{
+                title: "Notifications",
+                headerShown: false,
+                animation: "slide_from_right",
+              }}
             />
             <Stack.Screen
               name="EnterpriseInfoCreation"
@@ -70,6 +75,11 @@ export default function App() {
               name="EnterpriseImageCreation"
               component={EnterpriseImageCreation}
               options={{ title: "EnterpriseImageCreation", headerShown: false }}
+            />
+            <Stack.Screen
+              name="EventInfoCreation"
+              component={EventInfoCreation}
+              options={{ title: "EventInfoCreation", headerShown: false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
