@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { Text, Button } from "@react-native-material/core";
+import { Text } from "@react-native-material/core";
 import { useState } from "react";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
@@ -9,6 +9,7 @@ import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhone
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
+import CreationMainButton from "../components/CreationMainButton";
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -129,16 +130,11 @@ const EnterpriseInfoCreation = ({ navigation }) => {
           />
         </View>
 
-        <View style={styles.buttonContainer}>
-          <Button
-            title={"PRÓXIMA ETAPA"}
-            titleStyle={styles.buttonText}
-            color="#1daf6e"
-            contentContainerStyle={{height: 50}}
-            onPress={handleNextStepButton}
-            style={styles.button}
-          />
-        </View>
+        <CreationMainButton
+          buttonText={"PRÓXIMA ETAPA"}
+          color={"#1daf6e"}
+          onPress={handleNextStepButton}
+        />
       </View>
     </KeyboardAvoidingWrapper>
   );
@@ -155,13 +151,6 @@ const styles = StyleSheet.create({
   content: {
     marginBottom: 30
   },
-  input: {
-    width: 350,
-    borderColor: 'gray',
-    color: 'gray',
-    tintColor: 'gray',
-    marginBottom: 10
-  },
   selectDropdown: {
     width: 350,
     borderWidth: 0.8,
@@ -175,17 +164,6 @@ const styles = StyleSheet.create({
   dropdown: {
     borderRadius: 3,
     marginTop: -53,
-  },
-  buttonContainer: {
-    marginTop: 50
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
   },
   errorText: {
     color: 'red',

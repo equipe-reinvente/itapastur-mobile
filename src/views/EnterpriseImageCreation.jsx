@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
-import { Button } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -9,6 +8,7 @@ import { useEnterprise } from "../contexts/EnterpriseContext";
 import { GetContext } from "../components/AppContext";
 import BackNavigationButton from '../components/BackNavigationButton';
 import CreationTitle from '../components/CreationTitle';
+import CreationMainButton from "../components/CreationMainButton";
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -117,71 +117,58 @@ const EnterpriseImageCreation = ({ navigation }) => {
         handleBackButton={handleBackButton}
       />
 
-        <View style={styles.scrollViewContainer}>
-          <ScrollView overScrollMode='never' style={{width: '100%'}}>
-            <View style={styles.content}>
-              <CreationTitle
-                title={"Mostre seu empreendimento\nao mundo!"}
-                description={"Esse é o momento de caprichar!"}
-              />
-
-              {enterpriseData.images[0] ? (
-                <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
+      <View style={styles.scrollViewContainer}>
+        <ScrollView overScrollMode='never' style={{width: '100%'}}>
+          <View style={styles.content}>
+            <CreationTitle
+              title={"Mostre seu empreendimento\nao mundo!"}
+              description={"Esse é o momento de caprichar!"}
+            />
+            {enterpriseData.images[0] ? (
+              <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
+              ) : (
+                <TouchableWithoutFeedback onPress={pickImage}>
+                  <View style={styles.selectImageContainer}>
+                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+                    <View style={styles.plusCircleContainer}>
+                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
                     </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-
-              {enterpriseData.images[1] ? (
-                <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              )
+            }
+            {enterpriseData.images[1] ? (
+              <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
+              ) : (
+                <TouchableWithoutFeedback onPress={pickImage}>
+                  <View style={styles.selectImageContainer}>
+                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+                    <View style={styles.plusCircleContainer}>
+                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
                     </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-
-              {enterpriseData.images[2] ? (
-                <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              )
+            }
+            {enterpriseData.images[2] ? (
+              <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
+              ) : (
+                <TouchableWithoutFeedback onPress={pickImage}>
+                  <View style={styles.selectImageContainer}>
+                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+                    <View style={styles.plusCircleContainer}>
+                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
                     </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <Button
-                title={"FINALIZAR CADASTRO"}
-                titleStyle={styles.buttonText}
-                color="#1daf6e"
-                contentContainerStyle={{height: 50}}
-                onPress={handleFinishButton}
-                style={styles.button}
-                loading={loading}
-              />
-            </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              )
+            }
+          </View>
+          <CreationMainButton
+            buttonText={"FINALIZAR CADASTRO"}
+            color={"#1daf6e"}
+            onPress={handleFinishButton}
+          />
         </ScrollView>
       </View>
       <Toast />
@@ -231,18 +218,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: -15,
     right: -18,
-  },
-  buttonContainer: {
-    marginTop: 5,
-    marginBottom: "10%"
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
   }
 });
 

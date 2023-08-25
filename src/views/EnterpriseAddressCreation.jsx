@@ -1,9 +1,9 @@
 import { View, StyleSheet } from "react-native";
-import { Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
+import CreationMainButton from "../components/CreationMainButton";
 
 const EnterpriseAddressCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -70,16 +70,11 @@ const EnterpriseAddressCreation = ({ navigation }) => {
         />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <Button
-          title={"PRÓXIMA ETAPA"}
-          titleStyle={styles.buttonText}
-          color="#1daf6e"
-          contentContainerStyle={{height: 50}}
-          onPress={handleNextStepButton}
-          style={styles.button}
-        />
-      </View>
+      <CreationMainButton
+        buttonText={"PRÓXIMA ETAPA"}
+        color={"#1daf6e"}
+        onPress={handleNextStepButton}
+      />
     </View>
   )
 };
@@ -96,17 +91,6 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 10,
     marginBottom: 30
-  },
-  buttonContainer: {
-    marginTop: 50
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
   }
 });
 
