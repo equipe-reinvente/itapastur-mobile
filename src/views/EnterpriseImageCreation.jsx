@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
-import { Text, Button } from "@react-native-material/core";
-import { IconButton } from "@react-native-material/core";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, StyleSheet, ScrollView } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import { GetContext } from "../components/AppContext";
+import BackNavigationButton from '../components/BackNavigationButton';
+import CreationTitle from '../components/CreationTitle';
+import CreationMainButton from "../components/CreationMainButton";
+import SelectImage from '../components/SelectImage';
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,29 @@ const EnterpriseImageCreation = ({ navigation }) => {
         ...prevState,
         images: [...prevState.images, imageURI],
       }));
+    }
+  }
+
+  const editImage = async (imageIndex) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const imageURI = result.assets[0].uri;
+
+      setEnterpriseData((prevState) => {
+        const updatedImages = [...prevState.images];
+        updatedImages[imageIndex] = imageURI;
+  
+        return {
+          ...prevState,
+          images: updatedImages,
+        };
+      });
     }
   }
 
@@ -70,7 +94,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
     return data;
   };
 
-  const handleTopLeftButton = () => navigation.navigate('EnterpriseAddressCreation');
+  const handleBackButton = () => navigation.navigate('EnterpriseAddressCreation');
 
   const handleFinishButton = async () => {
     const data = buildEnterpriseFormData();
@@ -110,83 +134,43 @@ const EnterpriseImageCreation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topLeftButton}>
-        <IconButton
-          icon={() => (
-            <MaterialCommunityIcons
-              name={'chevron-left'}
-              size={40}
-              color={"#1DAF6E"}
+      <BackNavigationButton
+        size={40}
+        color={"#1DAF6E"}
+        handleBackButton={handleBackButton}
+      />
+
+      <View style={styles.scrollViewContainer}>
+        <ScrollView overScrollMode='never' style={{width: '100%'}}>
+          <View style={styles.content}>
+            <CreationTitle
+              title={"Mostre seu empreendimento\nao mundo!"}
+              description={"Esse é o momento de caprichar!"}
             />
-          )}
-          onPress={handleTopLeftButton}
-        />
-      </View>
-        <View style={styles.scrollViewContainer}>
-          <ScrollView overScrollMode='never' style={{width: '100%'}}>
-            <View style={styles.content}>
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>Mostre seu empreendimento ao mundo!</Text>
-                <Text style={styles.description}>Esse é o momento de caprichar!</Text>
-              </View>
 
-              {enterpriseData.images[0] ? (
-                <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+            <SelectImage
+              image={enterpriseData.images[0]}
+              pickImage={pickImage}
+              editImage={() => editImage(0)}
+            />
+      
+            <SelectImage
+              image={enterpriseData.images[1]}
+              pickImage={pickImage}
+              editImage={() => editImage(1)}
+            />
 
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-
-              {enterpriseData.images[1] ? (
-                <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-
-              {enterpriseData.images[2] ? (
-                <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <Button
-                title={"FINALIZAR CADASTRO"}
-                titleStyle={styles.buttonText}
-                color="#1daf6e"
-                contentContainerStyle={{height: 50}}
-                onPress={handleFinishButton}
-                style={styles.button}
-                loading={loading}
-              />
-            </View>
+            <SelectImage
+              image={enterpriseData.images[2]}
+              pickImage={pickImage}
+              editImage={() => editImage(2)}
+            />
+          </View>
+          <CreationMainButton
+            buttonText={"FINALIZAR CADASTRO"}
+            color={"#1daf6e"}
+            onPress={handleFinishButton}
+          />
         </ScrollView>
       </View>
       <Toast />
@@ -212,64 +196,9 @@ const styles = StyleSheet.create({
     top: 30,
     paddingBottom: 20,
   },
-  topLeftButton: {
-    position: "absolute",
-    top: -25,
-    left: -20,
-  },
   content: {
     marginBottom: 30,
   },
-  textContainer: {
-    position: 'relative',
-    marginRight: 20,
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 42,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#5E5E5E"
-  },
-  selectImageContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 350,
-    height: 120,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#8C8C8C",
-    marginBottom: 12
-  },
-  imageContainer: {
-    width: 350,
-    height: 150,
-    borderRadius: 8,
-    marginBottom: 10
-  },
-  plusCircleContainer: {
-    position: "absolute",
-    bottom: -15,
-    right: -18,
-  },
-  buttonContainer: {
-    marginTop: 5,
-    marginBottom: "10%"
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
-  }
 });
 
 export default EnterpriseImageCreation;
