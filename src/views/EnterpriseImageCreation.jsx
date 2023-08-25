@@ -33,6 +33,29 @@ const EnterpriseImageCreation = ({ navigation }) => {
     }
   }
 
+  const editImage = async (imageIndex) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const imageURI = result.assets[0].uri;
+
+      setEnterpriseData((prevState) => {
+        const updatedImages = [...prevState.images];
+        updatedImages[imageIndex] = imageURI;
+  
+        return {
+          ...prevState,
+          images: updatedImages,
+        };
+      });
+    }
+  }
+
   const buildEnterpriseFormData = () => {
     const data = new FormData();
 
@@ -127,17 +150,20 @@ const EnterpriseImageCreation = ({ navigation }) => {
 
             <SelectImage
               image={enterpriseData.images[0]}
-              onPress={pickImage}
+              pickImage={pickImage}
+              editImage={() => editImage(0)}
             />
       
             <SelectImage
               image={enterpriseData.images[1]}
-              onPress={pickImage}
+              pickImage={pickImage}
+              editImage={() => editImage(1)}
             />
 
             <SelectImage
               image={enterpriseData.images[2]}
-              onPress={pickImage}
+              pickImage={pickImage}
+              editImage={() => editImage(2)}
             />
           </View>
           <CreationMainButton

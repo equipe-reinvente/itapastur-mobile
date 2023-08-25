@@ -1,13 +1,15 @@
 import { View, StyleSheet, TouchableWithoutFeedback, Image } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const SelectImage = ({ image, onPress }) => {
+const SelectImage = ({ image, pickImage, editImage }) => {
   return (
     <View>
       {image ? (
-        <Image source={{ uri: image }} style={styles.imageContainer} />
+        <TouchableWithoutFeedback onPress={editImage}>
+          <Image source={{ uri: image }} style={styles.imageContainer} />
+        </TouchableWithoutFeedback>
         ) : (
-          <TouchableWithoutFeedback onPress={onPress}>
+          <TouchableWithoutFeedback onPress={pickImage}>
             <View style={styles.selectImageContainer}>
               <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
               <View style={styles.plusCircleContainer}>
