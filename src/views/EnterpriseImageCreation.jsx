@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, StyleSheet, ScrollView } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
@@ -9,6 +8,7 @@ import { GetContext } from "../components/AppContext";
 import BackNavigationButton from '../components/BackNavigationButton';
 import CreationTitle from '../components/CreationTitle';
 import CreationMainButton from "../components/CreationMainButton";
+import SelectImage from '../components/SelectImage';
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -124,45 +124,21 @@ const EnterpriseImageCreation = ({ navigation }) => {
               title={"Mostre seu empreendimento\nao mundo!"}
               description={"Esse é o momento de caprichar!"}
             />
-            {enterpriseData.images[0] ? (
-              <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
-              ) : (
-                <TouchableWithoutFeedback onPress={pickImage}>
-                  <View style={styles.selectImageContainer}>
-                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-                    <View style={styles.plusCircleContainer}>
-                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            }
-            {enterpriseData.images[1] ? (
-              <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
-              ) : (
-                <TouchableWithoutFeedback onPress={pickImage}>
-                  <View style={styles.selectImageContainer}>
-                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-                    <View style={styles.plusCircleContainer}>
-                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            }
-            {enterpriseData.images[2] ? (
-              <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
-              ) : (
-                <TouchableWithoutFeedback onPress={pickImage}>
-                  <View style={styles.selectImageContainer}>
-                    <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
-                    <View style={styles.plusCircleContainer}>
-                      <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            }
+
+            <SelectImage
+              image={enterpriseData.images[0]}
+              onPress={pickImage}
+            />
+      
+            <SelectImage
+              image={enterpriseData.images[1]}
+              onPress={pickImage}
+            />
+
+            <SelectImage
+              image={enterpriseData.images[2]}
+              onPress={pickImage}
+            />
           </View>
           <CreationMainButton
             buttonText={"FINALIZAR CADASTRO"}
@@ -197,28 +173,6 @@ const styles = StyleSheet.create({
   content: {
     marginBottom: 30,
   },
-  selectImageContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 350,
-    height: 120,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#8C8C8C",
-    marginBottom: 12
-  },
-  imageContainer: {
-    width: 350,
-    height: 150,
-    borderRadius: 8,
-    marginBottom: 10
-  },
-  plusCircleContainer: {
-    position: "absolute",
-    bottom: -15,
-    right: -18,
-  }
 });
 
 export default EnterpriseImageCreation;
