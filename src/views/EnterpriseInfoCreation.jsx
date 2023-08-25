@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { Text, TextInput, Button } from "@react-native-material/core";
+import { Text, Button } from "@react-native-material/core";
 import { useState } from "react";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
@@ -7,7 +7,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
 import BackNavigationButton from "../components/BackNavigationButton";
-import EnterpriseEventCreationTitle from "../components/EnterpriseEventCreationTitle";
+import CreationTitle from "../components/CreationTitle";
+import CreationInput from "../components/CreationInput";
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -77,22 +78,28 @@ const EnterpriseInfoCreation = ({ navigation }) => {
         />
 
         <View style={styles.content}>
-          <EnterpriseEventCreationTitle
+          <CreationTitle
             title={"Crie seu Empreendimento"}
             description={"Divulgue seu empreendimento no Itapas tur!"}
           />
 
-          <TextInput
-            label="Nome"
-            variant="outlined"
-            autoCapitalize='none'
+          <CreationInput
+            label={"Nome"}
             onChangeText={onChangeNameInput}
-            color='gray'
             value={enterpriseData.name}
-            placeholder="Açaí da Pedra do Frade"
-            style={styles.input}
+            placeholder={"Açaí da Pedra do Frade"}
           />
+
           {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+
+          <CreationInput
+            label={"Descrição"}
+            multiline
+            numberOfLines={8}
+            onChangeText={onChangeDescriptionInput}
+            value={enterpriseData.description}
+            placeholder={"Venda seu peixe aqui! :)"}
+          />
 
           <SelectDropdown
             data={categories}
@@ -112,31 +119,13 @@ const EnterpriseInfoCreation = ({ navigation }) => {
             rowTextStyle={styles.selectDropdownText}
           />
 
-          <TextInput
-            label="Descrição"
-            variant="outlined"
-            autoCapitalize='none'
-            onChangeText={onChangeDescriptionInput}
-            color='gray'
-            value={enterpriseData.description}
-            multiline
-            numberOfLines={8}
-            textAlignVertical="top"
-            placeholder="Venda seu peixe aqui! :)"
-            style={styles.input}
-          />
-
-          <TextInput
-            label="Número de Telefone"
-            variant="outlined"
-            autoCapitalize='none'
+          <CreationInput
+            label={"Número de Telefone"}
             onChangeText={onChangePhoneNumberInput}
-            color='gray'
             value={enterpriseData.phoneNumber}
-            placeholder="(85) 99999-9999"
-            keyboardType="numeric"
+            placeholder={"(85) 99999-9999"}
+            keyboardType={"numeric"}
             maxLength={15}
-            style={styles.input}
           />
         </View>
 

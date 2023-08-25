@@ -8,7 +8,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import { GetContext } from "../components/AppContext";
 import BackNavigationButton from '../components/BackNavigationButton';
-import EnterpriseEventCreationTitle from '../components/EnterpriseEventCreationTitle';
+import CreationTitle from '../components/CreationTitle';
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -120,7 +120,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
         <View style={styles.scrollViewContainer}>
           <ScrollView overScrollMode='never' style={{width: '100%'}}>
             <View style={styles.content}>
-              <EnterpriseEventCreationTitle
+              <CreationTitle
                 title={"Mostre seu empreendimento\nao mundo!"}
                 description={"Esse é o momento de caprichar!"}
               />

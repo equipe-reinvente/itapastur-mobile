@@ -1,8 +1,9 @@
 import { View, StyleSheet } from "react-native";
-import { TextInput, Button } from "@react-native-material/core";
+import { Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import BackNavigationButton from "../components/BackNavigationButton";
-import EnterpriseEventCreationTitle from "../components/EnterpriseEventCreationTitle";
+import CreationTitle from "../components/CreationTitle";
+import CreationInput from "../components/CreationInput";
 
 const EnterpriseAddressCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -41,43 +42,31 @@ const EnterpriseAddressCreation = ({ navigation }) => {
       />
 
       <View style={styles.content}>
-        <EnterpriseEventCreationTitle
+        <CreationTitle
           title={"Qual a\nlocalização?"}
           description={"Mostre onde fica o seu empreendimento! :D"}
         />
 
-        <TextInput
-          label="Rua"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Rua"}
           onChangeText={onChangeStreetAddressInput}
-          color='gray'
           value={enterpriseData.streetAddress}
-          placeholder="2 de Fevereiro"
-          style={styles.input}
+          placeholder={"2 de Fevereiro"}
         />
 
-        <TextInput
-          label="Número"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Número"}
           onChangeText={onChangeAddressNumberInput}
-          color='gray'
           value={enterpriseData.addressNumber}
-          placeholder="10"
-          keyboardType="numeric"
-          style={styles.input}
+          placeholder={"10"}
+          keyboardType={"numeric"}
         />
 
-        <TextInput
-          label="Bairro"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Bairro"}
           onChangeText={onChangeNeighborhoodAddressInput}
-          color='gray'
           value={enterpriseData.neighborhoodAddress}
-          placeholder="Centro"
-          style={styles.input}
+          placeholder={"Centro"}
         />
       </View>
 
@@ -107,13 +96,6 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 10,
     marginBottom: 30
-  },
-  input: {
-    width: 350,
-    borderColor: 'gray',
-    color: 'gray',
-    tintColor: 'gray',
-    marginBottom: 10
   },
   buttonContainer: {
     marginTop: 50

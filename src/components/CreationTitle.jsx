@@ -1,7 +1,7 @@
 import { View, StyleSheet } from "react-native";
 import { Text } from "@react-native-material/core";
 
-export const EnterpriseEventCreationTitle = ({ title, description }) => {
+export const CreationTitle = ({ title, description }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
@@ -27,5 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EnterpriseEventCreationTitle;
-
+export default CreationTitle;
