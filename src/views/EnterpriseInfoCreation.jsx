@@ -3,10 +3,10 @@ import { Text, TextInput, Button } from "@react-native-material/core";
 import { useState } from "react";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
-import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
+import BackNavigationButton from "../components/BackNavigationButton";
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -56,7 +56,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
     }
   };
 
-  const handleTopLeftButton = () => navigation.goBack(); // Definir view
+  const handleBackButton = () => navigation.goBack();
 
   const handleNextStepButton = () => {
     if (!isValidName(enterpriseData.name)) {
@@ -69,18 +69,12 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   return (
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
-        <View style={styles.topLeftButton}>
-          <IconButton
-            icon={() => (
-              <MaterialCommunityIcons
-                name={'chevron-left'}
-                size={40}
-                color={"#1DAF6E"}
-              />
-            )}
-            onPress={handleTopLeftButton}
-          />
-        </View>
+        <BackNavigationButton
+          size={40}
+          color={"#1DAF6E"}
+          handleBackButton={handleBackButton}
+        />
+
         <View style={styles.content}>
           <View style={styles.textContainer}>
             <Text style={styles.title}>Crie seu Empreendimento</Text>
@@ -167,11 +161,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 120,
     marginBottom: 80
-  },
-  topLeftButton: {
-    position: "absolute",
-    top: -70,
-    left: -20
   },
   content: {
     marginBottom: 30

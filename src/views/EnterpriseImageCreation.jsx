@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
 import { Text, Button } from "@react-native-material/core";
-import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import { GetContext } from "../components/AppContext";
+import BackNavigationButton from '../components/BackNavigationButton';
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -70,7 +70,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
     return data;
   };
 
-  const handleTopLeftButton = () => navigation.navigate('EnterpriseAddressCreation');
+  const handleBackButton = () => navigation.navigate('EnterpriseAddressCreation');
 
   const handleFinishButton = async () => {
     const data = buildEnterpriseFormData();
@@ -110,18 +110,12 @@ const EnterpriseImageCreation = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topLeftButton}>
-        <IconButton
-          icon={() => (
-            <MaterialCommunityIcons
-              name={'chevron-left'}
-              size={40}
-              color={"#1DAF6E"}
-            />
-          )}
-          onPress={handleTopLeftButton}
-        />
-      </View>
+      <BackNavigationButton
+        size={40}
+        color={"#1DAF6E"}
+        handleBackButton={handleBackButton}
+      />
+
         <View style={styles.scrollViewContainer}>
           <ScrollView overScrollMode='never' style={{width: '100%'}}>
             <View style={styles.content}>
@@ -211,11 +205,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     top: 30,
     paddingBottom: 20,
-  },
-  topLeftButton: {
-    position: "absolute",
-    top: -25,
-    left: -20,
   },
   content: {
     marginBottom: 30,
