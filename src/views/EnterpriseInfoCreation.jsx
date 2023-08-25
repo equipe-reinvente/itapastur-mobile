@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
 import BackNavigationButton from "../components/BackNavigationButton";
+import EnterpriseEventCreationTitle from "../components/EnterpriseEventCreationTitle";
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -76,10 +77,10 @@ const EnterpriseInfoCreation = ({ navigation }) => {
         />
 
         <View style={styles.content}>
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>Crie seu Empreendimento</Text>
-            <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
-          </View>
+          <EnterpriseEventCreationTitle
+            title={"Crie seu Empreendimento"}
+            description={"Divulgue seu empreendimento no Itapas tur!"}
+          />
 
           <TextInput
             label="Nome"
@@ -164,20 +165,6 @@ const styles = StyleSheet.create({
   },
   content: {
     marginBottom: 30
-  },
-  textContainer: {
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 40,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#999999"
   },
   input: {
     width: 350,

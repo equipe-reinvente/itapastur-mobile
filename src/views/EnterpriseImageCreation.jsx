@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Image, ScrollView } from "react-native";
-import { Text, Button } from "@react-native-material/core";
+import { Button } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -8,6 +8,7 @@ import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import { GetContext } from "../components/AppContext";
 import BackNavigationButton from '../components/BackNavigationButton';
+import EnterpriseEventCreationTitle from '../components/EnterpriseEventCreationTitle';
 
 const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -119,10 +120,10 @@ const EnterpriseImageCreation = ({ navigation }) => {
         <View style={styles.scrollViewContainer}>
           <ScrollView overScrollMode='never' style={{width: '100%'}}>
             <View style={styles.content}>
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>Mostre seu empreendimento ao mundo!</Text>
-                <Text style={styles.description}>Esse é o momento de caprichar!</Text>
-              </View>
+              <EnterpriseEventCreationTitle
+                title={"Mostre seu empreendimento\nao mundo!"}
+                description={"Esse é o momento de caprichar!"}
+              />
 
               {enterpriseData.images[0] ? (
                 <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
@@ -208,22 +209,6 @@ const styles = StyleSheet.create({
   },
   content: {
     marginBottom: 30,
-  },
-  textContainer: {
-    position: 'relative',
-    marginRight: 20,
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 42,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#5E5E5E"
   },
   selectImageContainer: {
     flex: 1,

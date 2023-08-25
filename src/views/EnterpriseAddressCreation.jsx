@@ -1,7 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import { Text, TextInput, Button } from "@react-native-material/core";
+import { TextInput, Button } from "@react-native-material/core";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import BackNavigationButton from "../components/BackNavigationButton";
+import EnterpriseEventCreationTitle from "../components/EnterpriseEventCreationTitle";
 
 const EnterpriseAddressCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -40,12 +41,10 @@ const EnterpriseAddressCreation = ({ navigation }) => {
       />
 
       <View style={styles.content}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>Qual a localização?</Text>
-          <Text style={styles.description}>
-            Mostre onde fica o seu empreendimento! :D
-          </Text>
-        </View>
+        <EnterpriseEventCreationTitle
+          title={"Qual a\nlocalização?"}
+          description={"Mostre onde fica o seu empreendimento! :D"}
+        />
 
         <TextInput
           label="Rua"
@@ -106,21 +105,8 @@ const styles = StyleSheet.create({
     marginBottom: 80
   },
   content: {
+    marginTop: 10,
     marginBottom: 30
-  },
-  textContainer: {
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 42,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#999999"
   },
   input: {
     width: 350,
