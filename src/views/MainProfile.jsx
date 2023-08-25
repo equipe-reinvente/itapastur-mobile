@@ -28,7 +28,6 @@ const MainProfile = ({ navigation }) => {
     };
 
     const setUsernameText = () => {
-        console.log(user);
         if (user['name'] !== "" && user['name'] !== null) setUsername(user['name']);
         else setUsername(user['email'].split("@")[0]);
         if (username.length > 16) {

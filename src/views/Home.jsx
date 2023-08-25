@@ -176,7 +176,7 @@ const Home = () => {
 
     };
 
-    const getTrendingPlaces = (data) => {
+    const getTrendingPlaces = async (data) => {
         let places = data['lojas'].sort((a, b) => b['favorites'] - a['favorites']);
         places = places.concat(data['artesoes'].sort((a, b) => b['favorites'] - a['favorites']));
         places = places.concat(data['pontos'].sort((a, b) => b['favorites'] - a['favorites']));
@@ -185,17 +185,17 @@ const Home = () => {
         setTrendingPlaces(newData);
     };
 
-    const getStores = (data) => {
+    const getStores = async (data) => {
         const newData = data['lojas'].sort((a, b) => b['favorites'] - a['favorites']).slice(0, 5);
         setStores(newData);
     };
     
-    const getArtisans = (data) => {
+    const getArtisans = async (data) => {
         const newData = data['artesoes'].slice(0, 4);
         setArtisansPlaces(newData);
     };
 
-    const getNewPlaces = (data) => {
+    const getNewPlaces = async (data) => {
         let places = data['lojas'].sort((a, b) => b['id'] - a['id']);
         places = places.concat(data['artesoes'].sort((a, b) => b['id'] - a['id']));
         places = places.concat(data['pontos'].sort((a, b) => b['id'] - a['id']));
@@ -224,13 +224,13 @@ const Home = () => {
           getNotificationCount();
         } catch (error) {
           console.error('Erro ao buscar categorias:', error);
-        }
+        };
     };
 
     const renderTrendingPlaces = (item) => {
         if (item['name'].length > 14) {
             item['name'] = item['name'].substring(0, 15) + "...";
-        }
+        };
         return (
             <PlaceCard image={{uri: item['image_one']}} title={item['name']} style={styles.placeCardStyle} likes={item['favorites']} id={item['id']} key={item['id']}/>
         );
@@ -239,7 +239,7 @@ const Home = () => {
     const renderCircularImageCard = (item) => {
         if (item['name'].length > 14) {
             item['name'] = item['name'].substring(0, 15) + "...";
-        }
+        };
         return (
             <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}}/>
         );
