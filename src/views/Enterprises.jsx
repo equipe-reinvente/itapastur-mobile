@@ -14,7 +14,7 @@ const Enterprises = ({ navigation }) => {
     const { user, authToken } = GetContext(); 
 
     const openSelectedEnterprise = (key) => {
-        let enterpriseData = enterpriseList[key];
+        let enterpriseData = enterpriseList.filter(item => item['id'] === key)[0];
         navigation.navigate("EnterprisesConfiguration", {enterpriseData});
     };
 
@@ -36,7 +36,7 @@ const Enterprises = ({ navigation }) => {
             item['description'] = item['description'].substring(0, 31) + "...";
         }
         return (
-            <ThumbnailButton title={item['name']} subtitle={item['description']} key={key} icon='chevron-right' callback={openSelectedEnterprise} iconColor='#1DAF6E' id={item['id']} image={{uri: item['image_one']}}/>
+            <ThumbnailButton title={item['name']} subtitle={item['description']} key={item['id']} icon='chevron-right' callback={openSelectedEnterprise} iconColor='#1DAF6E' id={item['id']} image={{uri: item['image_one']}}/>
         );
     };
 
@@ -52,7 +52,6 @@ const Enterprises = ({ navigation }) => {
                         }
                     );
                     const data = response.data['user_enterprises'];
-                    console.log(data);
                     if (data !== enterpriseList)setEnterpriseList(data);
                 } catch (error) {
                     if (axios.isAxiosError(error)) {

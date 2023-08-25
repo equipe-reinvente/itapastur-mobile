@@ -11,8 +11,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         iconColor = 'black',
                         isIconClickable=false,
                         iconCallback=() => {},
-                        id = -1}, 
-                        props) => {
+                        id = 0}) => {
 
     const styles = StyleSheet.create({
         container: style,
