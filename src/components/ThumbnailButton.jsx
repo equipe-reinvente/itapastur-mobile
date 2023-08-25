@@ -13,6 +13,10 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         iconCallback=() => {},
                         id = 0}) => {
 
+    try {
+        if (image.uri === null) image = require("../images/imagePlaceholder.png");
+    } catch {}
+
     const styles = StyleSheet.create({
         container: style,
         buttonContainer: {

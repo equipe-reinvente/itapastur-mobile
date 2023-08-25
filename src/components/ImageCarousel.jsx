@@ -6,6 +6,12 @@ const ImageCarousel = ({ images }) => {
   const carouselRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
+  try {
+    images.forEach((image, index) => {
+      if (image.source.uri === null) image.source = require("../images/imagePlaceholder.png");
+    });
+  } catch {}
+
   const renderCarouselItem = ({ item }) => (
     <View style={styles.carouselItem}>
       <Image source={item.source} style={styles.image} />

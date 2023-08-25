@@ -4,6 +4,7 @@ import { GetContext } from '../components/AppContext';
 import EventImageCarousel from '../components/EventImageCarousel';
 import { IconButton } from '@react-native-material/core';
 import { useEffect, useState } from 'react';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import axios from 'axios';
 import PlaceCard from '../components/PlaceCard';
 import CircularImageCard from '../components/CircularImageCard';
@@ -25,7 +26,7 @@ const itemInfo = [
     {date: "26/01", time: "20:00"}
 ]
 
-const Home = () => {
+const Home = ({ navigation }) => {
 
     const [notificationCount, setNotificationCount] = useState(0);
     const navigationPerfil = useNavigation();
@@ -239,7 +240,14 @@ const Home = () => {
             item['name'] = item['name'].substring(0, 15) + "...";
         };
         return (
-            <PlaceCard image={{uri: item['image_one']}} title={item['name']} style={styles.placeCardStyle} likes={item['favorites']} id={item['id']} key={item['id']}/>
+            <PlaceCard image={{uri: item['image_one']}} 
+            title={item['name']} 
+            style={styles.placeCardStyle} 
+            likes={item['favorites']} 
+            id={item['id']} 
+            key={item['id']} 
+            callback={openPressedcard}
+            category={item['category']}/>
         );
     };
 
@@ -248,7 +256,7 @@ const Home = () => {
             item['name'] = item['name'].substring(0, 15) + "...";
         };
         return (
-            <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}}/>
+            <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}} callback={openPressedcard} category={item['category']}/>
         );
     };
 
@@ -261,7 +269,10 @@ const Home = () => {
             <View style={styles.storeImageCard} key={item['id']}>
                 <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
                                                                                 height: '100%',
-                                                                                width: 330}}/>
+                                                                                width: 330}}
+                                                                                callback={openPressedcard}
+                                                                                category={item['category']}
+                                                                                id={item['id']}/>
                 <View style={{position: "relative", left: -10, zIndex: -1}}>
                     <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
@@ -287,6 +298,21 @@ const Home = () => {
             </View>
         )
     }
+
+    const openPressedcard = (id, category) => {
+        if (category == "Ponto Turístico") category = "pontos";
+        else if (category == "Artesão") category = "artesoes";
+        else if (category == "Lojas") category = "lojas";
+        const placeData = placesData[category].filter(item => item['id'] === id)[0];
+        if (placeData === undefined) {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Parece que esta item não carregou :(',
+                visibilityTime: 2000,
+              });
+        } else navigation.navigate("Place", {placeData});
+    };
 
     const getNotificationCount = async () => {
         let count = 0;
@@ -380,7 +406,8 @@ const Home = () => {
                         </View>
                     </View> 
                 </ScrollView>
-            </View>            
+            </View>  
+            <Toast />          
         </View>
     );
 };

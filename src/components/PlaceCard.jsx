@@ -8,7 +8,8 @@ const PlaceCard = ({ image=require("../images/imagePlaceholder.png"),
                             likes = 0,
                             title = "Unknown",
                             id = 0,
-                            callback = () => {} }) => {
+                            callback = () => {},
+                            category = ""}) => {
   const [likeContainerSize, setLikeContainerSize] = useState(25);
   const [likesCountText, setLikesCountText] = useState(likes + "");
 
@@ -118,7 +119,7 @@ const PlaceCard = ({ image=require("../images/imagePlaceholder.png"),
                 contentContainerStyle={styles.buttonContentContainer} 
                 color='rgba(0, 0, 0, 0)'
                 disableElevation 
-                onPress={() => callback(id)}/>
+                onPress={() => callback(id, category)}/>
         </View>
     </View>
   );
