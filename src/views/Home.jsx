@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, RefreshControl } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
 import EventImageCarousel from '../components/EventImageCarousel';
@@ -36,6 +36,7 @@ const Home = () => {
     const [newPlaces, setNewPlaces] = useState([]);
     const [artisansPlaces, setArtisansPlaces] = useState([]);
     const [stores, setStores] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const styles = StyleSheet.create({
         container: {
@@ -204,6 +205,12 @@ const Home = () => {
         setNewPlaces(newData);
     };
 
+    const refreshControl = async () => {
+        setRefreshing(true);
+        await fetchCategories();
+        setRefreshing(false);
+    }
+
     const fetchCategories = async () => {
         try {
           const response = await axios.get(
@@ -313,7 +320,9 @@ const Home = () => {
                 </View>
             </View>
             <View style={styles.scrollViewContainer}>
-                <ScrollView style={styles.scrollView} overScrollMode='never'>
+                <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
+                }>
                     <View style={styles.eventsContainer}>
                         <EventImageCarousel images={images} 
                         style={{position: 'relative', height: 102, width: 280, left: -20, borderRadius: 15}} 
