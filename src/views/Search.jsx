@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { GetContext } from '../components/AppContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ImageCard from '../components/ImageCard';
+import axios from "axios";
 import CircularImageCard from '../components/CircularImageCard';
 
 const Search = ({ navigation }) => {
@@ -11,11 +12,10 @@ const Search = ({ navigation }) => {
     const [searchText, setSearchText] = useState("");
     const [searchCategory, setSearchCategory] = useState("Todas as Categorias");
     const [showCategories, setShowCategories] = useState(true);
-    const { placesData, setPlacesData } = GetContext();
+    const { placesData, setPlacesData, authToken } = GetContext();
     const [results, setResults] = useState([]);
 
-    const searchByName = async (text) => {
-        if (placesData == {}) await fetchCategories();
+    const searchByName = (text) => {
         setSearchText(text);
         if (results.length > 0) setResults([]);
         if (text !== "" && text !== null) setShowCategories(false);
@@ -32,6 +32,7 @@ const Search = ({ navigation }) => {
               },
             }
           );
+          console.log(response.data);
           let data = response.data["enterprises"];
           if (data !== placesData) setPlacesData(data);
         } catch (error) {
@@ -39,7 +40,8 @@ const Search = ({ navigation }) => {
         }
     };
 
-    const pressedSearchKey = () => {
+    const pressedSearchKey = async () => {
+        await fetchCategories();
         let category = null;
         if (searchCategory === "Pontos turísticos") {
             category = 'pontos';
@@ -143,7 +145,7 @@ const Search = ({ navigation }) => {
             </View>}
             {!showCategories && 
             <View style={styles.scrollViewContainer}>
-                <ScrollView overScrollMode='none' style={{width: '100%'}}>
+                <ScrollView overScrollMode='never' style={{width: '100%'}}>
                     {results.map(renderResults)}
                 </ScrollView>
             </View>}
@@ -254,10 +256,10 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     scrollViewContainer: {
-        position: 'absolute',
+        position: 'relative',
         width: '100%',
         alignItems: 'flex-start',
-        paddingBottom: 100,
+        paddingBottom: 150,
         padding: 20,
         top: 80
     }

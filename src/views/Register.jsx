@@ -42,9 +42,11 @@ const Register = ({ navigation }) => {
     if (!canRegister) return;
 
     let data = { 
-      "email": email,
-      "password": password
-    }
+      "user": {
+          "email": email,
+          "password": password
+      }
+  }
 
     setLoading(true);
 

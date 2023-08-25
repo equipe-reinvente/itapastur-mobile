@@ -186,14 +186,13 @@ const Home = () => {
     };
 
     const getStores = (data) => {
-        //console.log(data['lojas'][0]);
         const newData = data['lojas'].sort((a, b) => b['favorites'] - a['favorites']).slice(0, 5);
         setStores(newData);
     };
     
     const getArtisans = (data) => {
         const newData = data['artesoes'].slice(0, 4);
-        setNewPlaces(newData);
+        setArtisansPlaces(newData);
     };
 
     const getNewPlaces = (data) => {
@@ -217,7 +216,7 @@ const Home = () => {
           );
           let data = response.data["enterprises"];
           if (data !== placesData) setPlacesData(data);
-          console.log("loaded data!");
+          else data = placesData; 
           getArtisans(data);
           getStores(data);
           getTrendingPlaces(data);
@@ -229,18 +228,28 @@ const Home = () => {
     };
 
     const renderTrendingPlaces = (item) => {
+        if (item['name'].length > 14) {
+            item['name'] = item['name'].substring(0, 15) + "...";
+        }
         return (
             <PlaceCard image={{uri: item['image_one']}} title={item['name']} style={styles.placeCardStyle} likes={item['favorites']} id={item['id']} key={item['id']}/>
         );
     };
 
     const renderCircularImageCard = (item) => {
+        if (item['name'].length > 14) {
+            item['name'] = item['name'].substring(0, 15) + "...";
+        }
         return (
             <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}}/>
         );
     };
 
     const renderStores = (item) => {
+        if (item['name'].length > 25) {
+            item['name'] = item['name'].substring(0, 26) + "...";
+        }
+
         return (
             <View style={styles.storeImageCard} key={item['id']}>
                 <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
@@ -282,7 +291,7 @@ const Home = () => {
         setNotificationCount(count);
     };
 
-    useEffect(() => fetchCategories(), []);
+    useEffect(() => {fetchCategories()}, []); 
 
     return (
         <View style={styles.container}>

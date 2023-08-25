@@ -4,19 +4,14 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
+import axios from 'axios'; 
 import ThumbnailButton from '../components/ThumbnailButton';
 import { useNavigation } from '@react-navigation/native';
 
 const Enterprises = ({ navigation }) => {
 
-    const [enterpriseList, setEnterpriseList] = useState([{'title': "Francy's Icecream Factory",
-                                                        'subtitle': 'Gelateria a moda italiana',
-                                                        'image': null,
-                                                        'likes': '4k',
-                                                        'category': 'Gelateria',
-                                                        'address': "Rua Raimundo Felício, 120",
-                                                        'members': ['Francisca Maria', 'Carlos Alberto'],
-                                                        'id': 0}]);
+    const [enterpriseList, setEnterpriseList] = useState([]);
+    const { user, authToken } = GetContext(); 
 
     const openSelectedEnterprise = (key) => {
         let enterpriseData = enterpriseList[key];
@@ -33,18 +28,41 @@ const Enterprises = ({ navigation }) => {
         navigation.goBack();
     };
 
-    const getEnterpriseList = () => {
-        //const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': enterpriseList.length};
-        //setEnterpriseList([...enterpriseList, newItem]);
-    };
-
     const renderEnterprises = (item, key) => {
+        if (item['name'].length > 25) {
+            item['name'] = item['name'].substring(0, 26) + "...";
+        }
+        if (item['description'].length > 30) {
+            item['description'] = item['description'].substring(0, 31) + "...";
+        }
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} icon='chevron-right' callback={openSelectedEnterprise} iconColor='#1DAF6E' id={item['id']}/>
+            <ThumbnailButton title={item['name']} subtitle={item['description']} key={key} icon='chevron-right' callback={openSelectedEnterprise} iconColor='#1DAF6E' id={item['id']} image={{uri: item['image_one']}}/>
         );
     };
 
-    useEffect(getEnterpriseList, []);
+    useEffect( () =>
+            {async function getEnterpriseList() {
+                try {
+                    const response = await axios.get(
+                        'https://itapastur-api.fly.dev/enterprises/' + user['id'], 
+                        {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`,
+                        },
+                        }
+                    );
+                    const data = response.data['user_enterprises'];
+                    console.log(data);
+                    if (data !== enterpriseList)setEnterpriseList(data);
+                } catch (error) {
+                    if (axios.isAxiosError(error)) {
+                        console.error('Erro do Axios:', error.message);
+                      } else {
+                        console.error('Erro:', error.message);
+                      }
+                }
+            }getEnterpriseList();} 
+            , []); 
 
     return (
         <View style={styles.container}>

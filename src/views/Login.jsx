@@ -38,8 +38,10 @@ const Login = ({ navigation }) => {
         if (!canLogin) return;
     
         let data = { 
-          "email": email,
-          "password": password
+            "user": {
+                "email": email,
+                "password": password
+            }
         }
 
         setLoading(true);
