@@ -12,7 +12,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
   const [nameError, setNameError] = useState("");
 
-  const categories = ["Ponto Turístico", "Artesão", "Loja"];
+  const categories = ["Ponto Turístico", "Artesão", "Lojas"];
 
   const onChangeNameInput = (name) => {
     setNameError("");
@@ -25,6 +25,10 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   const isValidName = (name) => name.trim() !== "";
 
   const onSelectCategory = (category) => {
+    if (category == "Ponto Turístico") category = "3";
+    else if (category == "Artesão") category = "2";
+    else if (category == "Lojas") category = "1";
+    console.log(category);
     setEnterpriseData((prevState) => ({
       ...prevState,
       category,

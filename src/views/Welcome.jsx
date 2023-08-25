@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
-  const {login} = GetContext();
+  const { login } = GetContext();
 
   const handleStartButton = async () => {
     try {
@@ -16,18 +16,16 @@ const WelcomeView = ({ navigation }) => {
 
       userData = JSON.parse(userData);
 
+      login(userData);
+
       const response = await axios.get(
-        'https://itapastur-api.fly.dev/healthy_token',
+        'https://itapastur-api.fly.dev/categories/enterprises',
         {
           headers: {
             Authorization: `Bearer ${userData['token']}`,
           },
         }
       );
-
-      console.log(response.data);
-
-      login(userData);
       console.log(userData);
       if (userData['token'] !== null && userData['token'] !== "") {
         navigation.navigate('Tabs');
