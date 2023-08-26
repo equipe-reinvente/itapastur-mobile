@@ -8,7 +8,8 @@ import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
 import SelectImage from "../components/SelectImage";
 import CreationMainButton from "../components/CreationMainButton";
-import { formatDate, removeNonDigitCharacters } from "../utils/formatDate";
+import { formatDate, removeNonDigitCharactersDate } from "../utils/formatDate";
+import { formatTime, removeNonDigitCharactersTime } from "../utils/formatTime";
 
 const EventInfoCreation = ({ navigation }) => {
   const { eventData, setEventData } = useEvent();
@@ -33,6 +34,21 @@ const EventInfoCreation = ({ navigation }) => {
     }));
   };
 
+  const onChangeDateInput = (date) => {
+    setDateError("");
+    if (date.length === 8) {
+      setEventData((prevState) => ({
+        ...prevState,
+        date: formatDate(date),
+      }));
+    } else {
+      setEventData((prevState) => ({
+        ...prevState,
+        date: removeNonDigitCharactersDate(date),
+      }));
+    }
+  };
+
   const isValidDate = (date) => {
     if (!date || date.length < 10) {
       return "Por favor, preencha o campo Data corretamente!";
@@ -54,19 +70,21 @@ const EventInfoCreation = ({ navigation }) => {
     }
   };
 
-  const onChangeDateInput = (date) => {
-    if (date.length === 8) {
+  const onChangeTimeInput = (time) => {
+    const cleanedTime = removeNonDigitCharactersTime(time);
+
+    if (time.length === 4) {
       setEventData((prevState) => ({
         ...prevState,
-        date: formatDate(date),
+        time: formatTime(cleanedTime),
       }));
     } else {
       setEventData((prevState) => ({
         ...prevState,
-        date: removeNonDigitCharacters(date),
+        time: cleanedTime,
       }));
     }
-  };
+  }
 
   const handleBackButton = () => navigation.goBack();
 
@@ -128,9 +146,11 @@ const EventInfoCreation = ({ navigation }) => {
 
             <CreationInput
               label={"Hora"}
-              onChangeText={() => {}}
+              onChangeText={onChangeTimeInput}
               value={eventData.time}
               placeholder={"12:00"}
+              keyboardType={"numeric"}
+              maxLength={5}
             />
 
             {/* <SelectImage /> */}

@@ -6,4 +6,5 @@ export const formatDate = (date) => {
   return `${day}/${month}/${year}`;
 };
 
-export const removeNonDigitCharacters = (date) => date.replace(/[^0-9]/g, "");
+export const removeNonDigitCharactersDate = (date) =>
+  date.replace(/[^0-9]/g, "");
