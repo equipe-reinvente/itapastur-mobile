@@ -122,73 +122,69 @@ const EnterpriseImageCreation = ({ navigation }) => {
           onPress={handleTopLeftButton}
         />
       </View>
-        <View style={styles.scrollViewContainer}>
-          <ScrollView overScrollMode='never' style={{width: '100%'}}>
-            <View style={styles.content}>
-              <View style={styles.textContainer}>
-                <Text style={styles.title}>Mostre seu empreendimento ao mundo!</Text>
-                <Text style={styles.description}>Esse é o momento de caprichar!</Text>
-              </View>
+        <View style={styles.content}>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>Mostre seu empreendimento ao mundo!</Text>
+            <Text style={styles.description}>Esse é o momento de caprichar!</Text>
+          </View>
 
-              {enterpriseData.images[0] ? (
-                <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+          {enterpriseData.images[0] ? (
+            <Image source={{ uri: enterpriseData.images[0] }} style={styles.imageContainer}/>
+            ) : (
+              <TouchableWithoutFeedback onPress={pickImage}>
+                <View style={styles.selectImageContainer}>
+                  <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
 
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
+                  <View style={styles.plusCircleContainer}>
+                    <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          }
 
-              {enterpriseData.images[1] ? (
-                <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+          {enterpriseData.images[1] ? (
+            <Image source={{ uri: enterpriseData.images[1] }} style={styles.imageContainer}/>
+            ) : (
+              <TouchableWithoutFeedback onPress={pickImage}>
+                <View style={styles.selectImageContainer}>
+                  <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
 
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
+                  <View style={styles.plusCircleContainer}>
+                    <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          }
 
-              {enterpriseData.images[2] ? (
-                <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
-                ) : (
-                  <TouchableWithoutFeedback onPress={pickImage}>
-                    <View style={styles.selectImageContainer}>
-                      <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
+          {enterpriseData.images[2] ? (
+            <Image source={{ uri: enterpriseData.images[2] }} style={styles.imageContainer}/>
+            ) : (
+              <TouchableWithoutFeedback onPress={pickImage}>
+                <View style={styles.selectImageContainer}>
+                  <MaterialCommunityIcons name={ 'camera-plus' } size={50} color={"#B0B0B0"} />
 
-                      <View style={styles.plusCircleContainer}>
-                        <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                )
-              }
-            </View>
+                  <View style={styles.plusCircleContainer}>
+                    <MaterialCommunityIcons name={ 'plus-circle' } size={40} color={"#000000"} />
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          }
+        </View>
 
-            <View style={styles.buttonContainer}>
-              <Button
-                title={"FINALIZAR CADASTRO"}
-                titleStyle={styles.buttonText}
-                color="#1daf6e"
-                contentContainerStyle={{height: 50}}
-                onPress={handleFinishButton}
-                style={styles.button}
-                loading={loading}
-              />
-            </View>
-        </ScrollView>
-      </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            title={"FINALIZAR CADASTRO"}
+            titleStyle={styles.buttonText}
+            color="#1daf6e"
+            contentContainerStyle={{height: 50}}
+            onPress={handleFinishButton}
+            style={styles.button}
+            loading={loading}
+          />
+        </View>
       <Toast />
     </View>
   )
@@ -203,14 +199,13 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
     marginTop: 75,
-    marginBottom: 0
+    marginBottom: 0,
   },
   scrollViewContainer: {
     position: 'relative',
-    width: '100%',
     alignItems: 'center',
-    top: 30,
-    paddingBottom: 20,
+    alignContent: 'center',
+    paddingBottom: 120,
   },
   topLeftButton: {
     position: "absolute",
@@ -218,11 +213,15 @@ const styles = StyleSheet.create({
     left: -20,
   },
   content: {
+    alignItems: 'center',
+    flex: 1,
+    width: 350,
+    marginRight: '50%',
+    marginLeft: 175,
     marginBottom: 30,
   },
   textContainer: {
     position: 'relative',
-    marginRight: 20,
     marginBottom: 15,
   },
   title: {
@@ -245,13 +244,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#8C8C8C",
-    marginBottom: 12
+    marginBottom: 12,
   },
   imageContainer: {
     width: 350,
     height: 150,
     borderRadius: 8,
-    marginBottom: 10
+    marginBottom: 10,
   },
   plusCircleContainer: {
     position: "absolute",
@@ -259,7 +258,10 @@ const styles = StyleSheet.create({
     right: -18,
   },
   buttonContainer: {
+    alignItems: 'center',
     marginTop: 5,
+    marginRight: '50%',
+    marginLeft: 175,
     marginBottom: "10%"
   },
   button: {

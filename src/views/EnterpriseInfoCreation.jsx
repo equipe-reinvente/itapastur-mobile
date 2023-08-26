@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
   },
   topLeftButton: {
     position: "absolute",
-    top: -70,
-    left: -20
+    top: -25,
+    left: -20,
   },
   content: {
     marginBottom: 30
