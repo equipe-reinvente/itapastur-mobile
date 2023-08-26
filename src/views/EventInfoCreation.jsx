@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { Text } from "@react-native-material/core";
 import { useState } from "react";
 import { useEvent } from "../contexts/EventContext";
+import * as ImagePicker from 'expo-image-picker';
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
@@ -100,6 +101,24 @@ const EventInfoCreation = ({ navigation }) => {
     }
   }
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const imageURI = result.assets[0].uri;
+
+      setEventData((prevState) => ({
+        ...prevState,
+        image: imageURI,
+      }));
+    }
+  }
+
   const handleBackButton = () => navigation.goBack();
 
   const handleNextStepButton = () => {
@@ -173,7 +192,11 @@ const EventInfoCreation = ({ navigation }) => {
 
             {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
 
-            {/* <SelectImage /> */}
+            <SelectImage
+              image={eventData.image}
+              pickImage={pickImage}
+              editImage={pickImage}
+            />
 
             <CreationMainButton
               buttonText={"PRÓXIMA ETAPA"}
