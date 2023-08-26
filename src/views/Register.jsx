@@ -44,7 +44,8 @@ const Register = ({ navigation }) => {
     let data = { 
       "user": {
           "email": email,
-          "password": password
+          "password": password,
+          "name": email.split("@")[0]
       }
   }
 

@@ -300,9 +300,10 @@ const Home = ({ navigation }) => {
     }
 
     const openPressedcard = (id, category) => {
-        if (category == "Ponto Turístico") category = "pontos";
-        else if (category == "Artesão") category = "artesoes";
-        else if (category == "Lojas") category = "lojas";
+        if (category == "Pontos Turísticos" || category == "Ponto Turístico") category = "pontos";
+        else if (category == "Artesões" || category == "Artesão") category = "artesoes";
+        else if (category == "Lojas" || category == "Loja") category = "lojas";
+        console.log(category);
         const placeData = placesData[category].filter(item => item['id'] === id)[0];
         if (placeData === undefined) {
             Toast.show({

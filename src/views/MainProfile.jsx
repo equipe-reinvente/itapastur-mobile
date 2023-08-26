@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const MainProfile = ({ navigation }) => {
     const { profilePhoto, user, logout } = GetContext();
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(user['user']['name']);
 
     const openEnterprisesMenu = () => {
         navigation.navigate("Enterprises");
@@ -28,8 +28,6 @@ const MainProfile = ({ navigation }) => {
     };
 
     const setUsernameText = () => {
-        if (user['name'] !== "" && user['name'] !== null) setUsername(user['name']);
-        else setUsername(user['email'].split("@")[0]);
         if (username.length > 16) {
             setUsername(username.substring(0, 17) + "...");
         }
