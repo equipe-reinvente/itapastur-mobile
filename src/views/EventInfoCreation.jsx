@@ -1,4 +1,5 @@
 import { View, StyleSheet } from "react-native";
+import { Text } from "@react-native-material/core";
 import { useState } from "react";
 import { useEvent } from "../contexts/EventContext";
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
@@ -12,6 +13,7 @@ import { formatDate, removeNonDigitCharacters } from "../utils/formatDate";
 const EventInfoCreation = ({ navigation }) => {
   const { eventData, setEventData } = useEvent();
   const [nameError, setNameError] = useState("");
+  const [dateError, setDateError] = useState("");
 
   const onChangeNameInput = (name) => {
     setNameError("");
@@ -29,6 +31,27 @@ const EventInfoCreation = ({ navigation }) => {
       ...prevState,
       description,
     }));
+  };
+
+  const isValidDate = (date) => {
+    if (!date || date.length < 10) {
+      return "Por favor, preencha o campo Data corretamente!";
+    }
+
+    const day = date.slice(0, 2);
+    const month = date.slice(3, 5);
+    const year = date.slice(6, 10);
+    const currentYear = new Date().getFullYear();
+
+    if (Number(day) <= 0 || Number(day) > 31) {
+      return "Dia inválido. Verifique de que o dia esteja correto!";
+    }
+    if (Number(month) <= 0 || Number(month) > 12) {
+      return "Mês inválido. Verifique se o mês está correto!";
+    }
+    if (Number(year) < currentYear) {
+      return "Ano inválido. Verifique de que o ano esteja correto!";
+    }
   };
 
   const onChangeDateInput = (date) => {
@@ -52,7 +75,11 @@ const EventInfoCreation = ({ navigation }) => {
       setNameError("Por favor, preencha o campo Nome!");
       return;
     }
-    navigation.navigate('EventAddressCreation');
+    if (isValidDate(eventData.date)) {
+      setDateError(isValidDate(eventData.date));
+      return;
+    }
+    navigation.navigate('Welcome');
   };
 
   return (
@@ -97,6 +124,8 @@ const EventInfoCreation = ({ navigation }) => {
               maxLength={10}
             />
 
+            {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
+
             <CreationInput
               label={"Hora"}
               onChangeText={() => {}}
@@ -104,7 +133,7 @@ const EventInfoCreation = ({ navigation }) => {
               placeholder={"12:00"}
             />
 
-            <SelectImage />
+            {/* <SelectImage /> */}
 
             <CreationMainButton
               buttonText={"PRÓXIMA ETAPA"}
@@ -127,6 +156,11 @@ const styles = StyleSheet.create({
   },
   content: {
     marginBottom: 30
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginBottom: 10,
   }
 });
 
