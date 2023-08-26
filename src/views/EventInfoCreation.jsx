@@ -44,13 +44,13 @@ const EventInfoCreation = ({ navigation }) => {
     const currentYear = new Date().getFullYear();
 
     if (Number(day) <= 0 || Number(day) > 31) {
-      return "Dia inválido. Verifique de que o dia esteja correto!";
+      return "Dia inválido. Verifique se o dia está correto!";
     }
     if (Number(month) <= 0 || Number(month) > 12) {
       return "Mês inválido. Verifique se o mês está correto!";
     }
     if (Number(year) < currentYear) {
-      return "Ano inválido. Verifique de que o ano esteja correto!";
+      return "Ano inválido. Verifique se o ano está correto!";
     }
   };
 
