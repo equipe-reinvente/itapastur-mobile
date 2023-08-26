@@ -15,6 +15,7 @@ import EventInfoCreation from "./src/views/EventInfoCreation";
 
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
+import { EventProvider } from "./src/contexts/EventContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,67 +23,75 @@ export default function App() {
   return (
     <AuthProvider>
       <EnterpriseProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Welcome"
-              component={Welcome}
-              options={{ title: "Welcome", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={{ title: "Tabs", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Place"
-              component={PlaceView}
-              options={{ title: "Place", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ title: "Login", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ title: "Register", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Notifications"
-              component={Notifications}
-              options={{
-                title: "Notifications",
-                headerShown: false,
-                animation: "slide_from_right",
-              }}
-            />
-            <Stack.Screen
-              name="EnterpriseInfoCreation"
-              component={EnterpriseInfoCreation}
-              options={{ title: "EnterpriseInfoCreation", headerShown: false }}
-            />
-            <Stack.Screen
-              name="EnterpriseAddressCreation"
-              component={EnterpriseAddressCreation}
-              options={{
-                title: "EnterpriseAddressCreation",
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="EnterpriseImageCreation"
-              component={EnterpriseImageCreation}
-              options={{ title: "EnterpriseImageCreation", headerShown: false }}
-            />
-            <Stack.Screen
-              name="EventInfoCreation"
-              component={EventInfoCreation}
-              options={{ title: "EventInfoCreation", headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <EventProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+                options={{ title: "Welcome", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Tabs"
+                component={Tabs}
+                options={{ title: "Tabs", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Place"
+                component={PlaceView}
+                options={{ title: "Place", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ title: "Login", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ title: "Register", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Notifications"
+                component={Notifications}
+                options={{
+                  title: "Notifications",
+                  headerShown: false,
+                  animation: "slide_from_right",
+                }}
+              />
+              <Stack.Screen
+                name="EnterpriseInfoCreation"
+                component={EnterpriseInfoCreation}
+                options={{
+                  title: "EnterpriseInfoCreation",
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="EnterpriseAddressCreation"
+                component={EnterpriseAddressCreation}
+                options={{
+                  title: "EnterpriseAddressCreation",
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="EnterpriseImageCreation"
+                component={EnterpriseImageCreation}
+                options={{
+                  title: "EnterpriseImageCreation",
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="EventInfoCreation"
+                component={EventInfoCreation}
+                options={{ title: "EventInfoCreation", headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </EventProvider>
       </EnterpriseProvider>
     </AuthProvider>
   );

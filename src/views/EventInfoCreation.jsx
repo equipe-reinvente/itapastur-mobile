@@ -1,15 +1,59 @@
 import { View, StyleSheet } from "react-native";
+import { useState } from "react";
+import { useEvent } from "../contexts/EventContext";
 import KeyboardAvoidingWrapper from "../components/KeyboardAvoidingWrapper";
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
 import SelectImage from "../components/SelectImage";
 import CreationMainButton from "../components/CreationMainButton";
+import { formatDate, removeNonDigitCharacters } from "../utils/formatDate";
 
 const EventInfoCreation = ({ navigation }) => {
+  const { eventData, setEventData } = useEvent();
+  const [nameError, setNameError] = useState("");
+
+  const onChangeNameInput = (name) => {
+    setNameError("");
+    setEventData((prevState) => ({
+      ...prevState,
+      name,
+    }));
+  };
+
+  const isValidName = (name) => name.trim() !== "";
+
+  const onChangeDescriptionInput = (description) => {
+    setNameError("");
+    setEventData((prevState) => ({
+      ...prevState,
+      description,
+    }));
+  };
+
+  const onChangeDateInput = (date) => {
+    if (date.length === 8) {
+      setEventData((prevState) => ({
+        ...prevState,
+        date: formatDate(date),
+      }));
+    } else {
+      setEventData((prevState) => ({
+        ...prevState,
+        date: removeNonDigitCharacters(date),
+      }));
+    }
+  };
+
   const handleBackButton = () => navigation.goBack();
 
-  const handleNextStepButton = () => navigation.goBack();
+  const handleNextStepButton = () => {
+    if (!isValidName(eventData.name)) {
+      setNameError("Por favor, preencha o campo Nome!");
+      return;
+    }
+    navigation.navigate('EventAddressCreation');
+  };
 
   return (
     <KeyboardAvoidingWrapper>
@@ -28,31 +72,35 @@ const EventInfoCreation = ({ navigation }) => {
 
             <CreationInput
               label={"Nome"}
-              onChangeText={() => {}}
-              value={""}
+              onChangeText={onChangeNameInput}
+              value={eventData.name}
               placeholder={"Festa de Itapajé"}
             />
+
+            {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
 
             <CreationInput
               label={"Descrição"}
               multiline
               numberOfLines={8}
-              onChangeText={() => {}}
-              value={""}
+              onChangeText={onChangeDescriptionInput}
+              value={eventData.description}
               placeholder={"Venda seu peixe aqui! :)"}
             />
 
             <CreationInput
               label={"Data"}
-              onChangeText={() => {}}
-              value={""}
+              onChangeText={onChangeDateInput}
+              value={eventData.date}
               placeholder={"07/09/2023"}
+              keyboardType={"numeric"}
+              maxLength={10}
             />
 
             <CreationInput
               label={"Hora"}
               onChangeText={() => {}}
-              value={""}
+              value={eventData.time}
               placeholder={"12:00"}
             />
 
