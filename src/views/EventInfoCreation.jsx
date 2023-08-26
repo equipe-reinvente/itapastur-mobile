@@ -15,6 +15,7 @@ const EventInfoCreation = ({ navigation }) => {
   const { eventData, setEventData } = useEvent();
   const [nameError, setNameError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [timeError, setTimeError] = useState("");
 
   const onChangeNameInput = (name) => {
     setNameError("");
@@ -86,6 +87,19 @@ const EventInfoCreation = ({ navigation }) => {
     }
   }
 
+  const isValidTime = (time) => {
+    if (!time || time.length < 5) {
+      return "Por favor, preencha o campo Hora corretamente!";
+    }
+
+    const hours = time.slice(0, 2);
+    const minutes = time.slice(3, 5);
+
+    if (Number(hours) > 23 || Number(minutes) > 59) {
+      return "Horário inválido. Verifique se o horário está correto!";
+    }
+  }
+
   const handleBackButton = () => navigation.goBack();
 
   const handleNextStepButton = () => {
@@ -95,6 +109,10 @@ const EventInfoCreation = ({ navigation }) => {
     }
     if (isValidDate(eventData.date)) {
       setDateError(isValidDate(eventData.date));
+      return;
+    }
+    if (isValidTime(eventData.time)) {
+      setTimeError(isValidTime(eventData.time));
       return;
     }
     navigation.navigate('Welcome');
@@ -152,6 +170,8 @@ const EventInfoCreation = ({ navigation }) => {
               keyboardType={"numeric"}
               maxLength={5}
             />
+
+            {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
 
             {/* <SelectImage /> */}
 
