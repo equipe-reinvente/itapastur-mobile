@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Text } from "@react-native-material/core";
 import { useState } from "react";
 import { useEvent } from "../contexts/EventContext";
@@ -141,69 +141,63 @@ const EventInfoCreation = ({ navigation }) => {
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
         <BackNavigationButton
-            size={40}
-            color={"#1DAF6E"}
-            handleBackButton={handleBackButton}
-          />
-
-          <View style={styles.content}>
-            <CreationTitle
-              title={"Crie um Evento"}
-              description={"Aumente suas vendas com eventos!"}
-            />
-
-            <CreationInput
-              label={"Nome"}
-              onChangeText={onChangeNameInput}
-              value={eventData.name}
-              placeholder={"Festa de Itapajé"}
-            />
-
-            {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
-
-            <CreationInput
-              label={"Descrição"}
-              multiline
-              numberOfLines={8}
-              onChangeText={onChangeDescriptionInput}
-              value={eventData.description}
-              placeholder={"Venda seu peixe aqui! :)"}
-            />
-
-            <CreationInput
-              label={"Data"}
-              onChangeText={onChangeDateInput}
-              value={eventData.date}
-              placeholder={"07/09/2023"}
-              keyboardType={"numeric"}
-              maxLength={10}
-            />
-
-            {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
-
-            <CreationInput
+          size={40}
+          color={"#1DAF6E"}
+          handleBackButton={handleBackButton}
+        />
+        <View style={styles.scrollViewContainer}>
+          <ScrollView overScrollMode='never' style={{width: '100%'}}>
+            <View style={styles.content}>
+              <CreationTitle
+                title={"Crie um Evento"}
+                description={"Aumente suas vendas com eventos!"}
+              />
+              <CreationInput
+                label={"Nome"}
+                onChangeText={onChangeNameInput}
+                value={eventData.name}
+                placeholder={"Festa de Itapajé"}
+              />
+              {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+              <CreationInput
+                label={"Descrição"}
+                multiline
+                numberOfLines={8}
+                onChangeText={onChangeDescriptionInput}
+                value={eventData.description}
+                placeholder={"Venda seu peixe aqui! :)"}
+              />
+              <CreationInput
+                label={"Data"}
+                onChangeText={onChangeDateInput}
+                value={eventData.date}
+                placeholder={"07/09/2023"}
+                keyboardType={"numeric"}
+                maxLength={10}
+              />
+              {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
+              <CreationInput
               label={"Hora"}
               onChangeText={onChangeTimeInput}
               value={eventData.time}
               placeholder={"12:00"}
               keyboardType={"numeric"}
-              maxLength={5}
-            />
-
-            {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
-
-            <SelectImage
-              image={eventData.image}
-              pickImage={pickImage}
-              editImage={pickImage}
-            />
-
-            <CreationMainButton
-              buttonText={"PRÓXIMA ETAPA"}
-              color={"#1daf6e"}
-              onPress={handleNextStepButton}
-            />
-          </View>
+                maxLength={5}
+              />
+              {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
+              <SelectImage
+                image={eventData.image}
+                pickImage={pickImage}
+                editImage={pickImage}
+              />
+              <CreationMainButton
+                buttonText={"PRÓXIMA ETAPA"}
+                color={"#1daf6e"}
+                onPress={handleNextStepButton}
+              />
+            </View>
+          </ScrollView>
+        </View>
       </View>
     </KeyboardAvoidingWrapper>
   );
@@ -211,11 +205,20 @@ const EventInfoCreation = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
+    width: '100%',
     justifyContent: "space-between",
-    marginHorizontal: 20,
-    marginTop: 120,
-    marginBottom: 80
+    marginHorizontal: 15,
+    marginTop: 75,
+    marginBottom: 0
+  },
+  scrollViewContainer: {
+    position: 'relative',
+    width: '100%',
+    alignItems: 'center',
+    top: 30,
+    paddingBottom: 20,
   },
   content: {
     marginBottom: 30

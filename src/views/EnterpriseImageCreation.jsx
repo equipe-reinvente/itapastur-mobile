@@ -184,8 +184,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: '100%',
     justifyContent: "space-between",
-    marginRight: 15,
-    marginLeft: 15,
+    marginHorizontal: 15,
     marginTop: 75,
     marginBottom: 0
   },
