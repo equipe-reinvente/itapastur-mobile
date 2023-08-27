@@ -1,12 +1,15 @@
 import { View, StyleSheet } from "react-native";
-import { Text, TextInput, Button } from "@react-native-material/core";
+import { Text } from "@react-native-material/core";
 import { useState } from "react";
 import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
-import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
+import BackNavigationButton from "../components/BackNavigationButton";
+import CreationTitle from "../components/CreationTitle";
+import CreationInput from "../components/CreationInput";
+import CreationMainButton from "../components/CreationMainButton";
 
 const EnterpriseInfoCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -56,7 +59,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
     }
   };
 
-  const handleTopLeftButton = () => navigation.goBack(); // Definir view
+  const handleBackButton = () => navigation.goBack();
 
   const handleNextStepButton = () => {
     if (!isValidName(enterpriseData.name)) {
@@ -69,35 +72,35 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   return (
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
-        <View style={styles.topLeftButton}>
-          <IconButton
-            icon={() => (
-              <MaterialCommunityIcons
-                name={'chevron-left'}
-                size={40}
-                color={"#1DAF6E"}
-              />
-            )}
-            onPress={handleTopLeftButton}
-          />
-        </View>
-        <View style={styles.content}>
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>Crie seu Empreendimento</Text>
-            <Text style={styles.description}>Divulgue seu empreendimento no Itapas tur!</Text>
-          </View>
+        <BackNavigationButton
+          size={40}
+          color={"#1DAF6E"}
+          handleBackButton={handleBackButton}
+        />
 
-          <TextInput
-            label="Nome"
-            variant="outlined"
-            autoCapitalize='none'
-            onChangeText={onChangeNameInput}
-            color='gray'
-            value={enterpriseData.name}
-            placeholder="Açaí da Pedra do Frade"
-            style={styles.input}
+        <View style={styles.content}>
+          <CreationTitle
+            title={"Crie seu Empreendimento"}
+            description={"Divulgue seu empreendimento no Itapas tur!"}
           />
+
+          <CreationInput
+            label={"Nome"}
+            onChangeText={onChangeNameInput}
+            value={enterpriseData.name}
+            placeholder={"Açaí da Pedra do Frade"}
+          />
+
           {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+
+          <CreationInput
+            label={"Descrição"}
+            multiline
+            numberOfLines={8}
+            onChangeText={onChangeDescriptionInput}
+            value={enterpriseData.description}
+            placeholder={"Venda seu peixe aqui! :)"}
+          />
 
           <SelectDropdown
             data={categories}
@@ -117,44 +120,21 @@ const EnterpriseInfoCreation = ({ navigation }) => {
             rowTextStyle={styles.selectDropdownText}
           />
 
-          <TextInput
-            label="Descrição"
-            variant="outlined"
-            autoCapitalize='none'
-            onChangeText={onChangeDescriptionInput}
-            color='gray'
-            value={enterpriseData.description}
-            multiline
-            numberOfLines={8}
-            textAlignVertical="top"
-            placeholder="Venda seu peixe aqui! :)"
-            style={styles.input}
-          />
-
-          <TextInput
-            label="Número de Telefone"
-            variant="outlined"
-            autoCapitalize='none'
+          <CreationInput
+            label={"Número de Telefone"}
             onChangeText={onChangePhoneNumberInput}
-            color='gray'
             value={enterpriseData.phoneNumber}
-            placeholder="(85) 99999-9999"
-            keyboardType="numeric"
+            placeholder={"(85) 99999-9999"}
+            keyboardType={"numeric"}
             maxLength={15}
-            style={styles.input}
           />
         </View>
 
-        <View style={styles.buttonContainer}>
-          <Button
-            title={"PRÓXIMA ETAPA"}
-            titleStyle={styles.buttonText}
-            color="#1daf6e"
-            contentContainerStyle={{height: 50}}
-            onPress={handleNextStepButton}
-            style={styles.button}
-          />
-        </View>
+        <CreationMainButton
+          buttonText={"PRÓXIMA ETAPA"}
+          color={"#1daf6e"}
+          onPress={handleNextStepButton}
+        />
       </View>
     </KeyboardAvoidingWrapper>
   );
@@ -168,34 +148,8 @@ const styles = StyleSheet.create({
     marginTop: 120,
     marginBottom: 80
   },
-  topLeftButton: {
-    position: "absolute",
-    top: -25,
-    left: -20,
-  },
   content: {
     marginBottom: 30
-  },
-  textContainer: {
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 40,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#999999"
-  },
-  input: {
-    width: 350,
-    borderColor: 'gray',
-    color: 'gray',
-    tintColor: 'gray',
-    marginBottom: 10
   },
   selectDropdown: {
     width: 350,
@@ -210,17 +164,6 @@ const styles = StyleSheet.create({
   dropdown: {
     borderRadius: 3,
     marginTop: -53,
-  },
-  buttonContainer: {
-    marginTop: 50
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
   },
   errorText: {
     color: 'red',

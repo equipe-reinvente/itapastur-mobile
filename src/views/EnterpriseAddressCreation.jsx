@@ -1,8 +1,9 @@
 import { View, StyleSheet } from "react-native";
-import { Text, TextInput, Button } from "@react-native-material/core";
-import { IconButton } from "@react-native-material/core";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEnterprise } from "../contexts/EnterpriseContext";
+import BackNavigationButton from "../components/BackNavigationButton";
+import CreationTitle from "../components/CreationTitle";
+import CreationInput from "../components/CreationInput";
+import CreationMainButton from "../components/CreationMainButton";
 
 const EnterpriseAddressCreation = ({ navigation }) => {
   const { enterpriseData, setEnterpriseData } = useEnterprise();
@@ -28,77 +29,52 @@ const EnterpriseAddressCreation = ({ navigation }) => {
     }));
   };
 
-  const handleTopLeftButton = () => navigation.navigate('EnterpriseInfoCreation');
+  const handleBackButton = () => navigation.navigate('EnterpriseInfoCreation');
 
   const handleNextStepButton = () => navigation.navigate('EnterpriseImageCreation');
 
   return (
     <View style={styles.container}>
-      <View style={styles.topLeftButton}>
-        <IconButton
-          icon={() => (
-            <MaterialCommunityIcons
-              name={'chevron-left'}
-              size={40}
-              color={"#1DAF6E"}
-            />
-          )}
-          onPress={handleTopLeftButton}
-        />
-      </View>
+      <BackNavigationButton
+        size={40}
+        color={"#1DAF6E"}
+        handleBackButton={handleBackButton}
+      />
+
       <View style={styles.content}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>Qual a localização?</Text>
-          <Text style={styles.description}>
-            Mostre onde fica o seu empreendimento! :D
-          </Text>
-        </View>
+        <CreationTitle
+          title={"Qual a\nlocalização?"}
+          description={"Mostre onde fica o seu empreendimento! :D"}
+        />
 
-        <TextInput
-          label="Rua"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Rua"}
           onChangeText={onChangeStreetAddressInput}
-          color='gray'
           value={enterpriseData.streetAddress}
-          placeholder="2 de Fevereiro"
-          style={styles.input}
+          placeholder={"2 de Fevereiro"}
         />
 
-        <TextInput
-          label="Número"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Número"}
           onChangeText={onChangeAddressNumberInput}
-          color='gray'
           value={enterpriseData.addressNumber}
-          placeholder="10"
-          keyboardType="numeric"
-          style={styles.input}
+          placeholder={"10"}
+          keyboardType={"numeric"}
         />
 
-        <TextInput
-          label="Bairro"
-          variant="outlined"
-          autoCapitalize='none'
+        <CreationInput
+          label={"Bairro"}
           onChangeText={onChangeNeighborhoodAddressInput}
-          color='gray'
           value={enterpriseData.neighborhoodAddress}
-          placeholder="Centro"
-          style={styles.input}
+          placeholder={"Centro"}
         />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <Button
-          title={"PRÓXIMA ETAPA"}
-          titleStyle={styles.buttonText}
-          color="#1daf6e"
-          contentContainerStyle={{height: 50}}
-          onPress={handleNextStepButton}
-          style={styles.button}
-        />
-      </View>
+      <CreationMainButton
+        buttonText={"PRÓXIMA ETAPA"}
+        color={"#1daf6e"}
+        onPress={handleNextStepButton}
+      />
     </View>
   )
 };
@@ -112,45 +88,9 @@ const styles = StyleSheet.create({
     marginTop: 120,
     marginBottom: 80
   },
-  topLeftButton: {
-    position: "absolute",
-    top: -70,
-    left: -20
-  },
   content: {
+    marginTop: 10,
     marginBottom: 30
-  },
-  textContainer: {
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 42,
-    textAlign: "center",
-    fontWeight: "bold",
-    marginBottom: 5
-  },
-  description: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#999999"
-  },
-  input: {
-    width: 350,
-    borderColor: 'gray',
-    color: 'gray',
-    tintColor: 'gray',
-    marginBottom: 10
-  },
-  buttonContainer: {
-    marginTop: 50
-  },
-  button: {
-    width: 350,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16
   }
 });
 
