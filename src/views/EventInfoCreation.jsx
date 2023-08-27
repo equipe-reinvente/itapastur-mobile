@@ -179,6 +179,7 @@ const EventInfoCreation = ({ navigation }) => {
                 placeholder={"07/09/2023"}
                 keyboardType={"numeric"}
                 maxLength={10}
+                icon={"star"}
               />
 
               {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
@@ -190,6 +191,7 @@ const EventInfoCreation = ({ navigation }) => {
                 placeholder={"12:00"}
                 keyboardType={"numeric"}
                 maxLength={5}
+                icon={"star"}
               />
 
               {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
