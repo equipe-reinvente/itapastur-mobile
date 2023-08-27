@@ -83,10 +83,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    height: '100%',
     justifyContent: "space-between",
     marginHorizontal: 20,
     marginTop: 120,
-    marginBottom: 80
+    marginBottom: 80,
+    top: '-5%'
   },
   content: {
     marginTop: 10,

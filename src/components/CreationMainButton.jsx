@@ -1,9 +1,12 @@
 import { View, StyleSheet } from "react-native";
 import { Button } from "@react-native-material/core";
 
-const CreationMainButton = ({ buttonText, color, onPress }) => {
+const CreationMainButton = ({ buttonText, color, onPress, style= {position: 'relative',
+                                                                  marginTop: 50,
+                                                                  width: '100%',
+                                                                  alignItems: 'center'} }) => {
   return (
-    <View style={styles.container}>
+    <View style={style}>
       <Button
         title={buttonText}
         titleStyle={styles.buttonText}
@@ -17,16 +20,8 @@ const CreationMainButton = ({ buttonText, color, onPress }) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-    marginTop: 50,
-    width: '100%',
-    alignItems: 'center'
-  },
   button: {
     width: 350,
-    marginRight: 175,
-    left: '21%',
     borderRadius: 5,
   },
   buttonText: {
