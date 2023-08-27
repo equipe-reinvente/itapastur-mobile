@@ -143,39 +143,34 @@ const EnterpriseImageCreation = ({ navigation }) => {
         color={"#1DAF6E"}
         handleBackButton={handleBackButton}
       />
+      <View style={styles.content}>
+        <CreationTitle
+          title={"Mostre seu empreendimento\nao mundo!"}
+          description={"Esse é o momento de caprichar!"}
+        />
+        <SelectImage
+          image={enterpriseData.images[0]}
+          pickImage={pickImage}
+          editImage={() => editImage(0)}
+        />
+  
+        <SelectImage
+          image={enterpriseData.images[1]}
+          pickImage={pickImage}
+          editImage={() => editImage(1)}
+        />
 
-      <View style={styles.scrollViewContainer}>
-        <ScrollView overScrollMode='never' style={{width: '100%'}}>
-          <View style={styles.content}>
-            <CreationTitle
-              title={"Mostre seu empreendimento\nao mundo!"}
-              description={"Esse é o momento de caprichar!"}
-            />
-            <SelectImage
-              image={enterpriseData.images[0]}
-              pickImage={pickImage}
-              editImage={() => editImage(0)}
-            />
-      
-            <SelectImage
-              image={enterpriseData.images[1]}
-              pickImage={pickImage}
-              editImage={() => editImage(1)}
-            />
-
-            <SelectImage
-              image={enterpriseData.images[2]}
-              pickImage={pickImage}
-              editImage={() => editImage(2)}
-            />
-          </View>
-          <CreationMainButton
-            buttonText={"FINALIZAR CADASTRO"}
-            color={"#1daf6e"}
-            onPress={handleFinishButton}
-          />
-        </ScrollView>
+        <SelectImage
+          image={enterpriseData.images[2]}
+          pickImage={pickImage}
+          editImage={() => editImage(2)}
+        />
       </View>
+      <CreationMainButton
+        buttonText={"FINALIZAR CADASTRO"}
+        color={"#1daf6e"}
+        onPress={handleFinishButton}
+      />
       <Toast />
     </View>
   )
@@ -186,23 +181,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     width: '100%',
+    height: '100%',
     justifyContent: "space-between",
     marginRight: 15,
     marginLeft: 15,
     marginTop: 75,
-    marginBottom: 0,
-  },
-  scrollViewContainer: {
-    position: 'relative',
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingBottom: 120,
+    marginBottom: '10%',
   },
   content: {
     alignItems: 'center',
     flex: 1,
     width: 350,
     marginRight: '50%',
+    height: '100%',
     marginLeft: 175,
     marginBottom: 30,
   },
