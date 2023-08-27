@@ -50,7 +50,7 @@ const Enterprises = ({ navigation }) => {
     const getEnterpriseList = async () => {
         try {
             const response = await axios.get(
-                'https://itapastur-api.fly.dev/enterprises/' + user['id'], 
+                'https://itapastur-api.fly.dev/enterprises/' + user['user']['id'], 
                 {
                 headers: {
                     Authorization: `Bearer ${authToken}`,

@@ -30,7 +30,11 @@ const EnterpriseImageCreation = ({ navigation }) => {
         images: [...prevState.images, imageURI],
       }));
     }
-  }
+  };
+
+  const getLongitudeAndLatitudeFromAdddress = () => {
+
+  };
 
   const buildEnterpriseFormData = () => {
     const data = new FormData();
@@ -42,12 +46,12 @@ const EnterpriseImageCreation = ({ navigation }) => {
     data.append('name', enterpriseData.name);
     data.append('description', enterpriseData.description);
     data.append('cellphone', enterpriseData.phoneNumber);
-    data.append('user_id', user['id']); 
+    data.append('user_id', user['user']['id']); 
     data.append('category_id', enterpriseData.category);
     data.append('street', enterpriseData.streetAddress);
     data.append('number', enterpriseData.addressNumber);
     data.append('neighborhood', enterpriseData.neighborhoodAddress);
-    data.append('latitude', -35.002); 
+    data.append('latitude', -31.240); 
     data.append('longitude', -32.100); 
     data.append('image_one', {
       uri: enterpriseData.images[0],

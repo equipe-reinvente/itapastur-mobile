@@ -3,15 +3,8 @@ import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from "react";
 
-const Socials = ({ onFavorite, onShare, isFavorite = false }) => {
+const Socials = ({ onFavorite, onShare, heartIcon = "heart-outline" }) => {
 
-  const[heartIcon, setHeatIcon] = useState("heart-outline");
-
-  const favorite = () => {
-    if (isFavorite) setHeatIcon("heart");
-    else setHeatIcon("heart-outline");
-    onFavorite();
-  }
 
   return(
     <View style={styles.container}>
@@ -24,7 +17,7 @@ const Socials = ({ onFavorite, onShare, isFavorite = false }) => {
           />
         )}
         style={styles.favoriteShareButton}
-        onPress={() => {favorite()}}
+        onPress={onFavorite}
       />
       <IconButton
         icon={() => (

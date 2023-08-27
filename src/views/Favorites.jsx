@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
 
@@ -11,16 +12,30 @@ const Favorites = ({ navigation }) => {
 
     const [favoritesList, setFavoritesList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const { authToken, user, setUser } = GetContext();
 
-    const openSelectedFavorites = (key) => {
-
+    const openSelectedFavorites = (id, category) => {
+        if (category == "Pontos Turísticos" || category == "Ponto Turístico") category = "pontos";
+        else if (category == "Artesões" || category == "Artesão") category = "artesoes";
+        else if (category == "Lojas" || category == "Loja") category = "lojas";
+        console.log(category);
+        const placeData = favoritesList[category].filter(item => item['id'] === id)[0];
+        if (placeData === undefined) {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Parece que esta item não carregou :(',
+                visibilityTime: 2000,
+              });
+        } else navigation.navigate("Place", {placeData});
     };
 
-    const deleteSelectedFavorites = (key) => {
-        console.log(key);
-        if (key !== null && key > -1) {
-            const newList = favoritesList.filter(item => (item['id'] !== key));
+    const deleteSelectedFavorites = (id) => {
+        console.log(id);
+        if (id !== null && id > -1) {
+            const newList = favoritesList.filter(item => (item['id'] !== id));
             setFavoritesList(newList);
+            unfavoriteOnBackend(id);
         }
     };
 
@@ -28,31 +43,86 @@ const Favorites = ({ navigation }) => {
         navigation.goBack();
     }
 
-    const getfavoritesList = async () => {
-        const newItem = {'title': 'loja 1', 'subtitle': 'descrição loja 1', 'id': favoritesList.length};
-        setFavoritesList([...favoritesList, newItem]);
+    const unfavoriteOnBackend = async (id) => {
+        const response = await axios.post(
+            'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: id},
+            {
+              headers: {
+                  Authorization: `Bearer ${authToken}`,
+              },
+            }
+        );
     };
 
-    const renderFavorites = (item, key) => {
+    const getfavoritesList = async (data, userData) => {
+        let newList = data['lojas'].filter(item => userData['liked_enterprises'].includes(item['id']));
+        newList.concat(data['pontos'].filter(item => userData['liked_enterprises'].includes(item['id'])));
+        newList.concat(data['artesoes'].filter(item => userData['liked_enterprises'].includes(item['id'])));
+        console.log(newList);
+        setFavoritesList(newList);
+    };
+
+    const renderFavorites = (item) => {
         return (
-            <ThumbnailButton title={item['title']} 
-            subtitle={item['subtitle']}
-            key={key} 
+            <ThumbnailButton title={item['name']} 
+            subtitle={item['description']}
+            key={item['id']} 
             callback={openSelectedFavorites} 
             icon='heart-off' 
             isIconClickable={true} 
+            image={{uri: item['image_one']}}
             iconCallback={deleteSelectedFavorites}
-            id={item['id']}/>
+            id={item['id']}
+            cat/>
         );
     };
 
     const refreshControl = async () => {
         setRefreshing(true);
-        await getfavoritesList();
+        await fetchUserInfo();
         setRefreshing(false);
-    }
+    };
 
-    useEffect(() => {getfavoritesList()}, []);
+    const fetchUserInfo = async () => {
+        try {
+            const response = await axios.get(
+                'https://itapastur-api.fly.dev/view_user/'+ user['user']['id'],
+                {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+                }
+              );
+              let userData = {
+                enterprises: response['data']['enterprises'],
+                token: user['token'],
+                liked_enterprises: response['data']['liked_enterprises'],
+                user: response['data']['user']
+              };
+              console.log(userData);
+              setUser(userData);
+              fetchCategories(userData);
+        } catch (error) {console.log(error);}
+    };
+
+    const fetchCategories = async (userData) => {
+        try {
+          const response = await axios.get(
+            'https://itapastur-api.fly.dev/categories/enterprises',
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+          let data = response.data["enterprises"]; 
+          getfavoritesList(data, userData);
+        } catch (error) {
+          console.error('Erro ao buscar categorias:', error);
+        };
+    };
+
+    useEffect(() => {fetchUserInfo()}, []);
 
     return (
         <View style={styles.container}>
