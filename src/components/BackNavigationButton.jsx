@@ -22,8 +22,8 @@ const BackNavigationButton = ({ size, color, handleBackButton }) => {
 const styles = StyleSheet.create({
   button: {
     position: "absolute",
-    top: -70,
-    left: -20
+    top: -30,
+    left: -15
   }
 });
 

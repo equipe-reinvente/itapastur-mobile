@@ -145,6 +145,7 @@ const EventInfoCreation = ({ navigation }) => {
           color={"#1DAF6E"}
           handleBackButton={handleBackButton}
         />
+
         <View style={styles.scrollViewContainer}>
           <ScrollView overScrollMode='never' style={{width: '100%'}}>
             <View style={styles.content}>
@@ -152,13 +153,16 @@ const EventInfoCreation = ({ navigation }) => {
                 title={"Crie um Evento"}
                 description={"Aumente suas vendas com eventos!"}
               />
+
               <CreationInput
                 label={"Nome"}
                 onChangeText={onChangeNameInput}
                 value={eventData.name}
                 placeholder={"Festa de Itapajé"}
               />
+
               {nameError ? <Text style={styles.errorText}>{nameError}</Text> : null}
+
               <CreationInput
                 label={"Descrição"}
                 multiline
@@ -167,6 +171,7 @@ const EventInfoCreation = ({ navigation }) => {
                 value={eventData.description}
                 placeholder={"Venda seu peixe aqui! :)"}
               />
+
               <CreationInput
                 label={"Data"}
                 onChangeText={onChangeDateInput}
@@ -175,21 +180,26 @@ const EventInfoCreation = ({ navigation }) => {
                 keyboardType={"numeric"}
                 maxLength={10}
               />
+
               {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
+
               <CreationInput
-              label={"Hora"}
-              onChangeText={onChangeTimeInput}
-              value={eventData.time}
-              placeholder={"12:00"}
-              keyboardType={"numeric"}
+                label={"Hora"}
+                onChangeText={onChangeTimeInput}
+                value={eventData.time}
+                placeholder={"12:00"}
+                keyboardType={"numeric"}
                 maxLength={5}
               />
+
               {timeError ? <Text style={styles.errorText}>{timeError}</Text> : null}
+
               <SelectImage
                 image={eventData.image}
                 pickImage={pickImage}
                 editImage={pickImage}
               />
+
               <CreationMainButton
                 buttonText={"PRÓXIMA ETAPA"}
                 color={"#1daf6e"}
@@ -211,17 +221,20 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 15,
     marginTop: 75,
-    marginBottom: 0
   },
   scrollViewContainer: {
     position: 'relative',
-    width: '100%',
     alignItems: 'center',
-    top: 30,
-    paddingBottom: 20,
+    alignContent: 'center',
+    paddingBottom: 120,
+    marginTop: 20,
   },
   content: {
-    marginBottom: 30
+    alignItems: 'center',
+    width: 350,
+    marginRight: '50%',
+    marginLeft: 175,
+    marginBottom: 20,
   },
   errorText: {
     color: 'red',
