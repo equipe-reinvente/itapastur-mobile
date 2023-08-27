@@ -58,7 +58,8 @@ const Enterprises = ({ navigation }) => {
                 }
             );
             const data = response.data['user_enterprises'];
-            if (data !== enterpriseList)setEnterpriseList(data);
+            setEnterpriseList(data);
+            console.log(data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Erro do Axios:', error.message);

@@ -170,6 +170,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
         buttonText={"FINALIZAR CADASTRO"}
         color={"#1daf6e"}
         onPress={handleFinishButton}
+        style={styles.creationButton}
       />
       <Toast />
     </View>
@@ -197,6 +198,13 @@ const styles = StyleSheet.create({
     marginLeft: 175,
     marginBottom: 30,
   },
+  creationButton: {
+    position: 'relative',
+    marginTop: 50,
+    width: '100%',
+    marginRight: 15,
+    alignItems: 'center'
+  }
 });
 
 export default EnterpriseImageCreation;
