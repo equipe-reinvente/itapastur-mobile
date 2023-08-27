@@ -41,6 +41,22 @@ const Search = ({ navigation }) => {
         }
     };
 
+    const openPressedcard = (id, category) => {
+        if (category == "Pontos Turísticos" || category == "Ponto Turístico") category = "pontos";
+        else if (category == "Artesões" || category == "Artesão") category = "artesoes";
+        else if (category == "Lojas" || category == "Loja") category = "lojas";
+        console.log(category);
+        const placeData = placesData[category].filter(item => item['id'] === id)[0];
+        if (placeData === undefined) {
+            Toast.show({
+                type: 'error',
+                position: 'top',
+                text1: 'Parece que esta item não carregou :(',
+                visibilityTime: 2000,
+              });
+        } else navigation.navigate("Place", {placeData});
+    };
+
     const refreshControl = async () => {
         setRefreshing(true);
         await pressedSearchKey();
@@ -81,7 +97,10 @@ const Search = ({ navigation }) => {
             <View style={styles.storeImageCard} key={item['id']}>
                 <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
                                                                                 height: '100%',
-                                                                                width: 330}}/>
+                                                                                width: 330}}
+                                                                                callback={openPressedcard}
+                                                                                category={item['category']}
+                                                                                id={item['id']}/>
                 <View style={{position: "relative", left: -10, zIndex: -1}}>
                     <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>

@@ -11,7 +11,8 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         iconColor = 'black',
                         isIconClickable=false,
                         iconCallback=() => {},
-                        id = 0}) => {
+                        id = 0,
+                        category = ""}) => {
 
     try {
         if (image.uri === null) image = require("../images/imagePlaceholder.png");
@@ -81,7 +82,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                                 contentContainerStyle={styles.buttonContainer} 
                                 pressableContainerStyle={styles.buttonPressableContainer}
                                 disableElevation
-                                onPress={() => callback(id)}
+                                onPress={() => callback(id, category)}
                                 trailing={
                                     props => (
                                         <MaterialCommunityIcons
@@ -96,7 +97,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                                 contentContainerStyle={styles.buttonContainer} 
                                 pressableContainerStyle={styles.buttonPressableContainer}
                                 disableElevation
-                                onPress={() => callback(id)}
+                                onPress={() => callback(id, category)}
                             />}
                     </View>}
                 {isIconClickable && 
@@ -107,7 +108,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                                     contentContainerStyle={styles.buttonContainer} 
                                     pressableContainerStyle={styles.buttonPressableContainer}
                                     disableElevation
-                                    onPress={() => callback(id)}
+                                    onPress={() => callback(id, category)}
                                     trailingContainerStyle={styles.arrow}/>
                                 <IconButton icon={() => (
                                     <MaterialCommunityIcons
@@ -116,14 +117,14 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                                         color={iconColor}
                                     />
                                 )} style={styles.iconButton}
-                                onPress={() => iconCallback(id)}/>
+                                onPress={() => iconCallback(id, category)}/>
                             </>}
                         {icon === null && 
                             <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false} 
                                 contentContainerStyle={styles.buttonContainer} 
                                 pressableContainerStyle={styles.buttonPressableContainer}
                                 disableElevation
-                                onPress={() => callback(id)}
+                                onPress={() => callback(id, category)}
                             />}
                     </View>}
             </View>

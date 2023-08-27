@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { GetContext } from '../components/AppContext';
 import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
 
 const Login = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,13 +23,14 @@ const Login = ({ navigation }) => {
     const makeLoginRequest = async () => {
         setPasswordErrorMessage("");
         setEmailErrorMessage("");
+        let email_processed = email.replace(" ", "");
         let canLogin = true;
         if (password.length < 7) {
           setPasswordErrorMessage("Senha inválida");
           setPassword("");
           canLogin = false;
         }
-        if (email.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        if (email_processed.length < 7 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email_processed)) {
           setEmailErrorMessage("Email inválido");
           setEmail("");
           canLogin = false;
@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
     
         let data = { 
             "user": {
-                "email": email,
+                "email": email_processed,
                 "password": password
             }
         }
@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
         try {
           const response = await axios.post("https://itapastur-api.fly.dev/login", data);
           if (response.status === 200) {
-            await SecureStore.setItemAsync('userData', JSON.stringify(response['data']));
+            console.log(response['data']);
             login(response['data']);
             setLoading(false);
             navigation.navigate('Tabs');

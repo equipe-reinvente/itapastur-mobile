@@ -1,14 +1,17 @@
 import { View, StyleSheet } from "react-native";
 import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from "react";
 
-const Socials = ({ onFavorite, onShare }) => {
+const Socials = ({ onFavorite, onShare, heartIcon = "heart-outline" }) => {
+
+
   return(
     <View style={styles.container}>
       <IconButton
         icon={() => (
           <MaterialCommunityIcons
-            name={'heart-outline'}
+            name={heartIcon}
             size={25}
             color={"#000000"}
           />

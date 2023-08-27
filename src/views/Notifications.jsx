@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
 
@@ -11,6 +12,7 @@ const Notifications = ({ navigation }) => {
 
     const [notificationList, setNotificationList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const { authToken, user, setUser } = GetContext();
 
     const openSelectedNotification = (key) => {
 
@@ -28,18 +30,34 @@ const Notifications = ({ navigation }) => {
         } catch (error) {console.log(error);}
     }
 
-    const getNotificationList = async () => {
-        const newItem = {'title': 'notificação 1', 'subtitle': 'descrição notificação 1', 'id': notificationList.length};
-        setNotificationList([...notificationList, newItem]);
+    const getNotificationList = async (data) => {
+        
     };
 
     const renderNotifications = (item, key) => {
         return (
-            <ThumbnailButton title={item['title']} subtitle={item['subtitle']} key={key} callback={openSelectedNotification} id={item['id']}/>
+            <ThumbnailButton title={item['name']} subtitle={item['description']} key={key} callback={openSelectedNotification} id={item['id']}/>
         );
     };
 
-    useEffect(() => {getNotificationList()}, []);
+    const fetchCategories = async () => {
+        try {
+          const response = await axios.get(
+            'https://itapastur-api.fly.dev/categories/enterprises',
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+          let data = response.data["enterprises"]; 
+          getNotificationList(data);
+        } catch (error) {
+          console.error('Erro ao buscar categorias:', error);
+        };
+    };
+
+    useEffect(() => {}, []);
 
     return (
         <View style={styles.container}>

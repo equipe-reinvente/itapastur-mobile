@@ -16,24 +16,33 @@ const WelcomeView = ({ navigation }) => {
 
       userData = JSON.parse(userData);
 
-      login(userData);
-
       const response = await axios.get(
-        'https://itapastur-api.fly.dev/categories/enterprises',
+        'https://itapastur-api.fly.dev/view_user/'+ userData['user']['id'],
         {
-          headers: {
+        headers: {
             Authorization: `Bearer ${userData['token']}`,
-          },
+        },
         }
       );
+
+      userData = {
+        enterprises: response['data']['enterprises'],
+        token: userData['token'],
+        liked_enterprises: response['data']['liked_enterprises'],
+        user: response['data']['user']
+      };
+
+      await login(userData);
       console.log(userData);
+
       if (userData['token'] !== null && userData['token'] !== "") {
-        navigation.navigate('EnterpriseInfoCreation');
+        navigation.navigate('Tabs'); 
       } else {
-        navigation.navigate('EnterpriseInfoCreation');
-      }
-    } catch {
-      navigation.navigate('EnterpriseInfoCreation');
+        navigation.navigate('Login');
+      };
+    } catch (error) {
+      console.log(error);
+      navigation.navigate('Login');
     }
   }
 
