@@ -12,6 +12,7 @@ import EnterpriseInfoCreation from "./src/views/EnterpriseInfoCreation";
 import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
 import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
 import EventInfoCreation from "./src/views/EventInfoCreation";
+import EventAddressCreation from "./src/views/EventAddressCreation";
 
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
@@ -88,6 +89,11 @@ export default function App() {
                 name="EventInfoCreation"
                 component={EventInfoCreation}
                 options={{ title: "EventInfoCreation", headerShown: false }}
+              />
+              <Stack.Screen
+                name="EventAddressCreation"
+                component={EventAddressCreation}
+                options={{ title: "EventAddressCreation", headerShown: false }}
               />
             </Stack.Navigator>
           </NavigationContainer>

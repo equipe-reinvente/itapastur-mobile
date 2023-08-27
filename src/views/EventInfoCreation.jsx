@@ -29,7 +29,6 @@ const EventInfoCreation = ({ navigation }) => {
   const isValidName = (name) => name.trim() !== "";
 
   const onChangeDescriptionInput = (description) => {
-    setNameError("");
     setEventData((prevState) => ({
       ...prevState,
       description,
@@ -73,6 +72,7 @@ const EventInfoCreation = ({ navigation }) => {
   };
 
   const onChangeTimeInput = (time) => {
+    setTimeError("");
     const cleanedTime = removeNonDigitCharactersTime(time);
 
     if (time.length === 4) {
@@ -134,7 +134,7 @@ const EventInfoCreation = ({ navigation }) => {
       setTimeError(isValidTime(eventData.time));
       return;
     }
-    navigation.navigate('Welcome');
+    navigation.navigate('EventAddressCreation');
   };
 
   return (
