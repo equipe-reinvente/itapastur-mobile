@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Linking, Platform } from "react-native";
 import PlaceTitle from "../components/PlaceTitle";
 import PlaceDescription from "../components/PlaceDescription";
 import ImageCarousel from "../components/ImageCarousel";
@@ -109,6 +109,27 @@ const PlaceView = ({ navigation, route }) => {
       }
     }
   };
+
+  const routeTrace = () => {
+    let url = "";
+    if (placeData['address']['street'] === null) {
+      url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${placeData['address']['latitude']},${placeData['address']['longitude']}`;
+    } else {
+      const address = `${placeData['address']['street']}, ${placeData['address']['number']}`
+      const encodedAddress = encodeURIComponent(address);
+      url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodedAddress}`;
+    }
+
+    Linking.canOpenURL(url)
+    .then(supported => {
+      if (!supported) {
+        console.error("Google Maps não está instalado.");
+      } else {
+        return Linking.openURL(url);
+      }
+    })
+    .catch(error => console.error("Erro ao abrir Google Maps:", error));
+  };
   
   useEffect(() => {checkIfIsFavorite()})
 
@@ -128,7 +149,7 @@ const PlaceView = ({ navigation, route }) => {
 
       <Socials onFavorite={() => {addFavorite()}} onShare={() => {}} heartIcon={heartIcon}/>
 
-      <RouteTraceButton onPress={() => {}}/>
+      <RouteTraceButton onPress={() => {routeTrace()}}/>
     </View>
   );
 };

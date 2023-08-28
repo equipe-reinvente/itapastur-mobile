@@ -223,8 +223,7 @@ const Home = ({ navigation }) => {
             }
           );
           let data = response.data["enterprises"];
-          if (data !== placesData) setPlacesData(data);
-          else data = placesData; 
+          setPlacesData(data);
           getArtisans(data);
           getStores(data);
           getTrendingPlaces(data);
