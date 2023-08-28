@@ -26,6 +26,7 @@ export default function App() {
   return (
     <AuthProvider>
       <EnterpriseProvider>
+        <EventProvider>
         <NavigationContainer>
           <DeepLinkHandler />
           <Stack.Navigator>
