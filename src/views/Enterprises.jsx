@@ -50,7 +50,7 @@ const Enterprises = ({ navigation }) => {
     const getEnterpriseList = async () => {
         try {
             const response = await axios.get(
-                'https://itapastur-api.fly.dev/enterprises/' + user['id'], 
+                'https://itapastur-api.fly.dev/enterprises/' + user['user']['id'], 
                 {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
@@ -58,7 +58,8 @@ const Enterprises = ({ navigation }) => {
                 }
             );
             const data = response.data['user_enterprises'];
-            if (data !== enterpriseList)setEnterpriseList(data);
+            setEnterpriseList(data);
+            console.log(data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Erro do Axios:', error.message);

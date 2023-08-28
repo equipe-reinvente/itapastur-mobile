@@ -3,7 +3,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const SelectImage = ({ image, pickImage, editImage }) => {
   return (
-    <View>
+    <View style={styles.container}>
       {image ? (
         <TouchableWithoutFeedback onPress={editImage}>
           <Image source={{ uri: image }} style={styles.imageContainer} />
@@ -24,7 +24,13 @@ const SelectImage = ({ image, pickImage, editImage }) => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: 350,
+    height: 150,
+  },
   imageContainer: {
+    flex: 1,
     width: 350,
     height: 150,
     borderRadius: 8,

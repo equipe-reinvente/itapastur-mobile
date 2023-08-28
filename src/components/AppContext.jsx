@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import * as SecureStore from 'expo-secure-store';
 
 const Context = createContext();
 
@@ -10,7 +11,8 @@ export function AuthProvider({ children }) {
 
   const login = (userObject) => {
     setAuthToken(userObject['token']);
-    setUser(userObject['user']);
+    setUser(userObject);
+    SecureStore.setItemAsync('userData', JSON.stringify(userObject));
   };
 
   const logout = () => {

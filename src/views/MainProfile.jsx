@@ -28,11 +28,14 @@ const MainProfile = ({ navigation }) => {
     };
 
     const setUsernameText = () => {
-        if (user['name'] !== "" && user['name'] !== null) setUsername(user['name']);
-        else setUsername(user['email'].split("@")[0]);
-        if (username.length > 16) {
-            setUsername(username.substring(0, 17) + "...");
-        }
+        console.log(user);
+        if (user['user']['name'] === null) {
+            let usernmae_processed = user['user']['email'].split("@")[0];
+            if (usernmae_processed.length > 16) setUsername(usernmae_processed.substring(0, 17) + "...");
+            else setUsername(usernmae_processed);
+        } else if (user['user']['name'].length > 16) {
+            setUsername(user['user']['name'].substring(0, 17) + "...");
+        } else setUsername(user['user']['name']);
     }
 
     useEffect(setUsernameText, []);
@@ -44,7 +47,7 @@ const MainProfile = ({ navigation }) => {
                 {profilePhoto === null && <Image style={styles.userPhoto} source={require("../images/profilePhoto.png")}/>}
                 <View style={styles.usernameEmailContainer}>
                    <Text style={styles.usernameText}>{username}</Text>
-                    <Text style={styles.emailText}>{user['email']}</Text> 
+                    <Text style={styles.emailText}>{user['user']['email']}</Text> 
                 </View>
                 <IconButton icon={() => (
                     <MaterialCommunityIcons
