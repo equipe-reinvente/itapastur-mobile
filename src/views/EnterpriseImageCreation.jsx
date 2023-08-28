@@ -72,16 +72,20 @@ const EnterpriseImageCreation = ({ navigation }) => {
 
   const buildEnterpriseFormData = () => {
     const data = new FormData();
+    let category = "";
 
     let image1Format = enterpriseData.images[0].split(".")[enterpriseData.images[0].split(".").length - 1];
     let image2Format = enterpriseData.images[1].split(".")[enterpriseData.images[1].split(".").length - 1];
     let image3Format = enterpriseData.images[2].split(".")[enterpriseData.images[2].split(".").length - 1];
+    if (enterpriseData.category == "Ponto Turístico") category = "3";
+    else if (enterpriseData.category == "Artesão") category = "2";
+    else if (enterpriseData.category == "Loja") category = "1";
     
     data.append('name', enterpriseData.name);
     data.append('description', enterpriseData.description);
     data.append('cellphone', enterpriseData.phoneNumber);
     data.append('user_id', user['user']['id']); 
-    data.append('category_id', enterpriseData.category);
+    data.append('category_id', category);
     data.append('street', enterpriseData.streetAddress);
     data.append('number', enterpriseData.addressNumber);
     data.append('neighborhood', enterpriseData.neighborhoodAddress);

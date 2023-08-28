@@ -28,10 +28,6 @@ const EnterpriseInfoCreation = ({ navigation }) => {
   const isValidName = (name) => name.trim() !== "";
 
   const onSelectCategory = (category) => {
-    if (category == "Ponto Turístico") category = "3";
-    else if (category == "Artesão") category = "2";
-    else if (category == "Loja") category = "1";
-    console.log(category);
     setEnterpriseData((prevState) => ({
       ...prevState,
       category,

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Linking, Platform } from "react-native";
+import { View, StyleSheet, Linking, Share, Text } from "react-native";
 import PlaceTitle from "../components/PlaceTitle";
 import PlaceDescription from "../components/PlaceDescription";
 import ImageCarousel from "../components/ImageCarousel";
@@ -7,6 +7,8 @@ import RouteTraceButton from "../components/RouteTraceButton";
 import axios from "axios";
 import { GetContext } from "../components/AppContext";
 import { useEffect, useState } from "react";
+import Comunications from "../components/Comunications";
+import Comments from "../components/Comments";
 
 const PlaceView = ({ navigation, route }) => {
   
@@ -15,6 +17,11 @@ const PlaceView = ({ navigation, route }) => {
   const [favorite, setFavorite] = useState(false);
   const [gotUser, setGotUser] = useState(false);
   const [heartIcon, setHeatIcon] = useState("heart-outline");
+  const [comments, setComments] = useState([{"user_id": 2, "username": "Marcos", "comment": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa muito bom, recomendo para todos!", 'id': 0},
+                                            {"user_id": 1, "username": "Homero", "comment": "brabo de mais, se podesse tava todo dia aí!", 'id': 1},
+                                            {"user_id": 3, "username": "Lívia", "comment": "quase que não consigo acreditar que esse lugar realmente existe em itapajé! Amei S2", 'id': 2},
+                                            {"user_id": 4, "username": "Cássio", "comment": "bom de mais", 'id': 3},
+                                            {"user_id": 5, "username": "Meireles", "comment": "legal", 'id': 4},]);
 
   const setFavoriteIcon = (isFavorite) => {
     if (isFavorite) setHeatIcon("heart");
@@ -34,6 +41,30 @@ const PlaceView = ({ navigation, route }) => {
     console.log(user);
     modifyFavoritesOnDatabase();
   }
+
+  const handleShare = async () => {
+    console.log(placeData);
+    const message = `Venha conferir ${placeData['name']} no ItapasTur!`;
+    const imageURI = placeData['image_one'];
+    const link = 'https://itapastur-api.fly.dev/forward/'+placeData['id'];
+    
+    const shareOptions = {
+      message: `${message} \n ${link}`,
+      url: imageURI,
+    };
+
+    Share.share(shareOptions);
+
+  };
+
+  const handleOpenWhatsApp = () => {
+    const url = `whatsapp://send?phone=${placeData['cellphone']}`;
+
+    Linking.openURL(url)
+      .catch(() => {
+        console.error('Não é possível abrir o WhatsApp');
+      });
+  };
 
   const modifyFavoritesOnDatabase = async () => {
     try {
@@ -129,8 +160,41 @@ const PlaceView = ({ navigation, route }) => {
     })
     .catch(error => console.error("Erro ao abrir Google Maps:", error));
   };
+
+  const formateFavorites = (favorites) => {
+    const favoritesCount = favorites;
+    favorites = favorites.toString();
+
+    if (favoritesCount > 1000 && favoritesCount < 1000000) {
+        favorites = favorites.substring(0, favorites.length - 4) + "K";
+    } else if (favoritesCount > 1000000 && favoritesCount < 1000000000) {
+        favorites = favorites.substring(0, favorites.length - 7) + "M";
+    } else if (favoritesCount >= 1000000000) {
+        favorites = favorites.substring(0, favorites.length - 10) + "B";
+    }
+
+    return favorites;
+  };
+
+  const selectFrontPageComments = () => {
+    let length = 0;
+    let newCommentsList = [];
+    comments.forEach((comment, idx) => {
+      length += comment.comment.length;
+      if (length < 240) {
+        newCommentsList.push(comment);
+      } else if (idx < 1) {
+        newCommentsList.push({"user_id": comment.user_id, "username": comment.username, "comment": comment.username.substring(0, 297) + "...", 'id': comment.id});
+      }
+    });
+
+    return newCommentsList;
+  }
   
   useEffect(() => {checkIfIsFavorite()})
+
+  let favorites = formateFavorites(placeData['favorites']);
+
 
   return (
     <View style={styles.container}>
@@ -146,7 +210,10 @@ const PlaceView = ({ navigation, route }) => {
         <ImageCarousel images={images}/>
       </View>
 
-      <Socials onFavorite={() => {addFavorite()}} onShare={() => {}} heartIcon={heartIcon}/>
+      <Socials onFavorite={() => {addFavorite()}} onShare={() => {handleShare()}} heartIcon={heartIcon}/>
+      <Comunications onComment={() => {}} onWhatsapp={() => {handleOpenWhatsApp()}} style={styles.comunicationsContainer}/>
+      <Text style={styles.likesStyle}>{favorites} Likes</Text>
+      <Comments comments={selectFrontPageComments()} style={styles.comments}/>
 
       <RouteTraceButton onPress={() => {routeTrace()}}/>
     </View>
@@ -162,6 +229,28 @@ const styles = StyleSheet.create({
     width: 450,
     height: 180,
     marginBottom: 90
+  },
+  comunicationsContainer: {
+    position: 'relative',
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    marginTop: -40,
+    marginBottom: 10,
+    marginLeft: "75%",
+  },
+  comments: {
+    width: 320,
+    maxHeight: 80,
+    minHeight: 40,
+    alignItems: 'flex-start',
+  },
+  likesStyle: {
+    position: 'relative',
+    width: 320,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 10
   },
 });
 

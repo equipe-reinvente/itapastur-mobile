@@ -108,11 +108,12 @@ const Search = ({ navigation }) => {
     };
 
     const renderResults = (item) => {
-        if (item['name'].length > 30) {
-            item['name'] = item['name'].substring(0, 31) + "...";
+        let name = item['name'];
+        if (name.length > 30) {
+            name = name.substring(0, 31) + "...";
         }
 
-        item['favorites'] = formateFavorites(item['favorites']);
+        let favorites = formateFavorites(item['favorites']);
 
         return (
             <View style={styles.storeImageCard} key={item['id']}>
@@ -123,7 +124,7 @@ const Search = ({ navigation }) => {
                                                                                 category={item['category']}
                                                                                 id={item['id']}/>
                 <View style={{position: "relative", left: -10, zIndex: -1}}>
-                    <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
+                    <Text style={{position: "relative", marginTop: 5}}>{name}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
                         <MaterialCommunityIcons
                             name={"heart"}
@@ -131,7 +132,7 @@ const Search = ({ navigation }) => {
                             color="rgba(255, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['favorites']}</Text>
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{favorites}</Text>
                         <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>

@@ -235,12 +235,13 @@ const Home = ({ navigation }) => {
     };
 
     const renderTrendingPlaces = (item) => {
-        if (item['name'].length > 14) {
-            item['name'] = item['name'].substring(0, 15) + "...";
+        let name = item['name'];
+        if (name.length > 14) {
+            name = name.substring(0, 15) + "...";
         };
         return (
             <PlaceCard image={{uri: item['image_one']}} 
-            title={item['name']} 
+            title={name} 
             style={styles.placeCardStyle} 
             likes={item['favorites']} 
             id={item['id']} 
@@ -251,11 +252,12 @@ const Home = ({ navigation }) => {
     };
 
     const renderCircularImageCard = (item) => {
-        if (item['name'].length > 14) {
-            item['name'] = item['name'].substring(0, 15) + "...";
+        let name = item['name'];
+        if (name.length > 14) {
+            name = name.substring(0, 15) + "...";
         };
         return (
-            <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}} callback={openPressedcard} category={item['category']}/>
+            <CircularImageCard title={name} id={item['id']} key={item['id']} image={{uri: item['image_one']}} callback={openPressedcard} category={item['category']}/>
         );
     };
 
@@ -275,11 +277,12 @@ const Home = ({ navigation }) => {
     };
 
     const renderStores = (item) => {
-        if (item['name'].length > 25) {
-            item['name'] = item['name'].substring(0, 26) + "...";
+        let name = item['name'];
+        if (name.length > 25) {
+            name = name.substring(0, 26) + "...";
         }
 
-        item['favorites'] = formateFavorites(item['favorites']);
+        let favorites = formateFavorites(item['favorites']);
 
         return (
             <View style={styles.storeImageCard} key={item['id']}>
@@ -298,7 +301,7 @@ const Home = ({ navigation }) => {
                             color="rgba(255, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['favorites']}</Text>
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{favorites}</Text>
                         <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
