@@ -86,7 +86,7 @@ const PlaceView = ({ navigation, route }) => {
         let userData = {
           enterprises: user['enterprises'],
           token: user['token'],
-          liked_enterprises: user['liked_enterprises'].push(placeData['id']),
+          liked_enterprises: [...user['liked_enterprises'], placeData['id']],
           user: user['user']
         };
         setUser(userData);
