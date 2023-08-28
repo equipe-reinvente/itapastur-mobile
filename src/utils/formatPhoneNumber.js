@@ -6,5 +6,5 @@ export const formatPhoneNumber = (phoneNumber) => {
   return `(${ddd}) ${phoneNumberFirstPart}-${phoneNumberSecondPart}`;
 };
 
-export const removeNonDigitCharacters = (phoneNumber) =>
+export const removeNonDigitCharactersPhone = (phoneNumber) =>
   phoneNumber.replace(/\D/g, "");

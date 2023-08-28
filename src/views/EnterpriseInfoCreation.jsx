@@ -5,7 +5,7 @@ import { useEnterprise } from "../contexts/EnterpriseContext";
 import SelectDropdown from "react-native-select-dropdown";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-import { formatPhoneNumber, removeNonDigitCharacters} from '../utils/formatPhoneNumber';
+import { formatPhoneNumber, removeNonDigitCharactersPhone } from '../utils/formatPhoneNumber';
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
@@ -54,7 +54,7 @@ const EnterpriseInfoCreation = ({ navigation }) => {
     } else {
       setEnterpriseData((prevState) => ({
         ...prevState,
-        phoneNumber: removeNonDigitCharacters(phoneNumber),
+        phoneNumber: removeNonDigitCharactersPhone(phoneNumber),
       }));
     }
   };
