@@ -28,12 +28,12 @@ const WelcomeView = ({ navigation }) => {
       );
       console.log(userData);
       if (userData['token'] !== null && userData['token'] !== "") {
-        navigation.navigate('EventInfoCreation');
+        navigation.navigate('Tabs');
       } else {
-        navigation.navigate('EventInfoCreation');
+        navigation.navigate('Login');
       }
     } catch {
-      navigation.navigate('EventInfoCreation');
+      navigation.navigate('Login');
     }
   }
 
