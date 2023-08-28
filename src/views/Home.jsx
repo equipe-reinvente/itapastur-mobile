@@ -259,10 +259,27 @@ const Home = ({ navigation }) => {
         );
     };
 
+    const formateFavorites = (favorites) => {
+        const favoritesCount = favorites;
+        favorites = favorites.toString();
+
+        if (favoritesCount > 1000 && favoritesCount < 1000000) {
+            favorites = favorites.substring(0, favorites.length - 4) + "K";
+        } else if (favoritesCount > 1000000 && favoritesCount < 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 7) + "M";
+        } else if (favoritesCount >= 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 10) + "B";
+        }
+
+        return favorites;
+    };
+
     const renderStores = (item) => {
         if (item['name'].length > 25) {
             item['name'] = item['name'].substring(0, 26) + "...";
         }
+
+        item['favorites'] = formateFavorites(item['favorites']);
 
         return (
             <View style={styles.storeImageCard} key={item['id']}>
@@ -281,7 +298,7 @@ const Home = ({ navigation }) => {
                             color="rgba(255, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['likes']}</Text>
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['favorites']}</Text>
                         <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>

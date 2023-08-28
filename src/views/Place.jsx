@@ -51,6 +51,7 @@ const PlaceView = ({ navigation, route }) => {
       }
       else {
         setFavorite(false);
+        setFavoriteIcon(false);
         let userData = {
           enterprises: user['enterprises'],
           token: user['token'],
@@ -58,8 +59,6 @@ const PlaceView = ({ navigation, route }) => {
           user: user['user']
         };
         setUser(userData);
-        setFavorite(false);
-        setFavoriteIcon(false);
       }
       const response = await axios.post(
         'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: placeData['id']},
