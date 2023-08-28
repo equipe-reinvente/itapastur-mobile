@@ -1,12 +1,19 @@
 import { View, StyleSheet } from "react-native";
+import { useState } from "react";
 import { useEvent } from "../contexts/EventContext";
+import axios from "axios";
+import { GetContext } from "../components/AppContext";
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import BackNavigationButton from "../components/BackNavigationButton";
 import CreationTitle from "../components/CreationTitle";
 import CreationInput from "../components/CreationInput";
 import CreationMainButton from "../components/CreationMainButton";
 
-const EventAddressCreation = ({ navigation }) => {
+const EventAddressCreation = ({ navigation, route }) => {
+  const [loading, setLoading] = useState(false);
   const { eventData, setEventData } = useEvent();
+  const { enterpriseData } = route.params;
+  const { authToken } = GetContext();
 
   const onChangeStreetAddressInput = (streetAddress) => {
     setEventData((prevState) => ({
@@ -31,7 +38,65 @@ const EventAddressCreation = ({ navigation }) => {
 
   const handleBackButton = () => navigation.navigate('EventInfoCreation');
 
-  const handleNextStepButton = () => navigation.navigate('Perfil');
+  const buildEventFormData = () => {
+    const data = new FormData();
+
+    let imageFormat = eventData.image.split(".")[eventData.image.split(".").length - 1];
+    
+    data.append('enterprise_id', enterpriseData['id']);
+    data.append('name', eventData.name);
+    data.append('description', eventData.description);
+    data.append('date', eventData.date);
+    data.append('time', eventData.time);
+    data.append('street', eventData.streetAddress);
+    data.append('number', eventData.addressNumber);
+    data.append('neighborhood', eventData.neighborhoodAddress);
+    data.append('latitude', -35.002);
+    data.append('longitude', -32.100);
+    data.append('image', {
+      uri: eventData.image,
+      name: `image.${imageFormat}`,
+      type: `image/${imageFormat}`,
+    });
+
+    return data;
+  };
+
+
+  const handleFinishButton = async () => {
+    const data = buildEventFormData();
+    const eventsURL = 'https://itapastur-api.fly.dev/events/';
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        eventsURL,
+        data,
+        {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setLoading(false);
+        navigation.navigate('Perfil');
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        position: 'top',
+        text1: error.message,
+        visibilityTime: 2000,
+      });
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -73,8 +138,9 @@ const EventAddressCreation = ({ navigation }) => {
       <CreationMainButton
         buttonText={"FINALIZAR CADASTRO"}
         color={"#1daf6e"}
-        onPress={handleNextStepButton}
+        onPress={handleFinishButton}
       />
+      <Toast />
     </View>
   )
 };
