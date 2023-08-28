@@ -223,8 +223,7 @@ const Home = ({ navigation }) => {
             }
           );
           let data = response.data["enterprises"];
-          if (data !== placesData) setPlacesData(data);
-          else data = placesData; 
+          setPlacesData(data);
           getArtisans(data);
           getStores(data);
           getTrendingPlaces(data);
@@ -236,12 +235,13 @@ const Home = ({ navigation }) => {
     };
 
     const renderTrendingPlaces = (item) => {
-        if (item['name'].length > 14) {
-            item['name'] = item['name'].substring(0, 15) + "...";
+        let name = item['name'];
+        if (name.length > 14) {
+            name = name.substring(0, 15) + "...";
         };
         return (
             <PlaceCard image={{uri: item['image_one']}} 
-            title={item['name']} 
+            title={name} 
             style={styles.placeCardStyle} 
             likes={item['favorites']} 
             id={item['id']} 
@@ -252,18 +252,37 @@ const Home = ({ navigation }) => {
     };
 
     const renderCircularImageCard = (item) => {
-        if (item['name'].length > 14) {
-            item['name'] = item['name'].substring(0, 15) + "...";
+        let name = item['name'];
+        if (name.length > 14) {
+            name = name.substring(0, 15) + "...";
         };
         return (
-            <CircularImageCard title={item['name']} id={item['id']} key={item['id']} image={{uri: item['image_one']}} callback={openPressedcard} category={item['category']}/>
+            <CircularImageCard title={name} id={item['id']} key={item['id']} image={{uri: item['image_one']}} callback={openPressedcard} category={item['category']}/>
         );
     };
 
-    const renderStores = (item) => {
-        if (item['name'].length > 25) {
-            item['name'] = item['name'].substring(0, 26) + "...";
+    const formateFavorites = (favorites) => {
+        const favoritesCount = favorites;
+        favorites = favorites.toString();
+
+        if (favoritesCount > 1000 && favoritesCount < 1000000) {
+            favorites = favorites.substring(0, favorites.length - 4) + "K";
+        } else if (favoritesCount > 1000000 && favoritesCount < 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 7) + "M";
+        } else if (favoritesCount >= 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 10) + "B";
         }
+
+        return favorites;
+    };
+
+    const renderStores = (item) => {
+        let name = item['name'];
+        if (name.length > 25) {
+            name = name.substring(0, 26) + "...";
+        }
+
+        let favorites = formateFavorites(item['favorites']);
 
         return (
             <View style={styles.storeImageCard} key={item['id']}>
@@ -282,7 +301,7 @@ const Home = ({ navigation }) => {
                             color="rgba(255, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['likes']}</Text>
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{favorites}</Text>
                         <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>

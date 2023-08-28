@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import DeepLinkHandler from "./src/components/DeepLinkHandler";
 
 import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
@@ -21,38 +22,39 @@ import { EventProvider } from "./src/contexts/EventContext";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <AuthProvider>
       <EnterpriseProvider>
-        <EventProvider>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="Welcome"
-                component={Welcome}
-                options={{ title: "Welcome", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Tabs"
-                component={Tabs}
-                options={{ title: "Tabs", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Place"
-                component={PlaceView}
-                options={{ title: "Place", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Login"
-                component={Login}
-                options={{ title: "Login", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Register"
-                component={Register}
-                options={{ title: "Register", headerShown: false }}
-              />
-              <Stack.Screen
+        <NavigationContainer>
+          <DeepLinkHandler />
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              options={{ title: "Welcome", headerShown: false }}
+            />
+            <Stack.Screen
+              name="Tabs"
+              component={Tabs}
+              options={{ title: "Tabs", headerShown: false }}
+            />
+            <Stack.Screen
+              name="Place"
+              component={PlaceView}
+              options={{ title: "Place", headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ title: "Login", headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ title: "Register", headerShown: false }}
+            />
+            <Stack.Screen
                 name="Notifications"
                 component={Notifications}
                 options={{

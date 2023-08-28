@@ -83,7 +83,7 @@ const Search = ({ navigation }) => {
             searchResults = searchResults.concat(placesData['artesoes'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
             searchResults = searchResults.concat(placesData['lojas'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
             searchResults = searchResults.concat(placesData['pontos'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
-            return searchResults;
+            return searchResults.sort((a, b) => b['favorites'] - a['favorites']);
         }
     };
 
@@ -92,7 +92,29 @@ const Search = ({ navigation }) => {
         else setSearchCategory(category);
     };
 
+    const formateFavorites = (favorites) => {
+        const favoritesCount = favorites;
+        favorites = favorites.toString();
+
+        if (favoritesCount > 1000 && favoritesCount < 1000000) {
+            favorites = favorites.substring(0, favorites.length - 4) + "K";
+        } else if (favoritesCount > 1000000 && favoritesCount < 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 7) + "M";
+        } else if (favoritesCount >= 1000000000) {
+            favorites = favorites.substring(0, favorites.length - 10) + "B";
+        }
+
+        return favorites;
+    };
+
     const renderResults = (item) => {
+        let name = item['name'];
+        if (name.length > 30) {
+            name = name.substring(0, 31) + "...";
+        }
+
+        let favorites = formateFavorites(item['favorites']);
+
         return (
             <View style={styles.storeImageCard} key={item['id']}>
                 <CircularImageCard image={{uri: item['image_one']}} buttonStyle={{position: 'relative',
@@ -102,7 +124,7 @@ const Search = ({ navigation }) => {
                                                                                 category={item['category']}
                                                                                 id={item['id']}/>
                 <View style={{position: "relative", left: -10, zIndex: -1}}>
-                    <Text style={{position: "relative", marginTop: 5}}>{item['name']}</Text>
+                    <Text style={{position: "relative", marginTop: 5}}>{name}</Text>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
                         <MaterialCommunityIcons
                             name={"heart"}
@@ -110,7 +132,7 @@ const Search = ({ navigation }) => {
                             color="rgba(255, 0, 0, 0.5)"
                             style={{position: 'relative', top: 1}}
                         />
-                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{item['likes']}</Text>
+                        <Text style={{color: "rgba(255, 0, 0, 0.5)", fontSize: 10, fontWeight: 'bold'}}>{favorites}</Text>
                         <Text style={{fontSize: 11, color: 'rgba(0, 0, 0, 0.5)'}}> · {item['category']}</Text>
                     </View>
                     <View style={{flexDirection: "row", alignItems: 'flex-start'}}>
@@ -126,10 +148,6 @@ const Search = ({ navigation }) => {
             </View>
         )
     }
-
-    const getSearchItems = () => {
-
-    };
 
     return (
         <View style={styles.container}>

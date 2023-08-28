@@ -13,6 +13,8 @@ const PlaceDescription = ({ description }) => {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
+    textAlign: 'left',
+    width: 350,
   },
   title: {
     fontSize: 25,

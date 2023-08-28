@@ -3,43 +3,40 @@ import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from "react";
 
-const Socials = ({ onFavorite, onShare, onEvent, heartIcon = "heart-outline" }) => {
+const containerStyle = {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    marginTop: -35,
+    marginBottom: 10,
+    marginLeft: 10,
+}
+
+const Comunications = ({ onComment, onWhatsapp, style = containerStyle}) => {
 
 
   return(
-    <View style={styles.container}>
+    <View style={style}>
       <IconButton
         icon={() => (
           <MaterialCommunityIcons
-            name={heartIcon}
+            name={"message-reply"}
             size={25}
             color={"#000000"}
           />
         )}
         style={styles.favoriteShareButton}
-        onPress={onFavorite}
+        onPress={onComment}
       />
       <IconButton
         icon={() => (
           <MaterialCommunityIcons
-            name={'share-variant'}
+            name={'whatsapp'}
             size={25}
             color={"#000000"}
           />
         )}
         style={styles.favoriteShareButton}
-        onPress={onShare}
-      />
-      <IconButton
-        icon={() => (
-          <MaterialCommunityIcons
-            name={'calendar'}
-            size={25}
-            color={"#000000"}
-          />
-        )}
-        style={styles.favoriteShareButton}
-        onPress={onEvent}
+        onPress={onWhatsapp}
       />
     </View>
   );
@@ -51,7 +48,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: -35,
     marginBottom: 10,
-    marginRight: 10,
+    marginLeft: 10,
   },
   favoriteShareButton: {
     height: 35,
@@ -62,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Socials;
+export default Comunications;

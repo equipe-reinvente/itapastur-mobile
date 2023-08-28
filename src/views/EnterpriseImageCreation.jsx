@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -14,6 +14,7 @@ const EnterpriseImageCreation = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { enterpriseData, setEnterpriseData } = useEnterprise();
   const { authToken, user } = GetContext();
+  const geocodeApiKey = "2859e67294a844188de5c6093362cb84";
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -33,8 +34,17 @@ const EnterpriseImageCreation = ({ navigation }) => {
     }
   };
 
-  const getLongitudeAndLatitudeFromAdddress = () => {
-
+  const getLongitudeAndLatitudeFromAdddress = async () => {
+    try {
+      const url = 'https://api.geoapify.com/v1/geocode/search?street='+enterpriseData.streetAddress.replace(" ", "20%")+"&housenumber="+enterpriseData.addressNumber+"&city=Itapajé&state=CE&country=Brazil&format=json&apiKey="+geocodeApiKey;
+      const response = await axios.get(url);
+      console.log(response.data['results'][0]['bbox']['lat2'], response.data['results'][0]['bbox']['lon2']);
+      setEnterpriseData((prevState) => ({
+        ...prevState,
+        longitude: response.data['results'][0]['bbox']['lon2'],
+        latitude: response.data['results'][0]['bbox']['lat2'],
+      }));
+    } catch (error) {console.log(error)}
   };
 
   const editImage = async (imageIndex) => {
@@ -58,25 +68,29 @@ const EnterpriseImageCreation = ({ navigation }) => {
         };
       });
     }
-  }
+  };
 
   const buildEnterpriseFormData = () => {
     const data = new FormData();
+    let category = "";
 
     let image1Format = enterpriseData.images[0].split(".")[enterpriseData.images[0].split(".").length - 1];
     let image2Format = enterpriseData.images[1].split(".")[enterpriseData.images[1].split(".").length - 1];
     let image3Format = enterpriseData.images[2].split(".")[enterpriseData.images[2].split(".").length - 1];
+    if (enterpriseData.category == "Ponto Turístico") category = "3";
+    else if (enterpriseData.category == "Artesão") category = "2";
+    else if (enterpriseData.category == "Loja") category = "1";
     
     data.append('name', enterpriseData.name);
     data.append('description', enterpriseData.description);
     data.append('cellphone', enterpriseData.phoneNumber);
     data.append('user_id', user['user']['id']); 
-    data.append('category_id', enterpriseData.category);
+    data.append('category_id', category);
     data.append('street', enterpriseData.streetAddress);
     data.append('number', enterpriseData.addressNumber);
     data.append('neighborhood', enterpriseData.neighborhoodAddress);
-    data.append('latitude', -31.240); 
-    data.append('longitude', -32.100); 
+    data.append('latitude', enterpriseData.latitude); 
+    data.append('longitude', enterpriseData.longitude); 
     data.append('image_one', {
       uri: enterpriseData.images[0],
       name: 'image.'+image1Format,
@@ -135,6 +149,8 @@ const EnterpriseImageCreation = ({ navigation }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {getLongitudeAndLatitudeFromAdddress()}, []);
 
   return (
     <View style={styles.container}>
