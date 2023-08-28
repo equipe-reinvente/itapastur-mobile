@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   selectImageContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     width: 350,
