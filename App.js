@@ -5,7 +5,6 @@ import DeepLinkHandler from "./src/components/DeepLinkHandler";
 
 import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
-import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
 import Notifications from "./src/views/Notifications";
@@ -14,6 +13,7 @@ import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
 import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
 import EventInfoCreation from "./src/views/EventInfoCreation";
 import EventAddressCreation from "./src/views/EventAddressCreation";
+import PlaceRoutes from "./src/views/PlaceRoutes";
 
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
@@ -27,35 +27,35 @@ export default function App() {
     <AuthProvider>
       <EnterpriseProvider>
         <EventProvider>
-        <NavigationContainer>
-          <DeepLinkHandler />
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Welcome"
-              component={Welcome}
-              options={{ title: "Welcome", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={{ title: "Tabs", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Place"
-              component={PlaceView}
-              options={{ title: "Place", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ title: "Login", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ title: "Register", headerShown: false }}
-            />
-            <Stack.Screen
+          <NavigationContainer>
+            <DeepLinkHandler />
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Welcome"
+                component={Welcome}
+                options={{ title: "Welcome", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Tabs"
+                component={Tabs}
+                options={{ title: "Tabs", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Place"
+                component={PlaceRoutes}
+                options={{ title: "Place", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ title: "Login", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ title: "Register", headerShown: false }}
+              />
+              <Stack.Screen
                 name="Notifications"
                 component={Notifications}
                 options={{

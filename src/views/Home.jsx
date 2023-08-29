@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
 import EventImageCarousel from '../components/EventImageCarousel';
@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
 
     const [notificationCount, setNotificationCount] = useState(0);
     const navigationPerfil = useNavigation();
-    const {authToken, setPlacesData, placesData} = GetContext();
+    const {authToken, setPlacesData, placesData, setCurrentPlaceData} = GetContext();
     const [notificationCountText, setNotificationCountText] = useState("");
     const [notificationCountBackgroundSize, setNotificationCountBackgroundSize] = useState(10);
     const [trendingPlaces, setTrendingPlaces] = useState([]);
@@ -38,6 +38,7 @@ const Home = ({ navigation }) => {
     const [artisansPlaces, setArtisansPlaces] = useState([]);
     const [stores, setStores] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const styles = StyleSheet.create({
         container: {
@@ -229,6 +230,7 @@ const Home = ({ navigation }) => {
           getTrendingPlaces(data);
           getNewPlaces(data);
           getNotificationCount();
+          setLoading(false);
         } catch (error) {
           console.error('Erro ao buscar categorias:', error);
         };
@@ -331,7 +333,10 @@ const Home = ({ navigation }) => {
                 text1: 'Parece que esta item não carregou :(',
                 visibilityTime: 2000,
               });
-        } else navigation.navigate("Place", {placeData});
+        } else {
+            setCurrentPlaceData(placeData);
+            navigation.navigate("Place");
+        };
     };
 
     const getNotificationCount = async () => {
@@ -365,6 +370,7 @@ const Home = ({ navigation }) => {
                     </View>}
                 </View>
             </View>
+            {!loading && !refreshing &&
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
@@ -426,7 +432,8 @@ const Home = ({ navigation }) => {
                         </View>
                     </View> 
                 </ScrollView>
-            </View>  
+            </View>}
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
             <Toast />          
         </View>
     );

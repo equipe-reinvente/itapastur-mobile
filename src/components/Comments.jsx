@@ -9,14 +9,17 @@ const containerStyle = {
 
 const Comments = ({comments = [], style = containerStyle, enableScrollView = false}) => {
 
-
     const renderComments = (item) => {
         return (
             <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 5}} key={item['id']}>
-                <Text>
-                    <Text style={styles.username}>{item['username']} </Text>
-                    <Text style={styles.text}>{item['comment']} </Text>
-                </Text>
+                {enableScrollView && <Text>
+                    <Text style={styles.usernameBig}>{item['user_name']} </Text>
+                    <Text style={styles.textBig}>{item['text_content']} </Text>
+                </Text>}
+                {!enableScrollView && <Text>
+                    <Text style={styles.username}>{item['user_name']} </Text>
+                    <Text style={styles.text}>{item['text_content']} </Text>
+                </Text>}
             </View>
         );
     };
@@ -24,7 +27,7 @@ const Comments = ({comments = [], style = containerStyle, enableScrollView = fal
     return (
         <View style={style}>
             {enableScrollView && 
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer} style={styles.scrollView} overScrollMode='never'>
                 {comments.map(renderComments)}
             </ScrollView>
             }
@@ -39,10 +42,13 @@ const Comments = ({comments = [], style = containerStyle, enableScrollView = fal
 
 const styles = StyleSheet.create({
     scrollViewContainer: {
-        flex: 1,
+        position: 'absolute',
+        width: '100%',
+        alignItems: 'flex-start',
+    },
+    scrollView: {
         position: 'relative',
         width: '100%',
-        alignItems: 'center',
     },
     text: {
         fontSize: 12,
@@ -50,6 +56,14 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 12,
+        fontWeight: 'bold'
+    },
+    textBig: {
+        fontSize: 17,
+        marginBottom: 5
+    },
+    usernameBig: {
+        fontSize: 20,
         fontWeight: 'bold'
     },
 });

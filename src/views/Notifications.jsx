@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ const Notifications = ({ navigation }) => {
     const [notificationList, setNotificationList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const { authToken, user, setUser } = GetContext();
+    const [loading, setLoading] = useState(true);
 
     const openSelectedNotification = (key) => {
 
@@ -57,7 +58,7 @@ const Notifications = ({ navigation }) => {
         };
     };
 
-    useEffect(() => {}, []);
+    useEffect(() => {setLoading(false)}, []);
 
     return (
         <View style={styles.container}>
@@ -73,14 +74,15 @@ const Notifications = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
+            {!loading && !refreshing &&
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
                     {notificationList.map(renderNotifications)}
                 </ScrollView>
-            </View>
-            
+            </View>}
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
         </View>
     );
 };
