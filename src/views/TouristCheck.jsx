@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { Button, Text } from "@react-native-material/core";
 import { LinearGradient } from "expo-linear-gradient";
 
