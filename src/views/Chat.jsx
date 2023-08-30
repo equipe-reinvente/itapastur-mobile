@@ -11,6 +11,8 @@ const Chat = ({route}) => {
     const [ commentsState, setCommentsState ] = useState(comments);
     const { user, authToken } = GetContext();
 
+    console.log(commentsState);
+
     const addComment = (comment) => {
         const commentObject = {"enterprise_id": currentPlaceData['id'], "user_id": user['user']['id'], "user_name": user['user']['name'], "text_content": comment, 'id': commentsState[commentsState.length - 1]['id'] + 1};
         setCommentsState([...commentsState, commentObject]);
