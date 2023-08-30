@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ const Favorites = ({ navigation }) => {
     const [favoritesList, setFavoritesList] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const { authToken, user, setUser } = GetContext();
+    const [loading, setLoading] = useState(true);
 
     const openSelectedFavorites = (id, category) => {
         if (category == "Pontos Turísticos" || category == "Ponto Turístico") category = "pontos";
@@ -27,7 +28,10 @@ const Favorites = ({ navigation }) => {
                 text1: 'Parece que esta item não carregou :(',
                 visibilityTime: 2000,
               });
-        } else navigation.navigate("Place", {placeData});
+        } else {
+            setCurrentPlaceData(placeData);
+            navigation.navigate("Place");
+        };
     };
 
     const deleteSelectedFavorites = (id) => {
@@ -60,6 +64,7 @@ const Favorites = ({ navigation }) => {
         newList.concat(data['artesoes'].filter(item => userData['liked_enterprises'].includes(item['id'])));
         console.log(newList);
         setFavoritesList(newList);
+        setLoading(false);
     };
 
     const renderFavorites = (item) => {
@@ -138,14 +143,15 @@ const Favorites = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
+            {!loading && !refreshing &&
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
                     {favoritesList.map(renderFavorites)}
                 </ScrollView>
-            </View>
-            
+            </View>}
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
         </View>
     );
 };

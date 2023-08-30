@@ -1,7 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { IconButton } from "@react-native-material/core";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useState } from "react";
 
 const containerStyle = {
     flexDirection: "row",

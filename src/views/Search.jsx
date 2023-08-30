@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, RefreshControl  } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { TextInput, IconButton } from "@react-native-material/core";
 import { useState } from 'react';
 import { GetContext } from '../components/AppContext';
@@ -15,6 +15,7 @@ const Search = ({ navigation }) => {
     const { placesData, setPlacesData, authToken } = GetContext();
     const [results, setResults] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const searchByName = (text) => {
         setSearchText(text);
@@ -54,7 +55,10 @@ const Search = ({ navigation }) => {
                 text1: 'Parece que esta item não carregou :(',
                 visibilityTime: 2000,
               });
-        } else navigation.navigate("Place", {placeData});
+        } else {
+            setCurrentPlaceData(placeData);
+            navigation.navigate("Place");
+        };
     };
 
     const refreshControl = async () => {
@@ -64,6 +68,7 @@ const Search = ({ navigation }) => {
     }
 
     const pressedSearchKey = async () => {
+        setLoading(true);
         await fetchCategories();
         let category = null;
         if (searchCategory === "Pontos turísticos") {
@@ -77,12 +82,16 @@ const Search = ({ navigation }) => {
     };
 
     const searchItems = (category) => {
-        if (category !== null) return placesData[category].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase()));
+        if (category !== null) {
+            setLoading(false);
+            return placesData[category].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase()));
+        }
         else {
             let searchResults = [];
             searchResults = searchResults.concat(placesData['artesoes'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
             searchResults = searchResults.concat(placesData['lojas'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
             searchResults = searchResults.concat(placesData['pontos'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
+            setLoading(false);
             return searchResults.sort((a, b) => b['favorites'] - a['favorites']);
         }
     };
@@ -189,11 +198,17 @@ const Search = ({ navigation }) => {
             </View>}
             {!showCategories && 
             <View style={styles.scrollViewContainer}>
-                <ScrollView overScrollMode='never' style={{width: '100%', position: 'relative'}} refreshControl={
+                {!loading && !refreshing && <ScrollView overScrollMode='never' style={{width: '100%', position: 'relative'}} refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
                     {results.map(renderResults)}
-                </ScrollView>
+                </ScrollView>}
+                {loading && 
+                <View style={{width: '100%', alignItems: 'center', marginTop: '80%'}}>
+                    <ActivityIndicator size="large" color="#1DAF6E"/>
+                </View>
+                
+                }
             </View>}
         </View>
     );
@@ -216,7 +231,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         marginTop: 30,
-        backgroundColor: "E7E7E7",
+        backgroundColor: "#E7E7E7",
         width: 342,
         height: 39,
         borderRadius: 30,

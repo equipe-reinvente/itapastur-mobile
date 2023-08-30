@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Toast } from 'react-native-toast-message/lib/src/Toast';

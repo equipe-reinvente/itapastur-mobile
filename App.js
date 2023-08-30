@@ -6,7 +6,6 @@ import DeepLinkHandler from "./src/components/DeepLinkHandler";
 import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
 import TouristCheck from "./src/views/TouristCheck";
-import PlaceView from "./src/views/Place";
 import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
 import Notifications from "./src/views/Notifications";
@@ -15,6 +14,7 @@ import EnterpriseAddressCreation from "./src/views/EnterpriseAddressCreation";
 import EnterpriseImageCreation from "./src/views/EnterpriseImageCreation";
 import EventInfoCreation from "./src/views/EventInfoCreation";
 import EventAddressCreation from "./src/views/EventAddressCreation";
+import PlaceRoutes from "./src/views/PlaceRoutes";
 
 import { AuthProvider } from "./src/components/AppContext";
 import { EnterpriseProvider } from "./src/contexts/EnterpriseContext";
@@ -47,7 +47,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="Place"
-                component={PlaceView}
+                component={PlaceRoutes}
                 options={{ title: "Place", headerShown: false }}
               />
               <Stack.Screen

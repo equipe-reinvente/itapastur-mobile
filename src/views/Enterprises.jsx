@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { IconButton, Button } from "@react-native-material/core";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ const Enterprises = ({ navigation }) => {
     const [enterpriseList, setEnterpriseList] = useState([]);
     const { user, authToken } = GetContext(); 
     const [refreshing, setRefreshing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const openSelectedEnterprise = (key) => {
         let enterpriseData = enterpriseList.filter(item => item['id'] === key)[0];
@@ -59,6 +60,7 @@ const Enterprises = ({ navigation }) => {
             );
             const data = response.data['user_enterprises'];
             setEnterpriseList(data);
+            setLoading(false);
             console.log(data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -85,6 +87,7 @@ const Enterprises = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
+            {!loading && !refreshing && 
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
@@ -99,8 +102,8 @@ const Enterprises = ({ navigation }) => {
                         contentContainerStyle={styles.createButton} 
                         onPress={createEnterprise}/>
                 </View>
-            </View>
-            
+            </View>}
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
         </View>
     );
 };

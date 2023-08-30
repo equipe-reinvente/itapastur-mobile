@@ -10,18 +10,14 @@ import { useEffect, useState } from "react";
 import Comunications from "../components/Comunications";
 import Comments from "../components/Comments";
 
-const PlaceView = ({ navigation, route }) => {
+//{"user_id": 5, "username": "Meireles", "comment": "legal", 'id': 4}
+
+const PlaceView = ({ navigation }) => {
   
-  const { placeData } = route.params; 
-  const { user, setUser, authToken } = GetContext();
+  const { user, setUser, authToken, currentPlaceData } = GetContext();
   const [favorite, setFavorite] = useState(false);
-  const [gotUser, setGotUser] = useState(false);
   const [heartIcon, setHeatIcon] = useState("heart-outline");
-  const [comments, setComments] = useState([{"user_id": 2, "username": "Marcos", "comment": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa muito bom, recomendo para todos!", 'id': 0},
-                                            {"user_id": 1, "username": "Homero", "comment": "brabo de mais, se podesse tava todo dia aí!", 'id': 1},
-                                            {"user_id": 3, "username": "Lívia", "comment": "quase que não consigo acreditar que esse lugar realmente existe em itapajé! Amei S2", 'id': 2},
-                                            {"user_id": 4, "username": "Cássio", "comment": "bom de mais", 'id': 3},
-                                            {"user_id": 5, "username": "Meireles", "comment": "legal", 'id': 4},]);
+  const [comments, setComments] = useState([]);
 
   const setFavoriteIcon = (isFavorite) => {
     if (isFavorite) setHeatIcon("heart");
@@ -29,12 +25,12 @@ const PlaceView = ({ navigation, route }) => {
     console.log(heartIcon);
   }
 
-  const image = { source: {uri: placeData['image_one']}}
+  const image = { source: {uri: currentPlaceData['image_one']}}
 
   const images = [
-    { source: {uri: placeData['image_one']} },
-    { source: {uri: placeData['image_two']} },
-    { source: {uri: placeData['image_three']} }
+    { source: {uri: currentPlaceData['image_one']} },
+    { source: {uri: currentPlaceData['image_two']} },
+    { source: {uri: currentPlaceData['image_three']} }
   ];
 
   const addFavorite = () => {
@@ -43,10 +39,10 @@ const PlaceView = ({ navigation, route }) => {
   }
 
   const handleShare = async () => {
-    console.log(placeData);
-    const message = `Venha conferir ${placeData['name']} no ItapasTur!`;
-    const imageURI = placeData['image_one'];
-    const link = 'https://itapastur-api.fly.dev/forward/'+placeData['id'];
+    console.log(currentPlaceData);
+    const message = `Venha conferir ${currentPlaceData['name']} no ItapasTur!`;
+    const imageURI = currentPlaceData['image_one'];
+    const link = 'https://itapastur-api.fly.dev/forward/'+currentPlaceData['id'];
     
     const shareOptions = {
       message: `${message} \n ${link}`,
@@ -58,7 +54,7 @@ const PlaceView = ({ navigation, route }) => {
   };
 
   const handleOpenWhatsApp = () => {
-    const url = `whatsapp://send?phone=${placeData['cellphone']}`;
+    const url = `whatsapp://send?phone=${currentPlaceData['cellphone']}`;
 
     Linking.openURL(url)
       .catch(() => {
@@ -71,7 +67,7 @@ const PlaceView = ({ navigation, route }) => {
       if (!favorite) {
         setFavorite(true);
         setFavoriteIcon(true);
-        let enterprisesFavorite = user['liked_enterprises'].filter(item => item === placeData['id']);
+        let enterprisesFavorite = user['liked_enterprises'].filter(item => item === currentPlaceData['id']);
         let userData = {
           enterprises: user['enterprises'],
           token: user['token'],
@@ -86,13 +82,13 @@ const PlaceView = ({ navigation, route }) => {
         let userData = {
           enterprises: user['enterprises'],
           token: user['token'],
-          liked_enterprises: [...user['liked_enterprises'], placeData['id']],
+          liked_enterprises: [...user['liked_enterprises'], currentPlaceData['id']],
           user: user['user']
         };
         setUser(userData);
       }
       const response = await axios.post(
-        'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: placeData['id']},
+        'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: currentPlaceData['id']},
         {
           headers: {
               Authorization: `Bearer ${authToken}`,
@@ -109,43 +105,40 @@ const PlaceView = ({ navigation, route }) => {
   };
 
   const checkIfIsFavorite = async () => {
-    if (gotUser === false) {
-      try {
-        setGotUser(true);
-        const response = await axios.get(
-          'https://itapastur-api.fly.dev/view_user/'+ user['user']['id'],
-          {
-          headers: {
-              Authorization: `Bearer ${authToken}`,
-          },
-          }
-        );
-        let userData = {
-          enterprises: response['data']['enterprises'],
-          token: user['token'],
-          liked_enterprises: response['data']['liked_enterprises'],
-          user: response['data']['user']
-        };
-        const isFavorite = userData['liked_enterprises'].includes(placeData['id']);
-        setUser(userData);
-        setFavorite(isFavorite);
-        setFavoriteIcon(isFavorite);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error('Erro do Axios:', error.message);
-        } else {
-          console.error('Erro:', error.message);
+    try {
+      const response = await axios.get(
+        'https://itapastur-api.fly.dev/view_user/'+ user['user']['id'],
+        {
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
         }
+      );
+      let userData = {
+        enterprises: response['data']['enterprises'],
+        token: user['token'],
+        liked_enterprises: response['data']['liked_enterprises'],
+        user: response['data']['user']
+      };
+      const isFavorite = userData['liked_enterprises'].includes(currentPlaceData['id']);
+      setUser(userData);
+      setFavorite(isFavorite);
+      setFavoriteIcon(isFavorite);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+          console.error('Erro do Axios:', error.message);
+      } else {
+        console.error('Erro:', error.message);
       }
     }
   };
 
   const routeTrace = () => {
     let url = "";
-    if (placeData['address']['street'] === null) {
-      url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${placeData['address']['latitude']},${placeData['address']['longitude']}`;
+    if (currentPlaceData['address']['street'] === null) {
+      url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${currentPlaceData['address']['latitude']},${currentPlaceData['address']['longitude']}`;
     } else {
-      const address = `${placeData['address']['street']}, ${placeData['address']['number']}`
+      const address = `${currentPlaceData['address']['street']}, ${currentPlaceData['address']['number']}`
       const encodedAddress = encodeURIComponent(address);
       url = `https://www.google.com/maps/dir/?api=1&origin=Current+Location&destination=${encodedAddress}`;
     }
@@ -179,39 +172,59 @@ const PlaceView = ({ navigation, route }) => {
   const selectFrontPageComments = () => {
     let length = 0;
     let newCommentsList = [];
-    comments.forEach((comment, idx) => {
-      length += comment.comment.length;
-      if (length < 240) {
-        newCommentsList.push(comment);
-      } else if (idx < 1) {
-        newCommentsList.push({"user_id": comment.user_id, "username": comment.username, "comment": comment.username.substring(0, 297) + "...", 'id': comment.id});
-      }
-    });
+    if (comments.length > 0) {
+      comments.forEach((comment, idx) => {
+        length += comment.text_content.length;
+        if (length < 240 && idx < 5) {
+          newCommentsList.push(comment);
+        } else if (idx < 1) {
+          newCommentsList.push({"enterprise_id": comment.enterprise_id, "user_id": comment.user_id, "user_name": comment.user_name, "text_content": comment.text_content.substring(0, 297) + "...", 'id': comment.id});
+        }
+      });
+    };
 
     return newCommentsList;
   }
-  
-  useEffect(() => {checkIfIsFavorite()})
 
-  let favorites = formateFavorites(placeData['favorites']);
+  const openComments = () => {
+    navigation.navigate("Chat", {comments, setComments, currentPlaceData});
+  };
+
+  const getComments = async () => {
+    try {
+      const response = await axios.get(
+        'https://itapastur-api.fly.dev/enterprise/'+currentPlaceData['id']+"/comments",
+        {
+          headers: {
+              Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+      setComments(response.data.comments);
+    } catch (error) {console.log(error);};
+  };
+  
+  useEffect(() => {checkIfIsFavorite(); getComments();}, []);
+
+  let favorites = formateFavorites(currentPlaceData['favorites']);
 
 
   return (
     <View style={styles.container}>
       <PlaceTitle
-        title={placeData['name']}
-        category={placeData['category']}
+        title={currentPlaceData['name']}
+        category={currentPlaceData['category']}
         image={image}
       />
 
-      <PlaceDescription description={placeData['description']} />
+      <PlaceDescription description={currentPlaceData['description']} />
 
       <View style={styles.carouselContainer}>
         <ImageCarousel images={images}/>
       </View>
 
       <Socials onFavorite={() => {addFavorite()}} onShare={() => {handleShare()}} heartIcon={heartIcon}/>
-      <Comunications onComment={() => {}} onWhatsapp={() => {handleOpenWhatsApp()}} style={styles.comunicationsContainer}/>
+      <Comunications onComment={() => {openComments()}} onWhatsapp={() => {handleOpenWhatsApp()}} style={styles.comunicationsContainer}/>
       <Text style={styles.likesStyle}>{favorites} Likes</Text>
       <Comments comments={selectFrontPageComments()} style={styles.comments}/>
 
@@ -251,7 +264,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
     marginBottom: 10
-  },
+  }
 });
 
 export default PlaceView;

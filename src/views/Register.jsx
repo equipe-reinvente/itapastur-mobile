@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,9 @@ const Register = ({ navigation }) => {
 
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
+  const [nameErrorMessage, setNameErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = useState("");
 
@@ -42,12 +45,12 @@ const Register = ({ navigation }) => {
     if (!canRegister) return;
 
     let data = { 
-      "user": {
-          "email": email_processed,
-          "password": password,
-          "name": email.split("@")[0]
-      }
-  }
+      "is_turist": false,
+      "email": email_processed,
+      "password": password,
+      "name": name,
+      "avatar": null
+    }
 
     setLoading(true);
 
@@ -83,6 +86,7 @@ const Register = ({ navigation }) => {
   const loginScreenLink = () => navigation.navigate('Login');
 
   const forgotPasswordScreenLink = () => {
+
   };
 
   return (
@@ -90,6 +94,18 @@ const Register = ({ navigation }) => {
       <Text style={styles.title}>Cadastre-se</Text>
       <Text style={styles.subtitle}>Um passo para conhecer
         mais de Itapajé! :D</Text>
+
+      <Text style={{ color: "red" }}>{nameErrorMessage}</Text>
+
+      <TextInput
+        label="Nome"
+        variant="outlined"
+        onChangeText={setName}
+        color='gray'
+        value={name}
+        placeholder="Carlos Braga"
+        style={styles.input}
+      />
 
       <Text style={{ color: "red" }}>{emailErrorMessage}</Text>
 
@@ -139,6 +155,18 @@ const Register = ({ navigation }) => {
         placeholder="password123example"
         onChangeText={setPasswordConfirmation}
         style={styles.password}
+        secureTextEntry={!showConfirmPassword}
+        trailing={props => (
+          <IconButton icon={() => (
+            <MaterialCommunityIcons
+              name={!showConfirmPassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="gray"
+            />
+          )}
+            onPress={() => {setShowConfirmPassword(!showConfirmPassword);}}
+          />
+        )}
       />
 
 
@@ -174,7 +202,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginTop: "36%",
+    marginTop: "15%",
     marginBottom: 10,
     textAlign: 'left',
   },

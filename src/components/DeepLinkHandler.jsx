@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, Linking } from 'react-native'; // Importe o Linking do React Native
+import { View, Linking } from 'react-native'; // Importe o Linking do React Native
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { GetContext } from './AppContext';
