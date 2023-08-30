@@ -5,6 +5,7 @@ import DeepLinkHandler from "./src/components/DeepLinkHandler";
 
 import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
+import TouristCheck from "./src/views/TouristCheck";
 import Tabs from "./src/views/Tabs";
 import Register from "./src/views/Register";
 import Notifications from "./src/views/Notifications";
@@ -22,7 +23,6 @@ import { EventProvider } from "./src/contexts/EventContext";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
   return (
     <AuthProvider>
       <EnterpriseProvider>
@@ -34,6 +34,11 @@ export default function App() {
                 name="Welcome"
                 component={Welcome}
                 options={{ title: "Welcome", headerShown: false }}
+              />
+              <Stack.Screen
+                name="TouristCheck"
+                component={TouristCheck}
+                options={{ title: "TouristCheck", headerShown: false }}
               />
               <Stack.Screen
                 name="Tabs"
