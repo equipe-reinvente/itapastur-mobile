@@ -87,12 +87,12 @@ const Enterprises = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
-            {!loading && !refreshing && 
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
-                    {enterpriseList.map(renderEnterprises)}
+                    {!loading && !refreshing && enterpriseList.map(renderEnterprises)}
                 </ScrollView>
                 <View style={styles.createButtonContainer}>
                     <Button titleStyle={styles.createButtonText} 
@@ -102,8 +102,7 @@ const Enterprises = ({ navigation }) => {
                         contentContainerStyle={styles.createButton} 
                         onPress={createEnterprise}/>
                 </View>
-            </View>}
-            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
+            </View>
         </View>
     );
 };

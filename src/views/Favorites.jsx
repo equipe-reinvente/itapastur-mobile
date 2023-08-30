@@ -143,15 +143,14 @@ const Favorites = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
-            {!loading && !refreshing &&
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
-                    {favoritesList.map(renderFavorites)}
+                    {!loading && !refreshing && favoritesList.map(renderFavorites)}
                 </ScrollView>
-            </View>}
-            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
+            </View>
         </View>
     );
 };

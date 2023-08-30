@@ -7,9 +7,6 @@ import { useEffect } from 'react';
 const EnterprisesConfiguration = ({ navigation, route }) => {
     const { enterpriseData } = route.params;
 
-    
-    //setCurrentEnterpriseData(enterpriseData);
-
     const openEnterprisesConfigurations = () => {
         
     };
@@ -19,7 +16,7 @@ const EnterprisesConfiguration = ({ navigation, route }) => {
     };
 
     const openEnterprisesAddEvents = () => {
-        
+        navigation.navigate("EventInfoCreation", {enterpriseData});
     };
 
     const resizeName = () => {

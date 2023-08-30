@@ -2,7 +2,14 @@ import { View, Image, StyleSheet } from "react-native";
 import { Button, Text } from "@react-native-material/core";
 import { LinearGradient } from "expo-linear-gradient";
 
-const TouristCheck = () => {
+const TouristCheck = ({ navigation }) => {
+
+  const updateUserIsTourist = async (isTourist) => {
+    try {
+      navigation.navigate('Tabs');
+    } catch (error) {console.log(error);}
+  }
+
   return (
     <LinearGradient
       colors={["#1dad6d", "#232c26"]}
@@ -22,7 +29,7 @@ const TouristCheck = () => {
           titleStyle={styles.buttonText}
           color="#1daf6e"
           contentContainerStyle={{height: 50}}
-          onPress={() => {}}
+          onPress={() => {updateUserIsTourist(true)}}
         />
 
         <Button
@@ -31,7 +38,7 @@ const TouristCheck = () => {
           titleStyle={styles.buttonText}
           color="#e36352"
           contentContainerStyle={{height: 50}}
-          onPress={() => {}}
+          onPress={() => {updateUserIsTourist(false)}}
         />
       </View>
     </LinearGradient>

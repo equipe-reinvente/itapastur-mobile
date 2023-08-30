@@ -59,7 +59,7 @@ const Register = ({ navigation }) => {
       if (response.status === 200) {
         login(response['data']);
         setLoading(false);
-        navigation.navigate('Tabs');
+        navigation.navigate('TouristCheck');
       } else {
         let error = response.data["error"];
         setEmailErrorMessage(error);

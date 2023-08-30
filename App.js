@@ -23,6 +23,7 @@ import { EventProvider } from "./src/contexts/EventContext";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <AuthProvider>
       <EnterpriseProvider>

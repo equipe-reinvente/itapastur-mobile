@@ -1,27 +1,42 @@
-import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator, BackHandler } from 'react-native';
 import { TextInput, IconButton } from "@react-native-material/core";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetContext } from '../components/AppContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ImageCard from '../components/ImageCard';
 import axios from "axios";
 import CircularImageCard from '../components/CircularImageCard';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Search = ({ navigation }) => {
 
-    const [searchText, setSearchText] = useState("");
-    const [searchCategory, setSearchCategory] = useState("Todas as Categorias");
-    const [showCategories, setShowCategories] = useState(true);
-    const { placesData, setPlacesData, authToken } = GetContext();
-    const [results, setResults] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const { placesData, setPlacesData, authToken, setCanReturnFromSearch, canReturnFromSearch } = GetContext();
+    const [params, setParams] = useState({
+        showCategories: true,
+        searchCategory: "Todas as Categorias",
+        searchText: "",
+        results: [],
+        loading: false,
+        refreshing: false,
+    })
 
     const searchByName = (text) => {
-        setSearchText(text);
-        if (results.length > 0) setResults([]);
-        if (text !== "" && text !== null) setShowCategories(false);
-        else setShowCategories(true);
+        setParams((prevState) => ({
+            ...prevState,
+            searchText: text,
+        }));
+        if (params.results.length > 0) setParams((prevState) => ({
+            ...prevState,
+            results: [],
+          }));
+        if (text !== "" && text !== null) setParams((prevState) => ({
+            ...prevState,
+            showCategories: false,
+          }));
+        else if (params.searchCategory === "Todas as Categorias") {setParams((prevState) => ({
+            ...prevState,
+            showCategories: true,
+          }));}
     };
 
     const fetchCategories = async () => {
@@ -62,20 +77,29 @@ const Search = ({ navigation }) => {
     };
 
     const refreshControl = async () => {
-        setRefreshing(true);
+        setParams((prevState) => ({
+            ...prevState,
+            refreshing: true,
+        }));
         await pressedSearchKey();
-        setRefreshing(false);
+        setParams((prevState) => ({
+            ...prevState,
+            refreshing: false,
+        }));
     }
 
     const pressedSearchKey = async () => {
-        setLoading(true);
+        setParams((prevState) => ({
+            ...prevState,
+            loading: true,
+        }));
         await fetchCategories();
         let category = null;
-        if (searchCategory === "Pontos turísticos") {
+        if (params.searchCategory === "Pontos turísticos") {
             category = 'pontos';
-        } else if (searchCategory === "Lojas") {
+        } else if (params.searchCategory === "Lojas") {
             category = 'lojas';
-        } else if (searchCategory === "Artesões") {
+        } else if (params.searchCategory === "Artesões") {
             category = 'artesoes';
         }
         setResults(searchItems(category));
@@ -83,22 +107,69 @@ const Search = ({ navigation }) => {
 
     const searchItems = (category) => {
         if (category !== null) {
-            setLoading(false);
-            return placesData[category].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase()));
+            setParams((prevState) => ({
+                ...prevState,
+                loading: false,
+            }));
+            return placesData[category].filter(item => item['name'].toLowerCase().includes(params.searchText.toLowerCase()));
         }
         else {
             let searchResults = [];
-            searchResults = searchResults.concat(placesData['artesoes'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
-            searchResults = searchResults.concat(placesData['lojas'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
-            searchResults = searchResults.concat(placesData['pontos'].filter(item => item['name'].toLowerCase().includes(searchText.toLowerCase())));
-            setLoading(false);
+            searchResults = searchResults.concat(placesData['artesoes'].filter(item => item['name'].toLowerCase().includes(params.searchText.toLowerCase())));
+            searchResults = searchResults.concat(placesData['lojas'].filter(item => item['name'].toLowerCase().includes(params.searchText.toLowerCase())));
+            searchResults = searchResults.concat(placesData['pontos'].filter(item => item['name'].toLowerCase().includes(params.searchText.toLowerCase())));
+            setParams((prevState) => ({
+                ...prevState,
+                loading: false,
+            }));
             return searchResults.sort((a, b) => b['favorites'] - a['favorites']);
         }
     };
 
-    const changeCategory = (category) => {
-        if (category === searchCategory) setSearchCategory("Todas as Categorias");
-        else setSearchCategory(category);
+    const changeCategory = async (category) => {
+        if (category === params.searchCategory || category === "Todas as Categorias") {
+            setParams((prevState) => ({
+                ...prevState,
+                searchCategory: "Todas as Categorias",
+            }));
+            setParams((prevState) => ({
+                ...prevState,
+                showCategories: true,
+            }));
+            setCanReturnFromSearch(true);
+            setParams((prevState) => ({
+                ...prevState,
+                loading: false,
+            }));
+        } else {
+            setParams((prevState) => ({
+                ...prevState,
+                searchCategory: category,
+            }));
+            setParams((prevState) => ({
+                ...prevState,
+                showCategories: false,
+            }));
+            setCanReturnFromSearch(false);
+            setParams((prevState) => ({
+                ...prevState,
+                loading: true,
+            }));
+            await fetchCategories();
+            if (category === "Pontos turísticos") {
+                category = 'pontos';
+            } else if (category === "Lojas") {
+                category = 'lojas';
+            } else if (category === "Artesões") {
+                category = 'artesoes';
+            };
+
+            setResults(placesData[category].sort((a, b) => b['favorites'] - a['favorites']));
+            setParams((prevState) => ({
+                ...prevState,
+                loading: false,
+            }));
+        }
     };
 
     const formateFavorites = (favorites) => {
@@ -156,7 +227,25 @@ const Search = ({ navigation }) => {
                 </View>
             </View>
         )
-    }
+    };
+
+    const handleBackButton = () => {
+        if (params.searchCategory === "Todas as Categorias") {
+            setCanReturnFromSearch(true);
+            return false;
+        }
+        else {
+            changeCategory("Todas as Categorias");
+            setCanReturnFromSearch(false);
+            return true;
+        };
+      };
+      
+      useFocusEffect(() => {BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+        return () => {
+        BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
+        };});
 
     return (
         <View style={styles.container}>
@@ -165,7 +254,7 @@ const Search = ({ navigation }) => {
                 onChangeText={searchByName}
                 color='gray'
                 placeholder= {
-                    "Buscar em " + searchCategory
+                    "Buscar em " + params.searchCategory
                 }
                 style={styles.searchBar}
                 inputContainerStyle={{backgroundColor: 'rgba(231, 231, 231, 255)', borderRadius: 30}}
@@ -184,7 +273,7 @@ const Search = ({ navigation }) => {
                 )}
             /> 
 
-            {showCategories === true && 
+            {params.showCategories === true && 
             <View style={styles.categoriesContainer}>
                 <Text style={styles.title}>
                     Categorias
@@ -196,19 +285,19 @@ const Search = ({ navigation }) => {
                     <ImageCard image={require('../images/artesanato.png')} text='Artesões' id={2} callback={() => changeCategory('Artesões')}/>
                 </View>
             </View>}
-            {!showCategories && 
+            {!params.showCategories && 
             <View style={styles.scrollViewContainer}>
-                {!loading && !refreshing && <ScrollView overScrollMode='never' style={{width: '100%', position: 'relative'}} refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
-                }>
-                    {results.map(renderResults)}
-                </ScrollView>}
-                {loading && 
+                {params.loading && 
                 <View style={{width: '100%', alignItems: 'center', marginTop: '80%'}}>
                     <ActivityIndicator size="large" color="#1DAF6E"/>
                 </View>
                 
                 }
+                <ScrollView overScrollMode='never' style={{width: '100%', position: 'relative'}} refreshControl={
+                    <RefreshControl refreshing={params.refreshing} onRefresh={refreshControl} />
+                }>
+                    {!params.loading && !params.refreshing &&  params.results.map(renderResults)}
+                </ScrollView>
             </View>}
         </View>
     );

@@ -4,13 +4,16 @@ import { Button, Text } from "@react-native-material/core";
 import { GetContext } from '../components/AppContext';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import { useState } from "react";
 
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
   const { login } = GetContext();
+  const [loading, setLoading] = useState(false);
 
   const handleStartButton = async () => {
     try {
+      setLoading(true);
       let userData = {'token': null};
       userData = await SecureStore.getItemAsync('userData');
 
@@ -34,10 +37,11 @@ const WelcomeView = ({ navigation }) => {
 
       await login(userData);
       console.log(userData);
-
       if (userData['token'] !== null && userData['token'] !== "") {
+        setLoading(false);
         navigation.navigate('Tabs'); 
       } else {
+        setLoading(false);
         navigation.navigate('Login');
       };
     } catch (error) {
@@ -66,6 +70,7 @@ const WelcomeView = ({ navigation }) => {
           color="#1daf6e"
           contentContainerStyle={{height: 50}}
           onPress={handleStartButton}
+          loading={loading}
         />
       </View>
     </LinearGradient>
