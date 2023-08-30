@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DeepLinkHandler from "./src/components/DeepLinkHandler";
+import { LogBox } from 'react-native';
 
 import Login from "./src/views/Login";
 import Welcome from "./src/views/Welcome";
@@ -23,6 +24,9 @@ import { EventProvider } from "./src/contexts/EventContext";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  LogBox.ignoreAllLogs();
+
   return (
     <AuthProvider>
       <EnterpriseProvider>

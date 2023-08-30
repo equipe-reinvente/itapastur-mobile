@@ -6,7 +6,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         callback = () => {},
                         title = "",
                         subtitle = "",
-                        image=require('../images/imagePlaceholder.png'),
+                        image=require('../images/image_placeholder.png'),
                         icon = null,
                         iconColor = 'black',
                         isIconClickable=false,
@@ -15,7 +15,7 @@ const ThumbnailButton = ({style = {position: 'relative', height: 80, width: "100
                         category = ""}) => {
 
     try {
-        if (image.uri === null) image = require("../images/imagePlaceholder.png");
+        if (image.uri === null) image = require("../images/image_placeholder.png");
     } catch {}
 
     const styles = StyleSheet.create({

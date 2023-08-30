@@ -5,7 +5,7 @@ import { useState } from 'react';
 const CircularImageCard = ({title = "",  
                         callback = () => {}, 
                         color='black', 
-                        image=require("../images/imagePlaceholder.png"),
+                        image=require("../images/image_placeholder.png"),
                         style = {width: 60, height: 85, marginRight: 25},
                         buttonStyle = {position: 'relative',
                         alignItems: 'flex-start',
@@ -16,7 +16,7 @@ const CircularImageCard = ({title = "",
 
     const imageBorderRadius = style['width'] / 2;
     try {
-        if (image.uri === null) image = require("../images/imagePlaceholder.png");
+        if (image.uri === null) image = require("../images/image_placeholder.png");
     } catch {}
 
     const styles = StyleSheet.create({
@@ -59,7 +59,7 @@ const CircularImageCard = ({title = "",
     return (
         <View style={styles.container}>
             {image!==null && <Image source={image} style={styles.image}/>}
-            {image===null && <Image source={require("../images/imagePlaceholder.png")} style={styles.image}/>}
+            {image===null && <Image source={require("../images/image_placeholder.png")} style={styles.image}/>}
             {title !== "" && <Text style={styles.title}>{title}</Text>}
             <View style={styles.overlayContainer}>
                 <Button style={styles.button} color='rgba(255, 255, 255, 0)' uppercase={false}

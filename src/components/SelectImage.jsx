@@ -21,13 +21,14 @@ const SelectImage = ({ image, pickImage, editImage }) => {
       }
     </View>
   )
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: 350,
     height: 150,
+    marginBottom: 5,
   },
   imageContainer: {
     flex: 1,

@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { GetContext } from '../components/AppContext';
 
 import Home from './Home';
 import Search from './Search';
@@ -8,6 +9,8 @@ import Profile from './Profile';
 const Tab = createBottomTabNavigator();
 
 const Tabs = ({ navigation }) => {
+
+    const {canReturnFromSearch} = GetContext();
 
     return (
         <Tab.Navigator screenOptions={{headerShown: false, tabBarStyle:{height: 80, position: "absolute"}, tabBarHideOnKeyboard: 'true'}}>
@@ -31,6 +34,11 @@ const Tabs = ({ navigation }) => {
                     ),
                     tabBarLabelStyle: {marginBottom: 10, fontSize: 12},
                     tabBarActiveTintColor: "black",
+                    tabBarOnPress: ({ defaultHandler }) => {
+                        if (canReturnFromSearch) {
+                          defaultHandler();
+                        }
+                    },
                 }}
             />
             <Tab.Screen

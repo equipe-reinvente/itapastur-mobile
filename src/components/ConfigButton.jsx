@@ -96,7 +96,7 @@ const ConfigButton = ({title = "",
                     trailingContainerStyle={styles.arrow}
                     leadingContainerStyle={styles.leadingIcon}
                     disableElevation
-                    onPress={callback}/>
+                    onPress={() => {callback()}}/>
             </View>
         </View>
     );

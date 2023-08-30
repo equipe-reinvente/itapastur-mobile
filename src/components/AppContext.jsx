@@ -5,10 +5,11 @@ const Context = createContext();
 
 export function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState(require("../images/profilePhoto.png"));
+  const [profilePhoto, setProfilePhoto] = useState(require("../images/profile_photo.png"));
   const [user, setUser] = useState({});
   const [placesData, setPlacesData] = useState({});
   const [currentPlaceData, setCurrentPlaceData] = useState({});
+  const [canReturnFromSearch, setCanReturnFromSearch] = useState(true);
 
   const login = (userObject) => {
     setAuthToken(userObject['token']);
@@ -22,7 +23,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser, placesData, setPlacesData, currentPlaceData, setCurrentPlaceData }}>
+    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser, placesData, setPlacesData, currentPlaceData, setCurrentPlaceData, canReturnFromSearch, setCanReturnFromSearch }}>
       {children}
     </Context.Provider>
   );

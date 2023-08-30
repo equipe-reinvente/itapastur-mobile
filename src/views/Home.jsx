@@ -11,11 +11,11 @@ import CircularImageCard from '../components/CircularImageCard';
 import { useNavigation } from '@react-navigation/native';
 
 const images = [
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") }
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") }
 ];
 
 const itemInfo = [
@@ -230,10 +230,25 @@ const Home = ({ navigation }) => {
           getTrendingPlaces(data);
           getNewPlaces(data);
           getNotificationCount();
+          await fetchEvents();
           setLoading(false);
         } catch (error) {
           console.error('Erro ao buscar categorias:', error);
         };
+    };
+
+    const fetchEvents = async () => {
+        try {
+            const response = await axios.get(
+            'https://itapastur-api.fly.dev/events',
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+        );
+        console.log(response);
+        } catch (error) {console.log(error);}
     };
 
     const renderTrendingPlaces = (item) => {
@@ -370,70 +385,73 @@ const Home = ({ navigation }) => {
                     </View>}
                 </View>
             </View>
-            {!loading && !refreshing &&
+            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
-                    <View style={styles.eventsContainer}>
-                        <EventImageCarousel images={images} 
-                        style={{position: 'relative', height: 102, width: 280, left: -20, borderRadius: 15}} 
-                        itemInfo={itemInfo}
-                        title={"Festa de Itapajé"}/>
-                    </View>
+                    {!loading && !refreshing && 
+                    <View>
+                        <View style={styles.eventsContainer}>
+                            <EventImageCarousel images={images} 
+                            style={{position: 'relative', height: 102, width: 280, left: -20, borderRadius: 15}} 
+                            itemInfo={itemInfo}
+                            title={"Festa de Itapajé"}/>
+                        </View>
 
-                    <View style={styles.contentContainer}>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Mais Populares</Text>
-                            <Text style={{
-                                position: 'relative',
-                                color: '#1DAF6E',
-                                right: 0,
-                                top: 6,
-                                marginLeft: "37%"
-                            }} onPress={seeMoreRedirect}>Ver mais</Text>
+                        <View style={styles.contentContainer}>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Mais Populares</Text>
+                                <Text style={{
+                                    position: 'relative',
+                                    color: '#1DAF6E',
+                                    right: 0,
+                                    top: 6,
+                                    marginLeft: "37%"
+                                }} onPress={seeMoreRedirect}>Ver mais</Text>
+                            </View>
+                            <View style={styles.imageCardContainer}>
+                                {trendingPlaces.map(renderTrendingPlaces)}
+                            </View>
+                            
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Novos lugares para experimentar</Text>
+                            </View>
+                            
+                            <View style={styles.circularImageCardContainer}>
+                                {newPlaces.map(renderCircularImageCard)}
+                            </View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Artesões Locais</Text>
+                                <Text style={{
+                                    position: 'relative',
+                                    color: '#1DAF6E',
+                                    right: 0,
+                                    top: 6,
+                                    marginLeft: "35%"
+                                }} onPress={seeMoreRedirect}>Ver mais</Text>
+                            </View>
+                            <View style={styles.imageCardContainer}>
+                                {artisansPlaces.map(renderTrendingPlaces)}
+                            </View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Lojas</Text>
+                                <Text style={{
+                                    position: 'relative',
+                                    color: '#1DAF6E',
+                                    right: 0,
+                                    top: 6,
+                                    marginLeft: "61%"
+                                }} onPress={seeMoreRedirect}>Ver mais</Text>
+                            </View>
+                            <View style={styles.circularImageCardContainer}>
+                                {stores.map(renderStores)}
+                            </View>
                         </View>
-                        <View style={styles.imageCardContainer}>
-                            {trendingPlaces.map(renderTrendingPlaces)}
-                        </View>
-                        
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Novos lugares para experimentar</Text>
-                        </View>
-                        
-                        <View style={styles.circularImageCardContainer}>
-                            {newPlaces.map(renderCircularImageCard)}
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Artesões Locais</Text>
-                            <Text style={{
-                                position: 'relative',
-                                color: '#1DAF6E',
-                                right: 0,
-                                top: 6,
-                                marginLeft: "35%"
-                            }} onPress={seeMoreRedirect}>Ver mais</Text>
-                        </View>
-                        <View style={styles.imageCardContainer}>
-                            {artisansPlaces.map(renderTrendingPlaces)}
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Lojas</Text>
-                            <Text style={{
-                                position: 'relative',
-                                color: '#1DAF6E',
-                                right: 0,
-                                top: 6,
-                                marginLeft: "61%"
-                            }} onPress={seeMoreRedirect}>Ver mais</Text>
-                        </View>
-                        <View style={styles.circularImageCardContainer}>
-                            {stores.map(renderStores)}
-                        </View>
-                    </View> 
+                    </View>
+                    }
                 </ScrollView>
-            </View>}
-            {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
+            </View>
             <Toast />          
         </View>
     );

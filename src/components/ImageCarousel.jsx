@@ -8,7 +8,7 @@ const ImageCarousel = ({ images }) => {
 
   try {
     images.forEach((image, index) => {
-      if (image.source.uri === null) image.source = require("../images/imagePlaceholder.png");
+      if (image.source.uri === null) image.source = require("../images/image_placeholder.png");
     });
   } catch {}
 

@@ -74,14 +74,13 @@ const Notifications = ({ navigation }) => {
                 )}
                 onPress={previousPage}/>
             </View>
-            {!loading && !refreshing &&
             <View style={styles.scrollViewContainer}>
                 <ScrollView style={styles.scrollView} overScrollMode='never' refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={refreshControl} />
                 }>
-                    {notificationList.map(renderNotifications)}
+                    {!loading && !refreshing && notificationList.map(renderNotifications)}
                 </ScrollView>
-            </View>}
+            </View>
             {loading && <ActivityIndicator size="large" color="#1DAF6E" style={{marginTop: '80%'}}/>}
         </View>
     );

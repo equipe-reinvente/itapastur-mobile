@@ -12,8 +12,9 @@ import CreationMainButton from "../components/CreationMainButton";
 import { formatDate, removeNonDigitCharactersDate } from "../utils/formatDate";
 import { formatTime, removeNonDigitCharactersTime } from "../utils/formatTime";
 
-const EventInfoCreation = ({ navigation }) => {
+const EventInfoCreation = ({ navigation, route }) => {
   const { eventData, setEventData } = useEvent();
+  const { enterpriseData } = route.params;
   const [nameError, setNameError] = useState("");
   const [dateError, setDateError] = useState("");
   const [timeError, setTimeError] = useState("");
@@ -134,7 +135,7 @@ const EventInfoCreation = ({ navigation }) => {
       setTimeError(isValidTime(eventData.time));
       return;
     }
-    navigation.navigate('EventAddressCreation');
+    navigation.navigate('EventAddressCreation', {enterpriseData});
   };
 
   return (
