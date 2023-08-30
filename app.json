@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "plugins": [
       [
         "expo-image-picker",
@@ -29,10 +31,20 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.itapastur.mobile"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "87bb0027-3147-4fe3-893c-13707168281f"
+      }
+    },
+    "errorRecovery": false
   }
 }

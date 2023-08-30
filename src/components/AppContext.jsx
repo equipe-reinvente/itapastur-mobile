@@ -5,7 +5,7 @@ const Context = createContext();
 
 export function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState(require("../images/profilePhoto.png"));
+  const [profilePhoto, setProfilePhoto] = useState(require("../images/profile_photo.png"));
   const [user, setUser] = useState({});
   const [placesData, setPlacesData] = useState({});
   const [currentPlaceData, setCurrentPlaceData] = useState({});

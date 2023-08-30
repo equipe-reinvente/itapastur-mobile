@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Image, StyleSheet, Text } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
-const EventImageCarousel = ({ images=require("../images/imagePlaceholder.png"), 
+const EventImageCarousel = ({ images=require("../images/image_placeholder.png"), 
                             style={marginHorizontal: 20}, 
                             sliderWidth=380, 
                             itemWidth=280, 

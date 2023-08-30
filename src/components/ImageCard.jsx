@@ -1,10 +1,10 @@
 import { View, StyleSheet, Image, ImageBackground } from 'react-native';
 import { Button } from "@react-native-material/core";
 
-const ImageCard = ({ text = "", image = require("../images/imagePlaceholder.png"), width = 340, height = 165, textColor = "white", callback = () => {}, id=0}) => {
+const ImageCard = ({ text = "", image = require("../images/image_placeholder.png"), width = 340, height = 165, textColor = "white", callback = () => {}, id=0}) => {
 
     try {
-        if (image.uri === null) image = require("../images/imagePlaceholder.png");
+        if (image.uri === null) image = require("../images/image_placeholder.png");
     } catch {}
 
     const styles = StyleSheet.create({

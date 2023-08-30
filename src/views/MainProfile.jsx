@@ -44,7 +44,7 @@ const MainProfile = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.userInfoContainer}>
                 {profilePhoto !== null && <Image style={styles.userPhoto} source={profilePhoto}/>}
-                {profilePhoto === null && <Image style={styles.userPhoto} source={require("../images/profilePhoto.png")}/>}
+                {profilePhoto === null && <Image style={styles.userPhoto} source={require("../images/profile_photo.png")}/>}
                 <View style={styles.usernameEmailContainer}>
                    <Text style={styles.usernameText}>{username}</Text>
                     <Text style={styles.emailText}>{user['user']['email']}</Text> 

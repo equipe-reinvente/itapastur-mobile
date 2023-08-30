@@ -11,11 +11,11 @@ import CircularImageCard from '../components/CircularImageCard';
 import { useNavigation } from '@react-navigation/native';
 
 const images = [
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") },
-    { source: require("../images/eventPlaceholder.png") }
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") },
+    { source: require("../images/event_placeholder.png") }
 ];
 
 const itemInfo = [

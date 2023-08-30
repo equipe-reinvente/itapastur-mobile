@@ -11,7 +11,7 @@ const Comments = ({comments = [], style = containerStyle, enableScrollView = fal
 
     const renderComments = (item) => {
         let image = item['image'];
-        if (image === undefined || image === null) image = require("../images/imagePlaceholder.png");
+        if (image === undefined || image === null) image = require("../images/profile_photo.png");
         else image = {uri: image};
 
         let commentStyle = {

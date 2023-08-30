@@ -3,7 +3,7 @@ import { Text } from "@react-native-material/core";
 
 const PlaceTitle = ({ title, category, image }) => {
   try {
-    if (image.source.uri == null) image.source = require("../images/imagePlaceholder.png");
+    if (image.source.uri == null) image.source = require("../images/image_placeholder.png");
   } catch {}
   
   return (
@@ -13,7 +13,7 @@ const PlaceTitle = ({ title, category, image }) => {
         <Text style={styles.category}>{category}</Text>
       </View>
       {image.source !== null && <Image source={image.source} style={styles.image} />}
-      {image.source === null && <Image source={require("../images/imagePlaceholder.png")} style={styles.image} />}
+      {image.source === null && <Image source={require("../images/image_placeholder.png")} style={styles.image} />}
     </View>
   );
 }

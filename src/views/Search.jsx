@@ -280,8 +280,8 @@ const Search = ({ navigation }) => {
                 </Text>
                 
                 <View style={styles.cardContainer}>
-                    <ImageCard image={require('../images/igrejaMatriz.png')} text='Pontos turísticos' id={0} callback={() => changeCategory('Pontos turísticos')}/>
-                    <ImageCard image={require('../images/itapajePlaca.png')} text='Lojas' id={1} callback={() => changeCategory('Lojas')}/>
+                    <ImageCard image={require('../images/igreja_matriz.png')} text='Pontos turísticos' id={0} callback={() => changeCategory('Pontos turísticos')}/>
+                    <ImageCard image={require('../images/itapaje_placa.png')} text='Lojas' id={1} callback={() => changeCategory('Lojas')}/>
                     <ImageCard image={require('../images/artesanato.png')} text='Artesões' id={2} callback={() => changeCategory('Artesões')}/>
                 </View>
             </View>}

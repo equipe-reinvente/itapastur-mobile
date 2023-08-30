@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Image, StyleSheet, Text, ImageBackground } from "react-native";
 
-const PlaceCard = ({ image=require("../images/imagePlaceholder.png"), 
+const PlaceCard = ({ image=require("../images/image_placeholder.png"), 
                             style={position: "relative", borderRadius: 15, height: 150, width: 150, overflow: 'hidden',},
                             likes = 0,
                             title = "Unknown",

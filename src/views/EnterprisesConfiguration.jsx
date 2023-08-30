@@ -41,7 +41,7 @@ const EnterprisesConfiguration = ({ navigation, route }) => {
                     onPress={() => navigation.goBack()}/>
                 </View>
                 {enterpriseData['image_one'] !== null && <Image style={styles.userPhoto} source={{uri: enterpriseData['image_one']}}/>}
-                {enterpriseData['image_one'] === null && <Image style={styles.userPhoto} source={require("../images/imagePlaceholder.png")}/>}
+                {enterpriseData['image_one'] === null && <Image style={styles.userPhoto} source={require("../images/image_placeholder.png")}/>}
                 <View style={styles.enterpriseNameCategoryContainer}>
                    <Text style={styles.enterpriseNameText}>{enterpriseData['name']}</Text>
                     <Text style={styles.categoryTextStyle}>{enterpriseData['category']}</Text> 
