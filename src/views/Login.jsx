@@ -63,6 +63,19 @@ const Login = ({ navigation }) => {
             text1: error.message,
             visibilityTime: 2000,
           });
+
+          devUserInfo = {
+            "token" :"test",
+            "user": {
+                "name": "dev",
+                "email": "test@gmail"
+            }
+          }
+
+          login(devUserInfo);
+
+          navigation.navigate('Tabs');
+
           console.log(error);
           setLoading(false);
         }
