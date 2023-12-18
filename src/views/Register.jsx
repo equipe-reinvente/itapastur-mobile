@@ -13,6 +13,7 @@ const Register = ({ navigation }) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = GetContext();
+  const { apiUrl } = GetContext();
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -49,13 +50,12 @@ const Register = ({ navigation }) => {
       "email": email_processed,
       "password": password,
       "name": name,
-      "avatar": null
     }
 
     setLoading(true);
 
     try {
-      const response = await axios.post("https://itapastur-api.fly.dev/users", data);
+      const response = await axios.post(apiUrl+"/users", data);
       if (response.status === 200) {
         login(response['data']);
         setLoading(false);

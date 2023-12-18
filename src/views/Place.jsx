@@ -18,6 +18,7 @@ const PlaceView = ({ navigation }) => {
   const [favorite, setFavorite] = useState(false);
   const [heartIcon, setHeatIcon] = useState("heart-outline");
   const [comments, setComments] = useState([]);
+  const { apiUrl } = GetContext();
 
   const setFavoriteIcon = (isFavorite) => {
     if (isFavorite) setHeatIcon("heart");
@@ -42,7 +43,7 @@ const PlaceView = ({ navigation }) => {
     console.log(currentPlaceData);
     const message = `Venha conferir ${currentPlaceData['name']} no ItapasTur!`;
     const imageURI = currentPlaceData['image_one'];
-    const link = 'https://itapastur-api.fly.dev/forward/'+currentPlaceData['id'];
+    const link = apiUrl+'/forward/'+currentPlaceData['id'];
     
     const shareOptions = {
       message: `${message} \n ${link}`,
@@ -88,7 +89,7 @@ const PlaceView = ({ navigation }) => {
         setUser(userData);
       }
       const response = await axios.post(
-        'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: currentPlaceData['id']},
+        apiUrl+'/like', {user_id: user['user']['id'], enterprise_id: currentPlaceData['id']},
         {
           headers: {
               Authorization: `Bearer ${authToken}`,
@@ -107,7 +108,7 @@ const PlaceView = ({ navigation }) => {
   const checkIfIsFavorite = async () => {
     try {
       const response = await axios.get(
-        'https://itapastur-api.fly.dev/view_user/'+ user['user']['id'],
+        apiUrl+'/view_user/'+ user['user']['id'],
         {
         headers: {
             Authorization: `Bearer ${authToken}`,
@@ -193,7 +194,7 @@ const PlaceView = ({ navigation }) => {
   const getComments = async () => {
     try {
       const response = await axios.get(
-        'https://itapastur-api.fly.dev/enterprise/'+currentPlaceData['id']+"/comments",
+        apiUrl+'/enterprise/'+currentPlaceData['id']+"/comments",
         {
           headers: {
               Authorization: `Bearer ${authToken}`,

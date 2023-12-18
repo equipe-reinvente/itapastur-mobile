@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState({});
   const [placesData, setPlacesData] = useState({});
   const [currentPlaceData, setCurrentPlaceData] = useState({});
+  const [apiUrl, setApiUrl] = useState("https://presently-enabled-monkey.ngrok-free.app");
 
   const login = (userObject) => {
     setAuthToken(userObject['token']);
@@ -22,7 +23,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser, placesData, setPlacesData, currentPlaceData, setCurrentPlaceData }}>
+    <Context.Provider value={{ authToken, login, logout, profilePhoto, setProfilePhoto, user, setUser, placesData, setPlacesData, currentPlaceData, setCurrentPlaceData, apiUrl, setApiUrl }}>
       {children}
     </Context.Provider>
   );

@@ -13,6 +13,7 @@ const Login = ({ navigation }) => {
     const [emailErrorMessage, setEmailErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const { login } = GetContext();
+    const { apiUrl } = GetContext();
 
     const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
@@ -23,6 +24,7 @@ const Login = ({ navigation }) => {
     const makeLoginRequest = async () => {
         setPasswordErrorMessage("");
         setEmailErrorMessage("");
+
         let email_processed = email.replace(" ", "");
         let canLogin = true;
         if (password.length < 7) {
@@ -45,7 +47,7 @@ const Login = ({ navigation }) => {
         setLoading(true);
     
         try {
-          const response = await axios.post("https://itapastur-api.fly.dev/login", data);
+          const response = await axios.post(apiUrl+"/login", data);
           if (response.status === 200) {
             console.log(response['data']);
             login(response['data']);
@@ -63,18 +65,6 @@ const Login = ({ navigation }) => {
             text1: error.message,
             visibilityTime: 2000,
           });
-
-          devUserInfo = {
-            "token" :"test",
-            "user": {
-                "name": "dev",
-                "email": "test@gmail"
-            }
-          }
-
-          login(devUserInfo);
-
-          navigation.navigate('Tabs');
 
           console.log(error);
           setLoading(false);

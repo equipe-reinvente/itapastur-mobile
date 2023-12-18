@@ -14,6 +14,7 @@ const Enterprises = ({ navigation }) => {
     const { user, authToken } = GetContext(); 
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const { apiUrl } = GetContext();
 
     const openSelectedEnterprise = (key) => {
         let enterpriseData = enterpriseList.filter(item => item['id'] === key)[0];
@@ -51,7 +52,7 @@ const Enterprises = ({ navigation }) => {
     const getEnterpriseList = async () => {
         try {
             const response = await axios.get(
-                'https://itapastur-api.fly.dev/enterprises/' + user['user']['id'], 
+                apiUrl+'/enterprises/' + user['user']['id'], 
                 {
                 headers: {
                     Authorization: `Bearer ${authToken}`,

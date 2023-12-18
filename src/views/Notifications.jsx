@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetContext } from '../components/AppContext';
-
 import ThumbnailButton from '../components/ThumbnailButton';
 
 const Notifications = ({ navigation }) => {
@@ -14,6 +13,7 @@ const Notifications = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { authToken, user, setUser } = GetContext();
     const [loading, setLoading] = useState(true);
+    const { apiUrl } = GetContext();
 
     const openSelectedNotification = (key) => {
 
@@ -44,7 +44,7 @@ const Notifications = ({ navigation }) => {
     const fetchCategories = async () => {
         try {
           const response = await axios.get(
-            'https://itapastur-api.fly.dev/categories/enterprises',
+            apiUrl+'/categories/enterprises',
             {
               headers: {
                 Authorization: `Bearer ${authToken}`,

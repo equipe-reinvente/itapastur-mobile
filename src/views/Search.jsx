@@ -16,6 +16,7 @@ const Search = ({ navigation }) => {
     const [results, setResults] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const { apiUrl } = GetContext();
 
     const searchByName = (text) => {
         setSearchText(text);
@@ -27,7 +28,7 @@ const Search = ({ navigation }) => {
     const fetchCategories = async () => {
         try {
           const response = await axios.get(
-            'https://itapastur-api.fly.dev/categories/enterprises',
+            apiUrl+'/categories/enterprises',
             {
               headers: {
                 Authorization: `Bearer ${authToken}`,

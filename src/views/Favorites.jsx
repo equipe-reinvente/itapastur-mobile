@@ -14,6 +14,7 @@ const Favorites = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
     const { authToken, user, setUser } = GetContext();
     const [loading, setLoading] = useState(true);
+    const { apiUrl } = GetContext();
 
     const openSelectedFavorites = (id, category) => {
         if (category == "Pontos Turísticos" || category == "Ponto Turístico") category = "pontos";
@@ -49,7 +50,7 @@ const Favorites = ({ navigation }) => {
 
     const unfavoriteOnBackend = async (id) => {
         const response = await axios.post(
-            'https://itapastur-api.fly.dev/like', {user_id: user['user']['id'], enterprise_id: id},
+            apiUrl+'/like', {user_id: user['user']['id'], enterprise_id: id},
             {
               headers: {
                   Authorization: `Bearer ${authToken}`,
@@ -91,7 +92,7 @@ const Favorites = ({ navigation }) => {
     const fetchUserInfo = async () => {
         try {
             const response = await axios.get(
-                'https://itapastur-api.fly.dev/view_user/'+ user['user']['id'],
+                apiUrl+'/view_user/'+ user['user']['id'],
                 {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
@@ -113,7 +114,7 @@ const Favorites = ({ navigation }) => {
     const fetchCategories = async (userData) => {
         try {
           const response = await axios.get(
-            'https://itapastur-api.fly.dev/categories/enterprises',
+            apiUrl+'/categories/enterprises',
             {
               headers: {
                 Authorization: `Bearer ${authToken}`,

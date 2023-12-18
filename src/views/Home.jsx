@@ -39,6 +39,7 @@ const Home = ({ navigation }) => {
     const [stores, setStores] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const { apiUrl } = GetContext();
 
     const styles = StyleSheet.create({
         container: {
@@ -216,7 +217,7 @@ const Home = ({ navigation }) => {
     const fetchCategories = async () => {
         try {
           const response = await axios.get(
-            'https://itapastur-api.fly.dev/categories/enterprises',
+            apiUrl+'/categories/enterprises',
             {
               headers: {
                 Authorization: `Bearer ${authToken}`,

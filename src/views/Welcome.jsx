@@ -8,6 +8,7 @@ import axios from 'axios';
 const WelcomeView = ({ navigation }) => {
   const description = "Explore Itapajé e todas as belezas naturais e cultura que esta cidade tem a oferecer!";
   const { login } = GetContext();
+  const { apiUrl } = GetContext();
 
   const handleStartButton = async () => {
     try {
@@ -17,7 +18,7 @@ const WelcomeView = ({ navigation }) => {
       userData = JSON.parse(userData);
 
       const response = await axios.get(
-        'https://itapastur-api.fly.dev/view_user/'+ userData['user']['id'],
+        apiUrl+'/view_user/'+ userData['user']['id'],
         {
         headers: {
             Authorization: `Bearer ${userData['token']}`,

@@ -14,6 +14,7 @@ const EventAddressCreation = ({ navigation, route }) => {
   const { eventData, setEventData } = useEvent();
   const { enterpriseData } = route.params;
   const { authToken } = GetContext();
+  const { apiUrl } = GetContext();
 
   const onChangeStreetAddressInput = (streetAddress) => {
     setEventData((prevState) => ({
@@ -65,7 +66,7 @@ const EventAddressCreation = ({ navigation, route }) => {
 
   const handleFinishButton = async () => {
     const data = buildEventFormData();
-    const eventsURL = 'https://itapastur-api.fly.dev/events/';
+    const eventsURL = apiUrl+'/events/';
 
     setLoading(true);
 

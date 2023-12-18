@@ -7,11 +7,12 @@ import { GetContext } from './AppContext';
 const DeepLinkHandler = () => {
   const { authToken } = GetContext();
   const navigation = useNavigation();
+  const { apiUrl } = GetContext();
 
   const fetchPlaces = async (placeId) => {
         try {
         const response = await axios.get(
-            'https://itapastur-api.fly.dev/categories/enterprises',
+            apiUrl+'/categories/enterprises',
             {
             headers: {
                 Authorization: `Bearer ${authToken}`,
