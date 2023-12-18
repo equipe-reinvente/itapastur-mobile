@@ -8,7 +8,7 @@ O app Itapastur foi desenvolvido para dispositivos Android utilizando a tecnolog
 - ![React Navigation Badge](https://img.shields.io/badge/React_Navigation-673AB8?logo=react&logoColor=fff&style=for-the-badge) -> Utilizado para navegar
   
 ## Preview 📱
-![mockup](./assets/preview.png)
+![mockup](./preview.png)
 
 ## Rodando o Projeto 🚀
 
