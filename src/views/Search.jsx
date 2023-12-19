@@ -21,7 +21,10 @@ const Search = ({ navigation }) => {
     const searchByName = (text) => {
         setSearchText(text);
         if (results.length > 0) setResults([]);
-        if (text !== "" && text !== null) setShowCategories(false);
+        if (text !== "" && text !== null) {
+            setShowCategories(false);
+            pressedSearchKey();
+        }
         else setShowCategories(true);
     };
 
